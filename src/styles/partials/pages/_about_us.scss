@@ -1,0 +1,62 @@
+.about{
+    min-height: 100vh;
+    background: url(https://www.amayatheme.redsun.design/dark/wp-content/uploads/sites/5/2021/10/amaya-hero-latte-art.jpg);
+    background-size: cover;
+    
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+        margin: auto;
+    
+        img {
+            width: 45%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            margin-right: 5%;
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+        }
+    
+        .text{
+            width:50%;
+          
+            h2 {
+                font-size: 36px;
+                font-weight: 800;
+                color: #fff;
+                margin-bottom: 20px;
+            }
+        
+            p {
+                font-weight: 300;
+                color: #fff;
+                line-height: 1.6;
+            }
+        }
+    }
+}
+
+@media (max-width: 793px) {
+
+    .content{
+        flex-direction: column;
+    }
+    img{
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+        margin-top: 5rem;
+        display: none;
+    }
+    
+    #text{
+        width: 100%;
+        margin-bottom: 3rem;
+        margin-top: 5rem;
+    }
+}
+
+
