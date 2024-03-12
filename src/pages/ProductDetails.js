@@ -34,7 +34,6 @@ const ProductDetails = () => {
 
     const [count, setCount] = useState(0);
 
-
     // handling Add-to-cart
     const handleAddItem = () => {
         addItem(product);
@@ -140,7 +139,7 @@ const ProductDetails = () => {
                             </div>
 
                             <div class="counter">
-                                <button className="counter__button" onClick={() => setCount(count - 1)}>-</button>
+                                <button className="counter__button" onClick={() => setCount(Math.max(count-1, 1))}>-</button>
                                 <span className="counter__count">{count}</span>
                                 <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                             </div>

@@ -84,7 +84,8 @@
         width: 4rem;
         height: auto;
         text-align: center;
-        background-color: var(--main-color);
+        background-color: #fff;
+        color: #000;
         cursor: pointer;
         margin-left: 1rem;
       }
@@ -92,8 +93,8 @@
       .size-option.selected {
         opacity: 1;
         border: 1px solid rgb(0, 0, 0);
-        background-color: #eee;
-        color:#333;
+        background-color: var(--main-color);
+        color:#fff;
       }
 }
 
@@ -178,30 +179,38 @@
 
 .counter {
 
-    &__button {
-        width: 20px;
-        height: 20px;
-        font-size: 20px;
-        color: #fff;
-        background-color: var(--main-color);
-        border: none;
-        cursor: pointer;
-        margin:2rem 3px 0 3px;
+    &{
+        display: inline-flex;
+        align-items: center;
+        @include bordered(1px, #444);
+        border-radius: 3px;
+        user-select: none;
+        overflow: hidden;
+        margin-top: 2rem;
 
+        &__button{
+            @include dimension(3.125rem, 2.25rem);
+            background-color: var(--bg-color-3);
+            @include transition(color, 0.2s);
 
-        &:hover {
-            background-color: #fff;
-            color:#333;
-        }
+            &:hover {
+                color: #eee;
+            }
 
-        &:active {
-            background-color: #eee;
+            &[disabled] {
+                cursor: not-allowed;
+                color: var(--text-muted);
+            }
         }
     }
 
     &__count {
-        margin: 0 10px;
-        font-size: 20px;
+        @include dimension(3.75rem, 2.25rem);
+        color: var(--main-color);
+        font-size: 1.4rem;
+        line-height: 2.25rem;
+        font-weight: bold;
+        text-align: center;
     }
 }
 
