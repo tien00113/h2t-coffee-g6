@@ -16,7 +16,7 @@ const Header = () => {
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
-    const {auth} = useSelector(store=>store);
+    const {auth} = useSelector(store=>store); //1 đối tượng được lấy từ backend
 
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
