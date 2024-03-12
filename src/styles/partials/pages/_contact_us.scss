@@ -6,11 +6,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-image: url(https://media.istockphoto.com/id/1467199066/vi/anh/t%C3%A1ch-c%C3%A0-ph%C3%AA-v%E1%BB%9Bi-kh%C3%B3i-v%C3%A0-h%E1%BA%A1t-c%C3%A0-ph%C3%AA-tr%C3%AAn-n%E1%BB%81n-g%E1%BB%97-c%C5%A9.jpg?s=612x612&w=0&k=20&c=PUDVwybbrlvYvsdoY5KNtvmA9o0miUa_8P5Tz6xr75M=);
+    background-image: url(https://cdn.pixabay.com/photo/2017/04/25/08/05/coffee-beans-2258865_1280.jpg);
     background-size: cover;
-    .content{
-        max-width: 800px;
+    .content{   
+        max-width: 800px;   
         text-align: center;
+        margin-top: 2rem;
         h2{
             font-size: 36px;
             font-weight: 800;
@@ -69,7 +70,7 @@
             h2{
                 font-size: 30px;
                 font-weight: 500;
-                color:#333;
+                color:#000;
             }
             .inputBox{
                 position: relative;

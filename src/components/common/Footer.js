@@ -20,25 +20,6 @@ const Footer = () => {
         <footer id="footer">
             <div className="container">
                 <div className="wrapper footer_wrapper">
-                    <div className="foot_about">
-                        <h2>
-                            <Link to="/">H2T-Coffee</Link>
-                        </h2>
-                        <div className="foot_subs">
-                            <p>Subscribe to our Email alerts to receive early discount offers, and new products info.</p>
-                            <form onSubmit={handleSubmit}>
-                                <input
-                                    type="email"
-                                    className="input_field"
-                                    placeholder="Email Address*"
-                                    required
-                                    value={subValue}
-                                    onChange={(e) => setSubValue(e.target.value)}
-                                />
-                                <button type="submit" className="btn">Subscribe</button>
-                            </form>
-                        </div>
-                    </div>
 
                     {
                         footMenu.map(item => {
@@ -62,33 +43,21 @@ const Footer = () => {
                             );
                         })
                     }
+
+                <div className="foot_social">
+                    <h4>Follow Us</h4>
+                    {
+                        footSocial.map((item) => {
+                            const { id, icon, path } = item;
+                            return (
+                                <Link to={path} key={id}>{icon}</Link>
+                            );
+                        })
+                    }
+                </div>
                 </div>
             </div>
 
-            <div className="separator"></div>
-
-            <div className="sub_footer">
-                <div className="container">
-                    <div className="sub_footer_wrapper">
-                        <div className="foot_copyright">
-                            <p>
-                                {currYear} | XBeat. All Rights Reserved.
-                                Built by | <a href="https://gulshansongara.netlify.app/">Gulshan Songara</a>
-                            </p>
-                        </div>
-                        <div className="foot_social">
-                            {
-                                footSocial.map((item) => {
-                                    const { id, icon, path } = item;
-                                    return (
-                                        <Link to={path} key={id}>{icon}</Link>
-                                    );
-                                })
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
         </footer >
     );
 };

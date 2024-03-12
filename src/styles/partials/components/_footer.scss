@@ -79,7 +79,9 @@
 
 .foot_social {
     @include flexbox();
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1rem;
     font-size: 1.2rem;
     margin-right: 4rem;
+    align-items: center;
 }
