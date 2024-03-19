@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TbTrash } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { displayMoney } from '../../helpers/utils';
@@ -15,6 +15,11 @@ const CartItem = (props) => {
     const newPrice = displayMoney(finalPrice);
     const oldPrice = displayMoney(originalPrice);
 
+    const [selectedSize, setSelectedSize] = useState(null);
+
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+    };
 
     return (
         <>
@@ -41,8 +46,20 @@ const CartItem = (props) => {
                         {newPrice} &nbsp;
                         <small><del>{oldPrice}</del></small>
                     </h2>
-
+                    <div className="size-select">
+                        <h4>Size:</h4>
+                        {['S', 'M', 'L'].map((size) => (
+                            <span
+                                key={size}
+                                className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                onClick={() => handleSizeClick(size)}
+                            >
+                                {size}
+                            </span>
+                        ))}
+                    </div>
                     <QuantityBox itemId={id} itemQuantity={quantity} />
+
                 </div>
             </div>
         </>

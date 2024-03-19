@@ -77,9 +77,10 @@
         justify-content: first baseline;
         width: 100%;
         border-radius: 2px;
-      }
-      
-      .size-option {
+        margin-top: 20px;
+    }
+
+    .size-option {
         opacity: 0.8;
         width: 4rem;
         height: auto;
@@ -88,14 +89,79 @@
         color: #000;
         cursor: pointer;
         margin-left: 1rem;
-      }
-      
-      .size-option.selected {
+    }
+
+    .size-option.selected {
         opacity: 1;
         border: 1px solid rgb(0, 0, 0);
         background-color: var(--main-color);
-        color:#fff;
-      }
+        color: #fff;
+    }
+
+    // counter
+
+    .counter {
+
+        & {
+            display: inline-flex;
+            align-items: center;
+            @include bordered(1px, #444);
+            border-radius: 3px;
+            user-select: none;
+            overflow: hidden;
+            margin-top: 1rem;
+
+            &__button {
+                @include dimension(3.125rem, 2.25rem);
+                background-color: var(--bg-color-3);
+                @include transition(color, 0.2s);
+
+                &:hover {
+                    color: #eee;
+                }
+
+                &[disabled] {
+                    cursor: not-allowed;
+                    color: var(--text-muted);
+                }
+            }
+        }
+
+        &__count {
+            @include dimension(3.75rem, 2.25rem);
+            color: var(--main-color);
+            font-size: 1.4rem;
+            line-height: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    // topping
+    .topping{
+        display: flex;
+        ul{
+            margin-left: 2rem;
+            li{
+                border: 1px solid var(--main-color);
+                color:#ccc;
+                padding: 4px 6px;
+                font-size: 14px;
+            }
+            .topping-option {
+                opacity: 0.8;
+                text-align: center;
+                cursor: pointer;
+            }
+            .topping-option.selected {
+                opacity: 1;
+                border: 1px solid rgb(0, 0, 0);
+                background-color: var(--main-color);
+                color: #fff;
+            }
+        }
+
+    }
 }
 
 .prod_details_info {
@@ -173,44 +239,3 @@
         width: 200px;
     }
 }
-
-
-// counter
-
-.counter {
-
-    &{
-        display: inline-flex;
-        align-items: center;
-        @include bordered(1px, #444);
-        border-radius: 3px;
-        user-select: none;
-        overflow: hidden;
-        margin-top: 2rem;
-
-        &__button{
-            @include dimension(3.125rem, 2.25rem);
-            background-color: var(--bg-color-3);
-            @include transition(color, 0.2s);
-
-            &:hover {
-                color: #eee;
-            }
-
-            &[disabled] {
-                cursor: not-allowed;
-                color: var(--text-muted);
-            }
-        }
-    }
-
-    &__count {
-        @include dimension(3.75rem, 2.25rem);
-        color: var(--main-color);
-        font-size: 1.4rem;
-        line-height: 2.25rem;
-        font-weight: bold;
-        text-align: center;
-    }
-}
-

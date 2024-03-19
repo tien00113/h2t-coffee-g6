@@ -13,6 +13,7 @@
     .quantity_box {
         transform: scale(0.9);
         transform-origin: 0 0;
+        margin-top: 2rem;
 
         @include devices(sm) {
             transform: scale(0.6);
@@ -146,3 +147,28 @@
 .checkout_btn {
     width: 100%;
 }
+
+.size-select {
+    display: flex;
+    justify-content: first baseline;
+    width: 100%;
+    border-radius: 2px;
+  }
+  
+  .size-option {
+    opacity: 0.8;
+    width: 4rem;
+    height: auto;
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+  
+  .size-option.selected {
+    opacity: 1;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: var(--main-color);
+    color:#fff;
+  }

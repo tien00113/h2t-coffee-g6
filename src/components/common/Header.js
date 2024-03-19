@@ -16,7 +16,7 @@ const Header = () => {
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
-    const {auth} = useSelector(store=>store); //1 đối tượng được lấy từ backend
+    const { auth } = useSelector(store => store); //1 đối tượng được lấy từ backend
 
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
@@ -36,6 +36,14 @@ const Header = () => {
 
     console.log("user------------------------------", auth);
 
+    const [isActive, setIsActive] = useState(false);
+    const toggleMenu = () => {
+        setIsActive(!isActive);
+    };
+    const hideMenu = () => {
+        setIsActive(false);
+      };
+
     return (
         <>
             <header id="header" className={isSticky ? 'sticky' : ''}>
@@ -45,37 +53,38 @@ const Header = () => {
                             <Link to="/">H2T-Coffee</Link>
                         </h2>
 
-                        <div className="nav_text">
-                            <div class='box'>
-                                <h4><Link to="/">Home</Link></h4>
-                            </div>
-
-                            <div class='box'>
-                                <h4>Menu</h4>
-                                <div className="dropdown_text">
-                                    <p><Link to="/all-products">All Products</Link></p>
-                                    <div className="separator"></div>
-                                    <ul>
-                                        {
-                                            menu.map(item => {
-                                                const { id, link, path } = item;
-                                                return (
-                                                    <li key={id}>
-                                                        <Link to={path}>{link}</Link>
-                                                    </li>
-                                                );
-                                            })
-                                        }
-                                    </ul>
+                        <nav>
+                            <div className={`nav_text ${isActive ? 'active' : ''}`}>
+                                <div className='box' onClick={hideMenu}>
+                                    <h4><Link to="/">Home</Link></h4>
+                                </div>
+                                <div class='box'>
+                                    <h4>Menu</h4>
+                                    <div className="dropdown_text">
+                                        <p><Link to="/all-products" onClick={hideMenu}>All Products</Link></p>
+                                        <div className="separator"></div>
+                                        <ul>
+                                            {
+                                                menu.map(item => {
+                                                    const { id, link, path } = item;
+                                                    return (
+                                                        <li key={id} onClick={hideMenu}>
+                                                            <Link to={path}>{link}</Link>
+                                                        </li>
+                                                    );
+                                                })
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class='box' onClick={hideMenu}>
+                                    <h4><Link to="/contact">Contact Us</Link></h4>
+                                </div>
+                                <div class='box' onClick={hideMenu}>
+                                    <h4><Link to="/about">About Us</Link></h4>
                                 </div>
                             </div>
-                            <div class='box'>
-                                <h4><Link to="/contact">Contact Us</Link></h4>
-                            </div>
-                            <div class='box'>
-                                <h4><Link to="/about">About Us</Link></h4>
-                            </div>
-                        </div>
+                        </nav>
 
                         <nav className="nav_actions">
                             <div className="search_action">
@@ -128,6 +137,11 @@ const Header = () => {
                                         }
                                     </ul>
                                 </div>
+                            </div>
+                            <div className="hamburger" onClick={toggleMenu}>
+                                <div></div>
+                                <div></div>
+                                <div></div>
                             </div>
                         </nav>
                     </div>

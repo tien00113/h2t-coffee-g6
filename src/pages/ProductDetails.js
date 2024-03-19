@@ -64,9 +64,13 @@ const ProductDetails = () => {
 
 
     const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedTopping, setSelectedTopping] = useState(null);
 
     const handleSizeClick = (size) => {
         setSelectedSize(size);
+    };
+    const handleToppingClick = (topping) => {
+        setSelectedTopping(topping);
     };
 
 
@@ -99,7 +103,6 @@ const ProductDetails = () => {
                         {/*=== Product Details Right-content ===*/}
                         <div className="prod_details_right_col">
                             <h1 className="prod_details_title">{title}</h1>
-                            <h4 className="prod_details_info">{info}</h4>
 
                             <div className="prod_details_ratings">
                                 <span className="rating_star">
@@ -119,9 +122,7 @@ const ProductDetails = () => {
                                         {newPrice} &nbsp;
                                         <small className="del_price"><del>{oldPrice}</del></small>
                                     </h2>
-                                    <p className="saved_price">You save: {savedPrice} ({savedDiscount}%)</p>
                                 </div>
-
                             </div>
 
 
@@ -142,6 +143,23 @@ const ProductDetails = () => {
                                 <button className="counter__button" onClick={() => setCount(Math.max(count-1, 1))}>-</button>
                                 <span className="counter__count">{count}</span>
                                 <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
+                            </div>
+
+                            <div className="separator"></div>
+
+                            <div class='topping'>
+                                <h4>Topping:</h4>
+                                {['Trân châu', 'Kem phủ', 'Thạch'].map((topping) => (
+                                    <ul>
+                                        <li
+                                            key={topping}
+                                            className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                            onClick={() => handleToppingClick(topping)}
+                                        >
+                                            {topping}
+                                        </li>
+                                    </ul>
+                                ))}
                             </div>
 
                             <div className="separator"></div>

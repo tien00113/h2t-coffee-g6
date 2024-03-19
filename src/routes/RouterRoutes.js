@@ -8,6 +8,7 @@ import ProductDetails from '../pages/ProductDetails';
 import ErrorPage from '../pages/ErrorPage';
 import AboutUs from '../pages/AboutUs';
 import ContactUs from '../pages/ContactUs';
+import CheckOut from '../pages/CheckOut';
 
 const RouterRoutes = () => {
 
@@ -19,6 +20,7 @@ const RouterRoutes = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/contact" element={<ContactUs />} />
+                <Route path="/checkout" element={<CheckOut />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/all-products" element={<AllProducts />} />
                 <Route path="/product-details/:productId" element={<ProductDetails />} />

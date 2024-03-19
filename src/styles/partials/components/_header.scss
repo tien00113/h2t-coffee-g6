@@ -166,3 +166,50 @@
         @include toggleVisibility(visible, 1);
     }
 }
+
+.nav_text {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    div {
+        width: 25px;
+        height: 2px;
+        background-color: #ffffff;
+        margin: 6px 0;
+        border-radius: 2px;
+    }
+}
+
+/* CSS cho màn hình nhỏ */
+@media (max-width: 800px) {
+    .nav_text {
+        display: none;
+    }
+
+    .nav_text.active {
+        position: absolute;
+        right: 0;
+        height: 30vh;
+        top: 8vh;
+        background-color: var(--bg-color-2);
+        opacity: 0.8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 30%;
+        margin-right: 5px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+    .dropdown_text{
+        right: 9rem;
+    }
+}
+

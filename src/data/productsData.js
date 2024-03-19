@@ -273,7 +273,7 @@ const productsData = [
             "/images/products/jbl-endu-4.png",
         ],
         brand: "JBL",
-        title: "JBL Endurance Run Sports",
+        title: "JBL Endurance Sports",
         info: "In-Ear Wired Earphones",
         category: "Earphones",
         type: "In Ear",

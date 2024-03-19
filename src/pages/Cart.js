@@ -5,6 +5,8 @@ import useDocTitle from '../hooks/useDocTitle';
 import cartContext from '../contexts/cart/cartContext';
 import CartItem from '../components/cart/CartItem';
 import EmptyView from '../components/common/EmptyView';
+import { Link } from 'react-router-dom';
+
 
 
 const Cart = () => {
@@ -88,7 +90,7 @@ const Cart = () => {
                                                 <b>{displayTotalAmount}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn checkout_btn">Checkout</button>
+                                        <button type="button" className="btn checkout_btn"><Link to="/checkout">Checkout</Link></button>
                                     </div>
                                 </div>
                             </div>
