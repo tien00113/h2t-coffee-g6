@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { IoMdStar } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { displayMoney } from '../../helpers/utils';
 import cartContext from '../../contexts/cart/cartContext';
 import useActive from '../../hooks/useActive';
-import { FaRegHeart } from "react-icons/fa";
-import { BsCart4 } from "react-icons/bs";
-
+import { FaHeart } from "react-icons/fa";
 
 const ProductCard = (props) => {
 
@@ -30,6 +28,16 @@ const ProductCard = (props) => {
 
     const newPrice = displayMoney(finalPrice);
     const oldPrice = displayMoney(originalPrice);
+
+    const [color, setColor] = useState('white');
+
+    const handleClick = () => {
+        if (color === 'red') {
+            setColor('white');
+        } else {
+            setColor('red');
+        }
+    };
 
 
     return (
@@ -70,9 +78,8 @@ const ProductCard = (props) => {
                                 <small className="del_price"><del>{oldPrice}</del></small>
                             </h2>
                         </div>
-                        <div class='icon_card'>
-                            <span><FaRegHeart /></span>
-                            {/* <span><BsCart4 /></span> */}
+                        <div class='icon_card' onClick={handleClick}>
+                            <span><FaHeart  style={{color:color}} /></span>
                         </div>
                     </div>
                 </div>

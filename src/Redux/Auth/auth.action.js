@@ -49,7 +49,6 @@ export const getUserAction = (registerData)=>async(dispatch)=>{
 
         if(data.token){
             localStorage.setItem("jwt",data.token)
-            
         }
 console.log("hoàn tất đăng ký-------",data)
         dispatch({type:GET_USER_SUCCESS, payload:data.jwt})

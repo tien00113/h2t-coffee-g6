@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column; 
-    background: url(https://cdn.pixabay.com/photo/2016/11/21/13/09/caffeine-1845314_1280.jpg);
+    background: url(https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg);
     background-size: cover;
 
     h2 {
@@ -34,14 +34,22 @@
         .about_text{
 
             h3{
-                color: #000;
-                font-weight: 500;
+                color: #c7c7c7;
+                font-size: 16px;
+                line-height: 18px;
+                font-weight: 700;
+                font-style: normal;
+                text-transform: uppercase;
+                letter-spacing: 0.13em;
+                opacity: 1;
                 margin-bottom: 1rem;
+                font-family: Syne,sans-serif;
             }
             p {
-                color: #000;
+                color: #fff;
                 font-weight: 300;
                 line-height: 1.6;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
         }
     }
@@ -55,17 +63,13 @@
         }
         .about_content {
             flex-direction: column;
+            
             img {
                 width: 100%;
                 margin: 0 0 2rem 0;
             }
-            .about_text{
-                h3,p{
-                    color: #fff;
-                }
-            }
         }
     }
+
+
 }
-
-

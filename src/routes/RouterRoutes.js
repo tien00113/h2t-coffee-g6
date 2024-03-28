@@ -9,6 +9,7 @@ import ErrorPage from '../pages/ErrorPage';
 import AboutUs from '../pages/AboutUs';
 import ContactUs from '../pages/ContactUs';
 import CheckOut from '../pages/CheckOut';
+import History from '../pages/History';
 
 const RouterRoutes = () => {
 
@@ -25,6 +26,7 @@ const RouterRoutes = () => {
                 <Route path="/all-products" element={<AllProducts />} />
                 <Route path="/product-details/:productId" element={<ProductDetails />} />
                 <Route path="*" element={<ErrorPage />} />
+                <Route path="/history" element={<History />} />
             </Routes>
         </>
     );

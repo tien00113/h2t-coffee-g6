@@ -10,6 +10,7 @@ import SearchBar from './SearchBar';
 import { useSelector, useStore } from 'react-redux';
 
 
+
 const Header = () => {
 
     const { formUserInfo, toggleForm, toggleSearch } = useContext(commonContext);
@@ -42,7 +43,7 @@ const Header = () => {
     };
     const hideMenu = () => {
         setIsActive(false);
-      };
+    };
 
     return (
         <>

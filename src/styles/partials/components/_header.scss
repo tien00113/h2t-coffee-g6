@@ -1,3 +1,4 @@
+
 #header {
     position: fixed;
     top: 0;
@@ -15,11 +16,14 @@
 .navbar {
     @include flexbox(space-between, center);
 }
+    
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Roboto:ital,wght@0,300;1,500&display=swap');
 
 .nav_logo {
     @include devices(xs) {
         font-size: 1.2rem;
     }
+    font-family: "Dancing Script", cursive;
 }
 
 .nav_actions {

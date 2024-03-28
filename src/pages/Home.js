@@ -4,6 +4,9 @@ import FeaturedSlider from '../components/sliders/FeaturedSlider';
 import SectionsHead from '../components/common/SectionsHead';
 import TopProducts from '../components/product/TopProducts';
 import Services from '../components/common/Services';
+import QuiltedImageList from '../components/common/QuiltedImageList';
+
+
 
 
 const Home = () => {
@@ -26,6 +29,11 @@ const Home = () => {
                     <SectionsHead heading="Top Products" />
                     <TopProducts />
                 </div>
+            </section>
+
+            <section className="section">
+                <SectionsHead heading="Top Products" />
+                <QuiltedImageList />
             </section>
 
             <Services />
