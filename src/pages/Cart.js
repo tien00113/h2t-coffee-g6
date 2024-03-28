@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsCartX } from 'react-icons/bs';
 import { calculateTotal, displayMoney } from '../helpers/utils';
 import useDocTitle from '../hooks/useDocTitle';
@@ -6,10 +6,15 @@ import cartContext from '../contexts/cart/cartContext';
 import CartItem from '../components/cart/CartItem';
 import EmptyView from '../components/common/EmptyView';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductInCartGuest } from '../Redux/Product/product.action';
 
 
 
 const Cart = () => {
+    const dispatch = useDispatch();
+
+    const { product } = useSelector(store => store);
 
     useDocTitle('Cart');
 
@@ -39,13 +44,24 @@ const Cart = () => {
     const totalAmount = calculateCartTotal - calculateCartDiscount;
     const displayTotalAmount = displayMoney(totalAmount);
 
+    const [cartGuest, setCartGuest] = useState(() => {
+        const cartData = localStorage.getItem('cart');
+        return cartData ? JSON.parse(cartData) : [];
+    });
+
+    useEffect(() => {
+        const productIds = cartGuest.map(item => item.id);
+        dispatch(getProductInCartGuest(productIds));
+        console.log("list product id: ", productIds)
+    }, [cartGuest])
+
 
     return (
         <>
             <section id="cart" className="section">
                 <div className="container">
                     {
-                        cartQuantity === 0 ? (
+                        cartGuest.length === 0 ? (
                             <EmptyView
                                 icon={<BsCartX />}
                                 msg="Your Cart is Empty"
@@ -56,10 +72,10 @@ const Cart = () => {
                             <div className="wrapper cart_wrapper">
                                 <div className="cart_left_col">
                                     {
-                                        cartItems.map(item => (
+                                        product.cart.map(item => (
                                             <CartItem
                                                 key={item.id}
-                                                {...item}
+                                                item={item}
                                             />
                                         ))
                                     }
@@ -73,24 +89,24 @@ const Cart = () => {
                                         </h3>
                                         <div className="order_summary_details">
                                             <div className="price">
-                                                <span>Original Price</span>
+                                                <span>Giá niêm yết</span>
                                                 <b>{displayCartTotal}</b>
                                             </div>
                                             <div className="discount">
-                                                <span>Discount</span>
+                                                <span>Khuyến mãi</span>
                                                 <b>- {displayCartDiscount}</b>
                                             </div>
                                             <div className="delivery">
-                                                <span>Delivery</span>
+                                                <span>Vận chuyển</span>
                                                 <b>Free</b>
                                             </div>
                                             <div className="separator"></div>
                                             <div className="total_price">
-                                                <b><small>Total Price</small></b>
+                                                <b><small>Tổng tiền</small></b>
                                                 <b>{displayTotalAmount}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn checkout_btn"><Link to="/checkout">Checkout</Link></button>
+                                        <button type="button" className="btn checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
                                     </div>
                                 </div>
                             </div>

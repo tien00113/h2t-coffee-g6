@@ -1,19 +1,17 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TbTrash } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { displayMoney } from '../../helpers/utils';
-import cartContext from '../../contexts/cart/cartContext';
 import QuantityBox from '../common/QuantityBox';
 
 
-const CartItem = (props) => {
-
-    const { id, images, title, info, finalPrice, originalPrice, quantity, path } = props;
-
-    const { removeItem } = useContext(cartContext);
-
-    const newPrice = displayMoney(finalPrice);
-    const oldPrice = displayMoney(originalPrice);
+const CartItem = ({ item}) => {
+    const [cartGuest, setCartGuest] = useState(() => {
+        const cartData = localStorage.getItem('cart');
+        return cartData ? JSON.parse(cartData) : [];
+    });
+    const newPrice = displayMoney(item?.salePrice);
+    const oldPrice = displayMoney(item?.price);
 
     const [selectedSize, setSelectedSize] = useState(null);
 
@@ -21,24 +19,40 @@ const CartItem = (props) => {
         setSelectedSize(size);
     };
 
+    // let cartData = localStorage.getItem('cart');
+    // let cart = cartData ? JSON.parse(cartData) : [];
+
+    const cartitem = cartGuest.find(cartitem => cartitem.id === item.id);
+
+    const quantity = cartitem? cartitem.quantity : 1;
+
+    const handleRemoveCartItem = (itemId) => {
+        const newcart = cartGuest.filter(it => it.id !== itemId);
+
+        setCartGuest(newcart);
+
+        localStorage.setItem('cart', JSON.stringify(newcart));
+        alert("đã xóa item khỏi cart");
+    }
+    
     return (
         <>
             <div className="cart_item">
                 <figure className="cart_item_img">
-                    <Link to={`${path}${id}`}>
-                        <img src={images[0]} alt="product-img" />
+                    <Link to="{`${path}${id}`}">
+                        <img src={item?.image[0].imageUrl} alt="product-img" />
                     </Link>
                 </figure>
                 <div className="cart_item_info">
                     <div className="cart_item_head">
                         <h4 className="cart_item_title">
-                            <Link to={`/product-details/${id}`}>{title} {info}</Link>
+                            <Link to={`/product-details/${item?.id}`}>{item?.name} {item?.name}</Link>
                         </h4>
                         <div className="cart_item_del">
-                            <span onClick={() => removeItem(id)}>
+                            <span onClick={() => handleRemoveCartItem(item?.id)}>
                                 <TbTrash />
                             </span>
-                            <div className="tooltip">Remove Item</div>
+                            <div className="tooltip">Xóa</div>
                         </div>
                     </div>
 
@@ -48,17 +62,17 @@ const CartItem = (props) => {
                     </h2>
                     <div className="size-select">
                         <h4>Size:</h4>
-                        {['S', 'M', 'L'].map((size) => (
+                        {item?.sizeOptions.map((size) => (
                             <span
-                                key={size}
-                                className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                key={size.id}
+                                className={`size-option ${selectedSize === size.name ? 'selected' : ''}`}
                                 onClick={() => handleSizeClick(size)}
                             >
-                                {size}
+                                {size.name}
                             </span>
                         ))}
                     </div>
-                    <QuantityBox itemId={id} itemQuantity={quantity} />
+                    <QuantityBox itemId={item?.id} itemQuantity={quantity} />
 
                 </div>
             </div>

@@ -7,7 +7,7 @@ const { authReducer } = require("./Auth/auth.reducer");
 
 const rootReducers = combineReducers({
     auth: authReducer,
-    products: productReducer,
+    product: productReducer,
 })
 
 export const store = legacy_createStore(rootReducers, applyMiddleware(thunk));

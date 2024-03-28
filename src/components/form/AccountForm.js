@@ -1,11 +1,11 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import commonContext from '../../contexts/common/commonContext';
 // import useForm from '../../hooks/useForm';
 // import useOutsideClose from '../../hooks/useOutsideClose';
 // import useScrollDisable from '../../hooks/useScrollDisable';
-import { useDispatch } from 'react-redux';
-import { registerUserAction, loginUserAction } from '../../Redux/Auth/auth.action';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUserAction, loginUserAction, getUserAction } from '../../Redux/Auth/auth.action';
 import { Field, Form, Formik } from 'formik';
 
 const AccountForm = () => {
@@ -13,7 +13,9 @@ const AccountForm = () => {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isSignupVisible, setIsSignupVisible] = useState(false);
 
-    const initialValues = isSignupVisible ? { email: "", password: "", confirmpassword: "", username:""} : { email: "", password: ""}
+    const initialValues = isSignupVisible ? { email: "", password: "", confirmpassword: "", username: "" } : { email: "", password: "" }
+
+    const { auth } = useSelector(store => store);
 
     const handleController = () => {
         setIsSignupVisible(!isSignupVisible)
@@ -23,6 +25,11 @@ const AccountForm = () => {
         console.log("da bam dang nhap", values)
         dispatch(loginUserAction({ data: values }));
     }
+    useEffect(() => {
+        if (auth.user) {
+            window.location.reload();
+        }
+    }, [auth.user])
 
     const handleSubmitSignup = (values) => {
         console.log("đã bấm đăng ký", values);

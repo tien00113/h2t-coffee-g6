@@ -7,7 +7,8 @@ import commonContext from '../../contexts/common/commonContext';
 import cartContext from '../../contexts/cart/cartContext';
 import AccountForm from '../form/AccountForm';
 import SearchBar from './SearchBar';
-import { useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import { getUserAction, logoutAction } from '../../Redux/Auth/auth.action';
 
 
 
@@ -17,10 +18,24 @@ const Header = () => {
     const { cartItems } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt");
+
+    useEffect(() => {
+        if(jwt){
+            dispatch(getUserAction(jwt));
+        }
+    }, [jwt]);
     const { auth } = useSelector(store => store); //1 đối tượng được lấy từ backend
 
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
+    }
+
+    const handleLogout = ()=>{
+        dispatch(logoutAction());
+        localStorage.removeItem("jwt");
+        alert("đã đăng xuất thành công")
     }
 
     useEffect(() => {
@@ -112,15 +127,25 @@ const Header = () => {
                                     <AiOutlineUser />
                                 </span>
                                 <div className="dropdown_menu">
-                                    <h4>Hello! {formUserInfo && <Link to="*">&nbsp;{formUserInfo}</Link>}</h4>
+                                    {auth.user &&<h4>Hello! {<Link to="*">&nbsp;{auth.user.lastName}</Link>}</h4>}
                                     <p>Tài Khoản</p>
                                     {
-                                        !formUserInfo && (
+                                        !auth.user && (
                                             <button
                                                 type="button"
                                                 onClick={handleOpenLoginSignup}
                                             >
-                                                Login / Signup
+                                                Đăng nhập
+                                            </button>
+                                        )
+                                    }
+                                    {
+                                        auth.user && (
+                                            <button
+                                                type="button"
+                                                onClick={handleLogout}
+                                            >
+                                                Đăng xuất
                                             </button>
                                         )
                                     }

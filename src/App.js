@@ -6,7 +6,11 @@ import Footer from './components/common/Footer';
 import BackTop from './components/common/BackTop';
 import { FiltersProvider } from './contexts/filters/filtersContext';
 
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 const App = () => {
+  
   return (
     <>
       <CommonProvider>

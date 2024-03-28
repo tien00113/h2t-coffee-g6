@@ -11,32 +11,46 @@ import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProductsAction } from '../Redux/Product/product.action';
+import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
+
+
+// const ProductDetails = () => {
+//     const { productId } = useParams();
+
+//     const { product } = useSelector(state => state.product);
+//     const dispatch = useDispatch();
+
+//     useEffect(() => {
+//         dispatch(getProductDetail(productId));
+//     }, [dispatch, productId])
+//     /////////////////////////
+//     /////////////////////////\
+//     ////////////////////////
+// import { getAllProductsAction } from '../Redux/Product/product.action';
 
 
 const ProductDetails = () => {
+    const { productId } = useParams();
     const dispatch = useDispatch();
-    const { products } = useSelector(store => store);
+    const { product } = useSelector(store => store);
     console.log("tất cả sản phẩm", products);
 
     useEffect(() => {
-        dispatch(getAllProductsAction());
-    }, products)
+        dispatch(getAllProductAction());
+    }, product)
     useDocTitle('Product Details');
 
     const { handleActive, activeClass } = useActive(0);
 
     const { addItem } = useContext(cartContext);
 
-    const { productId } = useParams();
-
     // here the 'id' received has 'string-type', so converting it to a 'Number'
     const prodId = parseInt(productId);
 
     // showing the Product based on the received 'id'
-    const product = productsData.find(item => item.id === prodId);
+    const products = productsData.find(item => item.id === prodId);
 
-    const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = product;
+    const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = products;
 
     const [previewImg, setPreviewImg] = useState(images[0]);
 
@@ -50,10 +64,10 @@ const ProductDetails = () => {
 
     // setting the very-first image on re-render
     useEffect(() => {
-        setPreviewImg(images[0]);
+        setPreviewImg(product?.image[0].imageUrl);
         handleActive(0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [images]);
+    }, [product?.image]);
 
 
     // handling Preview image
@@ -65,10 +79,10 @@ const ProductDetails = () => {
 
     // calculating Prices
     const discountedPrice = originalPrice - finalPrice;
-    const newPrice = displayMoney(finalPrice);
-    const oldPrice = displayMoney(originalPrice);
-    const savedPrice = displayMoney(discountedPrice);
-    const savedDiscount = calculateDiscount(discountedPrice, originalPrice);
+    const newPrice = displayMoney(product?.salePrice);
+    const oldPrice = displayMoney(product?.price);
+    // const savedPrice = displayMoney(discountedPrice);
+    // const savedDiscount = calculateDiscount(discountedPrice, originalPrice);
 
 
     const [selectedSize, setSelectedSize] = useState(null);
@@ -81,6 +95,7 @@ const ProductDetails = () => {
         setSelectedTopping(topping);
     };
 
+    console.log("sản phẩm chi tiết này này: ", product);
 
     return (
         <>
@@ -91,7 +106,7 @@ const ProductDetails = () => {
                         {/*=== Product Details Left-content ===*/}
                         <div className="prod_details_left_col">
                             <div className="prod_details_tabs">
-                                {
+                                {/* {
                                     images.map((img, i) => (
                                         <div
                                             key={i}
@@ -101,7 +116,7 @@ const ProductDetails = () => {
                                             <img src={img} alt="product-img" />
                                         </div>
                                     ))
-                                }
+                                } */}
                             </div>
                             <figure className="prod_details_img">
                                 <img src={previewImg} alt="product-img" />
@@ -116,6 +131,13 @@ const ProductDetails = () => {
                                 <span className="rating_star">
                                     {
                                         [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
+                                    }
+                                    {
+                                        product?.reViewProducts && product?.reViewProducts.length >0 ?
+                                            [...Array(5)].map((_, i) => <IoMdStar key={i} />)
+                                            :
+                                            [...Array(product?.reViewProducts.rate)].map((_, i) => <IoMdStar key={i} />)
+
                                     }
                                 </span>
                                 <span>|</span>
@@ -136,13 +158,13 @@ const ProductDetails = () => {
 
                             <div className="size-select">
                                 <h4>Size:</h4>
-                                {['S', 'M', 'L'].map((size) => (
+                                {product?.sizeOptions.map((size) => (
                                     <span
-                                        key={size}
-                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => handleSizeClick(size)}
+                                        key={size.id}
+                                        className={`size-option ${selectedSize === size.name ? 'selected' : ''}`}
+                                        onClick={() => handleSizeClick(size.name)}
                                     >
-                                        {size}
+                                        {size.name}
                                     </span>
                                 ))}
                             </div>
@@ -157,14 +179,14 @@ const ProductDetails = () => {
 
                             <div class='topping'>
                                 <h4>Topping:</h4>
-                                {['Trân châu', 'Kem phủ', 'Thạch'].map((topping) => (
+                                {product?.toppingOptions.map((topping) => (
                                     <ul>
                                         <li
-                                            key={topping}
-                                            className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
-                                            onClick={() => handleToppingClick(topping)}
+                                            key={topping.id}
+                                            className={`topping-option ${selectedTopping === topping.name ? 'selected' : ''}`}
+                                            onClick={() => handleToppingClick(topping.name)}
                                         >
-                                            {topping}
+                                            {topping.name}
                                         </li>
                                     </ul>
                                 ))}
@@ -188,7 +210,7 @@ const ProductDetails = () => {
                 </div>
             </section>
 
-            <ProductSummary {...product} />
+            {/* <ProductSummary {...product} /> */}
 
             <section id="related_products" className="section">
                 <div className="container">
