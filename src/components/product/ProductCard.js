@@ -8,9 +8,9 @@ import { FaRegHeart } from "react-icons/fa";
 import { BsCart4 } from "react-icons/bs";
 
 
-const ProductCard = (props) => {
+const ProductCard = ({ item }) => {
 
-    const { id, images, title, info, finalPrice, originalPrice, rateCount, path } = props;
+    // const { id, images, title, info, finalPrice, originalPrice, rateCount, path } = item;
 
     const { addItem } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
@@ -18,33 +18,62 @@ const ProductCard = (props) => {
 
     // handling Add-to-cart
     const handleAddItem = () => {
-        const item = { ...props };
+        const item = { item };
         addItem(item);
 
-        handleActive(id);
+        handleActive(item?.id);
 
         setTimeout(() => {
             handleActive(false);
         }, 3000);
     };
 
-    const newPrice = displayMoney(finalPrice);
-    const oldPrice = displayMoney(originalPrice);
+    const newPrice = displayMoney(item?.price);
+    const oldPrice = displayMoney(item?.price);
 
+    const addToCartGuest = (productId, quantity) => {
+        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {cart:[]};
+        const existingProductIndex =cart.findIndex(item => item.id === productId);
+        if (existingProductIndex >= 0) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
+            cart[existingProductIndex].quantity = cart[existingProductIndex].quantity +1;
+            console.log("vcl",cart)
+
+        } else {
+            const product = { id: productId, quantity: quantity };
+            console.log("có phải mảng không: ", Array.isArray(cart))
+            cart.push(product);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+    };
+
+    const cartGuest = localStorage.getItem('cart');
+
+    console.log("cart đây này: ", cartGuest);
+
+
+    const handleAddToCart = () => {
+        addToCartGuest(item.id, 1);
+
+        handleActive(item?.id);
+        setTimeout(() => {
+            handleActive(false);
+        }, 3000);
+    }
 
     return (
         <>
             <div className="card products_card">
                 <figure className="products_img">
-                    <Link to={`${path}${id}`}>
-                        <img src={images[1]} alt="product-img" />
+                    <Link to="{`/product-details/${item.id}`}">
+                        <img src={item?.image[0].imageUrl} alt="image-product" />
                     </Link>
                     <div class='btn_card'>
                         <button
                             type="button"
-                            className={`btn products_btn ${activeClass(id)}`}
-                            onClick={handleAddItem}
-                            >
+                            className={`btn products_btn ${activeClass(item?.id)}`}
+                            onClick={handleAddToCart}
+                        >
                             {active ? 'Đã Thêm' : 'Giỏ Hàng'}
                         </button>
                         <button type="button" className="btn buy_btn"><Link to="/checkout">Mua Ngay</Link></button>
@@ -52,7 +81,7 @@ const ProductCard = (props) => {
                 </figure>
                 <div className="products_details">
                     <h3 className="products_title">
-                        <Link to={`${path}${id}`}>{title}</Link>
+                        <Link to={`/product-details/${item?.id}`}>{item?.name}</Link>
                     </h3>
                     {/* <h5 className="products_info">{info}</h5> */}
 
@@ -60,12 +89,16 @@ const ProductCard = (props) => {
 
                     <span className="rating_star">
                         {
-                            [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
+                            item?.reViewProducts && item?.reViewProducts.length > 0 ?
+                                [...Array(item?.reViewProducts.rate)].map((_, i) => <IoMdStar key={i} />)
+                                :
+                                [...Array(5)].map((_, i) => <IoMdStar key={i} />)
+
                         }
                     </span>
                     <div className="prod_details_price">
                         <div className="price_box">
-                            <h2 className="price">
+                            <h2 className="price" style={{ color: "white" }}>
                                 {newPrice} &nbsp;
                                 <small className="del_price"><del>{oldPrice}</del></small>
                             </h2>

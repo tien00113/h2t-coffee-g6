@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import useActive from '../../hooks/useActive';
 import productsData from '../../data/productsData';
 import ProductCard from './ProductCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductAction } from '../../Redux/Product/product.action';
 
 
 const TopProducts = () => {
 
+    const dispatch = useDispatch();
+    const {product} = useSelector(store=> store);
     const [products, setProducts] = useState(productsData);
     const { activeClass, handleActive } = useActive(0);
+
+    useEffect(() => {
+        if (product) {
+            dispatch(getAllProductAction());
+        }
+    }, []);
+
+    console.log("tất cả sản phẩm nẹ, ",product);
 
     // making a unique set of product's category
     const productsCategory = [
@@ -50,10 +62,10 @@ const TopProducts = () => {
             </div>
             <div className="wrapper products_wrapper">
                 {
-                    products.slice(0, 11).map(item => (
+                    product.products.slice(0, 14).map(item => (
                         <ProductCard
                             key={item.id}
-                            {...item}
+                            item={item}
                         />
                     ))
                 }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BsExclamationCircle } from 'react-icons/bs';
 import useDocTitle from '../hooks/useDocTitle';
 import FilterBar from '../components/filters/FilterBar';
@@ -6,13 +6,23 @@ import ProductCard from '../components/product/ProductCard';
 import Services from '../components/common/Services';
 import filtersContext from '../contexts/filters/filtersContext';
 import EmptyView from '../components/common/EmptyView';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductAction } from '../Redux/Product/product.action';
 
 
 const AllProducts = () => {
 
+    const dispatch = useDispatch();
+    const { product } = useSelector(store => store);
     useDocTitle('All Products');
 
-    const { allProducts } = useContext(filtersContext);
+    useEffect(() => {
+        if (product) {
+            dispatch(getAllProductAction());
+        }
+    }, []);
+
+    console.log("tatadad cả sản phẩm nẹ, ", product);
 
 
     return (
@@ -22,14 +32,15 @@ const AllProducts = () => {
 
                 <div className="container">
                     {
-                        allProducts.length ? (
+                        product.products && product.products.length ? (
                             <div className="wrapper products_wrapper">
                                 {
-                                    allProducts.map(item => (
+                                    product.products.map(item => (
                                         <ProductCard
                                             key={item.id}
-                                            {...item}
+                                            item={item}
                                         />
+
                                     ))
                                 }
                             </div>

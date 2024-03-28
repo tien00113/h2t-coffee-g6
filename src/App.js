@@ -5,10 +5,11 @@ import RouterRoutes from './routes/RouterRoutes';
 import Footer from './components/common/Footer';
 import BackTop from './components/common/BackTop';
 import { FiltersProvider } from './contexts/filters/filtersContext';
-
-//lấy token rra nẹ
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 const App = () => {
+  
   return (
     <>
       <CommonProvider>
