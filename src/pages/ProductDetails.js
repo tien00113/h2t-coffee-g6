@@ -10,10 +10,18 @@ import SectionsHead from '../components/common/SectionsHead';
 import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllProductsAction } from '../Redux/Product/product.action';
 
 
 const ProductDetails = () => {
+    const dispatch = useDispatch();
+    const { products } = useSelector(store => store);
+    console.log("tất cả sản phẩm", products);
 
+    useEffect(() => {
+        dispatch(getAllProductsAction());
+    }, products)
     useDocTitle('Product Details');
 
     const { handleActive, activeClass } = useActive(0);
@@ -140,7 +148,7 @@ const ProductDetails = () => {
                             </div>
 
                             <div class="counter">
-                                <button className="counter__button" onClick={() => setCount(Math.max(count-1, 1))}>-</button>
+                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
                                 <span className="counter__count">{count}</span>
                                 <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                             </div>
