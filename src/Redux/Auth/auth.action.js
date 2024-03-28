@@ -51,6 +51,12 @@ export const getUserAction = (jwt) => async (dispatch) => {
         console.log("Thông tin tài khoản-------", data)
         dispatch({ type: GET_USER_SUCCESS, payload: data })
 
+        if (data.token) {
+            localStorage.setItem("jwt", data.token)
+        }
+        console.log("hoàn tất đăng nhập-------", data)
+        dispatch({ type: GET_USER_SUCCESS, payload: data })
+
     } catch (error) {
         console.log("lỗi rồi mày--------", error)
         dispatch({ type: GET_USER_FAILURE, payload: error })

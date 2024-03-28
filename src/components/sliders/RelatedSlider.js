@@ -22,13 +22,13 @@ const RelatedSlider = (props) => {
             pagination={{ clickable: true }}
             breakpoints={{
                 480: {
-                    slidesPerView: 2,
+                    slidesPerView: 1,
                 },
-                768: {
+                568: {
                     slidesPerView: 2,
                 },
                 992: {
-                    slidesPerView: 4,
+                    slidesPerView: 3,
                 },
             }}
             className="related_swiper"

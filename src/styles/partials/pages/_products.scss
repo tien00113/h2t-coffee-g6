@@ -3,15 +3,11 @@
     margin: 0 3rem;
 
     @include devices(lg) {
-        @include grid-cols(3, 1fr, 0.7rem);
+        @include grid-cols(2, 1fr, 1rem);
     }
 
     @include devices(md) {
-        @include grid-cols(2, 1fr, 0.6rem);
-    }
-
-    @include devices(xs) {
-        grid-template-columns: 1fr;
+        @include grid-cols(1, 1fr, 2rem);
     }
 }
 
@@ -41,7 +37,7 @@
             }
         }
     }
-    
+
 }
 
 .products_img {
@@ -94,6 +90,7 @@
         margin-left: 3rem;
         span {
             font-size: 24px;
+            color: #ccc;
         }
     }
     
@@ -114,7 +111,7 @@
 
     &.active {
         background-color: green;
-    }
+    }   
 
     &[disabled] {
         cursor: not-allowed;
@@ -128,30 +125,42 @@
     display: grid;  
     grid-template-columns: 240px 1fr;
 
-    @include devices(lg) {
+    @include devices(lg) {  
         grid-template-columns: 1fr;
     }
 
     .products_wrapper {
         @include devices(xl) {
-            @include grid-cols(3, 1fr, 0.7rem);
+            @include grid-cols(2, 1fr, 0.7rem);
             .products_card{
-                width: 100%;
-                margin-bottom: 20px;
-                .prod_details_price{
-                    .icon_card{
-                        margin-left: 2rem;
-                    }
-                }
+                width: 90%;
+                height: 96%;
             }
         }
 
         @include devices(md) {
-            @include grid-cols(2, 1fr, 0.6rem);
+            @include grid-cols(1, 1fr, 0.6rem);
         }
 
-        @include devices(xs) {
-            grid-template-columns: 1fr;
-        }
     }
 }
+
+// @media (max-width: 1150px) {
+//     .products_card{
+//         padding-bottom: 10px;
+//         .price_box{
+//             .price{
+//                 font-size: 20px;
+//             }
+//             .del_price{
+//                 font-size: 18px;
+//             }
+//         }
+//         .icon_card {
+//             span {
+//                 font-size: 20px;
+//             }
+//         }
+
+//     }
+// }

@@ -11,22 +11,33 @@ import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetail } from '../Redux/Product/product.action';
+import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
+
+
+// const ProductDetails = () => {
+//     const { productId } = useParams();
+
+//     const { product } = useSelector(state => state.product);
+//     const dispatch = useDispatch();
+
+//     useEffect(() => {
+//         dispatch(getProductDetail(productId));
+//     }, [dispatch, productId])
+//     /////////////////////////
+//     /////////////////////////\
+//     ////////////////////////
+// import { getAllProductsAction } from '../Redux/Product/product.action';
 
 
 const ProductDetails = () => {
     const { productId } = useParams();
-
-    const { product } = useSelector(state => state.product);
     const dispatch = useDispatch();
+    const { product } = useSelector(store => store);
+    console.log("tất cả sản phẩm", products);
 
     useEffect(() => {
-        dispatch(getProductDetail(productId));
-    }, [dispatch, productId])
-    /////////////////////////
-    /////////////////////////\
-    ////////////////////////
-
+        dispatch(getAllProductAction());
+    }, product)
     useDocTitle('Product Details');
 
     const { handleActive, activeClass } = useActive(0);

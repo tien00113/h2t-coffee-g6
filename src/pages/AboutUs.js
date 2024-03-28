@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+
 
 const AboutUs = () => {
   return (
@@ -9,7 +10,7 @@ const AboutUs = () => {
           <div class="about_text">
             <h3>Chào mừng bạn đến với cửa hàng chúng tôi !</h3>
             <p>
-              Chào bạn, hãy cùng tôi thưởng thức một tách cà phê thơm ngon nhé! 
+              Hãy cùng tôi thưởng thức một tách cà phê thơm ngon nhé! 
               Cà phê không chỉ là một thức uống giúp chúng ta tỉnh táo, 
               mà còn là một nghệ thuật, một phần của cuộc sống. 
               Hãy cùng nhâm nhi và tận hưởng hương vị đặc biệt từ từng hạt cà phê. 
@@ -20,6 +21,7 @@ const AboutUs = () => {
               Hãy cùng chúng tôi khám phá thế giới cà phê!</p>
           </div>
       </div>
+
     </section>
   )
 }
