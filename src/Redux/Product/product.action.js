@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_BASE_URL, api } from "../../config/api";
-import { GET_ALL_PRODUCT_FAILURE, GET_ALL_PRODUCT_REQUEST, GET_ALL_PRODUCT_SUCCESS, GET_PRODUCT_CART_GUEST_FAILURE, GET_PRODUCT_CART_GUEST_REQUEST, GET_PRODUCT_CART_GUEST_SUCCESS, GET_PRODUCT_DETAIL_FAILURE, GET_PRODUCT_DETAIL_REQUEST, GET_PRODUCT_DETAIL_SUCCESS } from "./product.actionTYPE";
+import { GET_ALL_PRODUCT_FAILURE, GET_ALL_PRODUCT_REQUEST, GET_ALL_PRODUCT_SUCCESS, GET_PRODUCT_CART_GUEST_FAILURE, GET_PRODUCT_CART_GUEST_REQUEST, GET_PRODUCT_CART_GUEST_SUCCESS, GET_PRODUCT_DETAIL_FAILURE, GET_PRODUCT_DETAIL_REQUEST, GET_PRODUCT_DETAIL_SUCCESS, GET_USER_CART_FAILURE, GET_USER_CART_REQUEST, GET_USER_CART_SUCCESS } from "./product.actionTYPE";
 
 export const getAllProductAction = () => async (dispatch) => {
     dispatch({ type: GET_ALL_PRODUCT_REQUEST })
@@ -41,3 +41,15 @@ export const getProductInCartGuest = (productId) => async (dispatch) => {
     }
 }
 
+export const getUserCartAction = () => async (dispatch) => {
+    dispatch({ type: GET_USER_CART_REQUEST })
+    try {
+        const { data } = await api.get(`${API_BASE_URL}/api/cart/items`);
+        console.log("Tat ca san pham trong user cart", data);
+        dispatch({ type: GET_USER_CART_SUCCESS, payload: data })
+
+    } catch (error) {
+        console.log("lỗi get user cart--------", error)
+        dispatch({ type: GET_USER_CART_FAILURE, payload: error })
+    }
+}

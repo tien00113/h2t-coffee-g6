@@ -14,30 +14,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
 
 
-// const ProductDetails = () => {
-//     const { productId } = useParams();
-
-//     const { product } = useSelector(state => state.product);
-//     const dispatch = useDispatch();
-
-//     useEffect(() => {
-//         dispatch(getProductDetail(productId));
-//     }, [dispatch, productId])
-//     /////////////////////////
-//     /////////////////////////\
-//     ////////////////////////
-// import { getAllProductsAction } from '../Redux/Product/product.action';
-
-
 const ProductDetails = () => {
     const { productId } = useParams();
+    const prodId = parseInt(productId);
     const dispatch = useDispatch();
-    const { product } = useSelector(store => store);
-    console.log("tất cả sản phẩm", products);
+    const { product } = useSelector(state => state.product);
 
     useEffect(() => {
-        dispatch(getAllProductAction());
-    }, product)
+        dispatch(getProductDetail(prodId));
+    }, [dispatch])
     useDocTitle('Product Details');
 
     const { handleActive, activeClass } = useActive(0);
@@ -45,14 +30,13 @@ const ProductDetails = () => {
     const { addItem } = useContext(cartContext);
 
     // here the 'id' received has 'string-type', so converting it to a 'Number'
-    const prodId = parseInt(productId);
 
     // showing the Product based on the received 'id'
-    const products = productsData.find(item => item.id === prodId);
+    // const products = productsData.find(item => item.id === prodId);
 
-    const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = products;
+    // const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = products;
 
-    const [previewImg, setPreviewImg] = useState(images[0]);
+    const [previewImg, setPreviewImg] = useState(product?.image[0].imageUrl);
 
     const [count, setCount] = useState(0);
 
@@ -71,14 +55,14 @@ const ProductDetails = () => {
 
 
     // handling Preview image
-    const handlePreviewImg = (i) => {
-        setPreviewImg(images[i]);
-        handleActive(i);
-    };
+    // const handlePreviewImg = (i) => {
+    //     setPreviewImg(images[i]);
+    //     handleActive(i);
+    // };
 
 
     // calculating Prices
-    const discountedPrice = originalPrice - finalPrice;
+    // const discountedPrice = originalPrice - finalPrice;
     const newPrice = displayMoney(product?.salePrice);
     const oldPrice = displayMoney(product?.price);
     // const savedPrice = displayMoney(discountedPrice);
@@ -125,23 +109,23 @@ const ProductDetails = () => {
 
                         {/*=== Product Details Right-content ===*/}
                         <div className="prod_details_right_col">
-                            <h1 className="prod_details_title">{title}</h1>
+                            <h1 className="prod_details_title">{product?.name}</h1>
 
                             <div className="prod_details_ratings">
                                 <span className="rating_star">
-                                    {
+                                    {/* {
                                         [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
-                                    }
+                                    } */}
                                     {
                                         product?.reViewProducts && product?.reViewProducts.length >0 ?
-                                            [...Array(5)].map((_, i) => <IoMdStar key={i} />)
+                                            [...Array(product?.reViewProducts)].map((_, i) => <IoMdStar key={i} />)
                                             :
-                                            [...Array(product?.reViewProducts.rate)].map((_, i) => <IoMdStar key={i} />)
+                                            [...Array(5)].map((_, i) => <IoMdStar key={i} />)
 
                                     }
                                 </span>
                                 <span>|</span>
-                                <Link to="*">{ratings} Ratings</Link>
+                                <Link to="*"> Ratings</Link>
                             </div>
 
                             <div className="separator"></div>
@@ -201,7 +185,7 @@ const ProductDetails = () => {
                                     className="btn"
                                     onClick={handleAddItem}
                                 >
-                                    Add to cart
+                                    Thêm vào giỏ
                                 </button>
                             </div>
 
@@ -215,7 +199,7 @@ const ProductDetails = () => {
             <section id="related_products" className="section">
                 <div className="container">
                     <SectionsHead heading="Related Products" />
-                    <RelatedSlider category={category} />
+                    <RelatedSlider category={product?.category} />
                 </div>
             </section>
 

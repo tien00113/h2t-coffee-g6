@@ -5,11 +5,13 @@ import { displayMoney } from '../../helpers/utils';
 import cartContext from '../../contexts/cart/cartContext';
 import useActive from '../../hooks/useActive';
 import { FaHeart } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToUserCartAction } from '../../Redux/Cart/cart.action';
 
 const ProductCard = ({ item }) => {
 
-    // const { id, images, title, info, finalPrice, originalPrice, rateCount, path } = item;
-
+    const dispatch = useDispatch();
+    const { auth } = useSelector(store => store)
     const { addItem } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
 
@@ -30,28 +32,36 @@ const ProductCard = ({ item }) => {
     const oldPrice = displayMoney(item?.price);
 
     const addToCartGuest = (productId, quantity) => {
-        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {cart:[]};
-        const existingProductIndex =cart.findIndex(item => item.id === productId);
+        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : { cart: [] };
+        const existingProductIndex = cart.findIndex(item => item.id === productId);
         if (existingProductIndex >= 0) {
             // Sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
-            cart[existingProductIndex].quantity = cart[existingProductIndex].quantity +1;
-            console.log("vcl",cart)
+            cart[existingProductIndex].quantity = cart[existingProductIndex].quantity + 1;
 
         } else {
             const product = { id: productId, quantity: quantity };
-            console.log("có phải mảng không: ", Array.isArray(cart))
             cart.push(product);
         }
         localStorage.setItem('cart', JSON.stringify(cart));
     };
+    let obj = {
+        "productId": item.id,
+        "quantity": 1
+    };
 
-    const cartGuest = localStorage.getItem('cart');
+    let json = JSON.stringify(obj);
 
-    console.log("cart đây này: ", cartGuest);
-
+    const addToUserCart = () => {
+        dispatch(addToUserCartAction(json));
+    }
 
     const handleAddToCart = () => {
-        addToCartGuest(item.id, 1);
+        if (auth.user === null) {
+            addToCartGuest(item.id, 1);
+        }
+        else {
+            addToUserCart();
+        }
 
         handleActive(item?.id);
         setTimeout(() => {
@@ -111,7 +121,7 @@ const ProductCard = ({ item }) => {
                             </h2>
                         </div>
                         <div class='icon_card' onClick={handleClick}>
-                            <span><FaHeart  style={{color:color}} /></span>
+                            <span><FaHeart style={{ color: color }} /></span>
                         </div>
                     </div>
                 </div>

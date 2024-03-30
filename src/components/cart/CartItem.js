@@ -19,9 +19,6 @@ const CartItem = ({ item}) => {
         setSelectedSize(size);
     };
 
-    // let cartData = localStorage.getItem('cart');
-    // let cart = cartData ? JSON.parse(cartData) : [];
-
     const cartitem = cartGuest.find(cartitem => cartitem.id === item.id);
 
     const quantity = cartitem? cartitem.quantity : 1;
@@ -34,6 +31,10 @@ const CartItem = ({ item}) => {
         localStorage.setItem('cart', JSON.stringify(newcart));
         alert("đã xóa item khỏi cart");
     }
+
+    useEffect(()=>{
+        
+    },[cartGuest])
     
     return (
         <>
@@ -46,7 +47,7 @@ const CartItem = ({ item}) => {
                 <div className="cart_item_info">
                     <div className="cart_item_head">
                         <h4 className="cart_item_title">
-                            <Link to={`/product-details/${item?.id}`}>{item?.name} {item?.name}</Link>
+                            <Link to={`/product-details/${item?.id}`}>{item?.name}</Link>
                         </h4>
                         <div className="cart_item_del">
                             <span onClick={() => handleRemoveCartItem(item?.id)}>
