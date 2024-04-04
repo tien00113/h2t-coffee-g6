@@ -1,13 +1,20 @@
-import React, { useContext, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import commonContext from '../../contexts/common/commonContext';
 import productsData from '../../data/productsData';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
-// import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProductByName } from '../../Redux/Search/search.action';
 
 
 const SearchBar = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {search} = useSelector(store=> store);
+    const [query, setQuery] = useState('');
 
     const { isSearchOpen, toggleSearch, searchResults, setSearchResults } = useContext(commonContext);
 
@@ -26,13 +33,16 @@ const SearchBar = () => {
 
     // handling Search
     const handleSearching = (e) => {
-        const searchedTerm = e.target.value.toLowerCase().trim();
+        setQuery(e.target.value);
+        dispatch(getProductByName(e.target.value));
 
-        const updatedSearchResults = productsData.filter(item => item.title.toLowerCase().includes(searchedTerm));
-
-        searchedTerm === '' ? setSearchResults([]) : setSearchResults(updatedSearchResults);
     };
-
+    const handleSearchResults= () =>{
+        if (query.trim()) {
+            navigate(`/all-products`);
+            closeSearch();
+        }
+    }
 
     return (
         <>
@@ -44,31 +54,30 @@ const SearchBar = () => {
                                 <input
                                     type="search"
                                     className="input_field"
-                                    placeholder="Search for product..."
+                                    placeholder="Tìm Kiếm Sản Phẩm..."
                                     onChange={handleSearching}
                                 />
-                                {/* <button
+                                <button
                                     type="button"
                                     className="btn"
-                                    disabled={searchResults.length === 0}
+                                    onClick={handleSearchResults}
                                 >
                                     <AiOutlineSearch />
-                                </button> */}
+                                </button>
                             </div>
 
                             {
-                                searchResults.length !== 0 && (
+                                search.resultProducts.length !== 0 && (
                                     <div className="search_results">
                                         {
-                                            searchResults.map(item => {
-                                                const { id, title, path } = item;
+                                            search.resultProducts.map(item => {
                                                 return (
                                                     <Link
-                                                        to={`${path}${id}`}
+                                                        to={`/product-details/${item.id}`}
                                                         onClick={closeSearch}
-                                                        key={id}
+                                                        key={item.id}
                                                     >
-                                                        {title}
+                                                        {item.name}
                                                     </Link>
                                                 );
                                             })

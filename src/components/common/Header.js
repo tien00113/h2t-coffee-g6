@@ -14,25 +14,26 @@ import { getUserAction, logoutAction } from '../../Redux/Auth/auth.action';
 
 const Header = () => {
 
-    const { formUserInfo, toggleForm, toggleSearch } = useContext(commonContext);
-    const { cartItems } = useContext(cartContext);
+    const { toggleSearch } = useContext(commonContext);
+    const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
+    const [check, setCheck] = useState(false);
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt");
-
+    const { auth } = useSelector(store => store);
     useEffect(() => {
-        if(jwt){
+        if (jwt) {
             dispatch(getUserAction(jwt));
+            getUserCart();
+            setCheck(true);
         }
     }, [jwt]);
-    const { auth } = useSelector(store => store); //1 đối tượng được lấy từ backend
-
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
     }
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         dispatch(logoutAction());
         localStorage.removeItem("jwt");
         alert("đã đăng xuất thành công")
@@ -47,10 +48,6 @@ const Header = () => {
             window.removeEventListener('scroll', handleIsSticky);
         };
     }, [isSticky]);
-
-    const cartQuantity = cartItems.length;
-
-    console.log("user------------------------------", auth);
 
     const [isActive, setIsActive] = useState(false);
     const toggleMenu = () => {
@@ -74,7 +71,7 @@ const Header = () => {
                                 <div className='box' onClick={hideMenu}>
                                     <h4><Link to="/">Home</Link></h4>
                                 </div>
-                                <div class='box'>
+                                <div className='box'>
                                     <h4>Menu</h4>
                                     <div className="dropdown_text">
                                         <p><Link to="/all-products" onClick={hideMenu}>All Products</Link></p>
@@ -93,10 +90,10 @@ const Header = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                <div class='box' onClick={hideMenu}>
+                                <div className='box' onClick={hideMenu}>
                                     <h4><Link to="/contact">Contact Us</Link></h4>
                                 </div>
-                                <div class='box' onClick={hideMenu}>
+                                <div className='box' onClick={hideMenu}>
                                     <h4><Link to="/about">About Us</Link></h4>
                                 </div>
                             </div>
@@ -114,8 +111,10 @@ const Header = () => {
                                 <Link to="/cart">
                                     <AiOutlineShoppingCart />
                                     {
-                                        cartQuantity > 0 && (
-                                            <span className="badge">{cartQuantity}</span>
+                                        check ? (
+                                            cartUser?.cartItems.length > 0 && (<span className="badge">{cartUser?.cartItems.length}</span>)
+                                        ): (
+                                            cartGuests.length > 0 && (<span className="badge">{cartGuests.length}</span>)
                                         )
                                     }
                                 </Link>
@@ -127,7 +126,7 @@ const Header = () => {
                                     <AiOutlineUser />
                                 </span>
                                 <div className="dropdown_menu">
-                                    {auth.user &&<h4>Hello! {<Link to="*">&nbsp;{auth.user.lastName}</Link>}</h4>}
+                                    {auth.user && <h4>Hello! {<Link to="*">&nbsp;{auth.user.lastName}</Link>}</h4>}
                                     <p>Tài Khoản</p>
                                     {
                                         !auth.user && (

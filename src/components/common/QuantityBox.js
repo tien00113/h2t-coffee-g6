@@ -5,9 +5,9 @@ import cartContext from '../../contexts/cart/cartContext';
 
 const QuantityBox = (props) => {
 
-    const { itemId, itemQuantity } = props;
+    const { itemId, itemQuantity, check, cartItemId} = props;
 
-    const { incrementItem, decrementItem } = useContext(cartContext);
+    const { incrementItem, decrementItem, incrementItemCartUser, decrementItemCartUser } = useContext(cartContext);
 
 
     return (
@@ -15,7 +15,7 @@ const QuantityBox = (props) => {
             <div className="quantity_box">
                 <button
                     type="button"
-                    onClick={() => decrementItem(itemId)}
+                    onClick={() => {!check ? decrementItem(itemId) : decrementItemCartUser(cartItemId)}}
                 >
                     <FaMinus />
                 </button>
@@ -24,8 +24,7 @@ const QuantityBox = (props) => {
                 </span>
                 <button
                     type="button"
-                    onClick={() => incrementItem(itemId)}
-                    disabled={itemQuantity >= 5}
+                    onClick={() => {!check ? incrementItem(itemId) : incrementItemCartUser(cartItemId)}}
                 >
                     <FaPlus />
                 </button>

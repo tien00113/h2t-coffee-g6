@@ -6,22 +6,26 @@ import productsData from '../../data/productsData';
 import ProductCard from './ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction } from '../../Redux/Product/product.action';
+import { getAllCategoryAction } from '../../Redux/Category/category.action';
 
 
 const TopProducts = () => {
 
     const dispatch = useDispatch();
-    const {product} = useSelector(store=> store);
+    const { product } = useSelector(store=> store);
+    const { category } = useSelector(state => state.category);
     const [products, setProducts] = useState(productsData);
     const { activeClass, handleActive } = useActive(0);
 
     useEffect(() => {
         if (product) {
             dispatch(getAllProductAction());
+            dispatch(getAllCategoryAction());
         }
     }, []);
 
-    console.log("tất cả sản phẩm nẹ, ",product);
+    console.log("tất cả sản phẩm nẹ, ", product);
+    console.log("tất cả phan loai ne ", category);
 
     // making a unique set of product's category
     const productsCategory = [
@@ -47,14 +51,17 @@ const TopProducts = () => {
         <>
             <div className="products_filter_tabs">
                 <ul className="tabs">
+                    <li className='tabs_item'>
+                        Tất cả
+                    </li>
                     {
-                        productsCategory.map((item, i) => (
+                        category.map(item => (
                             <li
-                                key={i}
-                                className={`tabs_item ${activeClass(i)}`}
-                                onClick={() => handleProducts(item, i)}
+                                key={item.id}
+                                className={`tabs_item ${activeClass(item.id)}`}
+                                onClick={() => handleProducts(item, item.id)}
                             >
-                                {item}
+                                {item.name}
                             </li>
                         ))
                     }
@@ -71,7 +78,7 @@ const TopProducts = () => {
                 }
                 <div className="card products_card browse_card">
                     <Link to="/all-products">
-                        Browse All <br /> Products <BsArrowRight />
+                        Tất Cả <br /> Sản Phẩm <BsArrowRight />
                     </Link>
                 </div>
             </div>

@@ -19,6 +19,7 @@ const ProductDetails = () => {
     const prodId = parseInt(productId);
     const dispatch = useDispatch();
     const { product } = useSelector(state => state.product);
+    const {auth} = useSelector(state => state);
 
     useEffect(() => {
         dispatch(getProductDetail(prodId));
@@ -27,7 +28,7 @@ const ProductDetails = () => {
 
     const { handleActive, activeClass } = useActive(0);
 
-    const { addItem } = useContext(cartContext);
+    const { addItemCartUser, addItemCartGuest} = useContext(cartContext);
 
     // here the 'id' received has 'string-type', so converting it to a 'Number'
 
@@ -38,13 +39,32 @@ const ProductDetails = () => {
 
     const [previewImg, setPreviewImg] = useState(product?.image[0].imageUrl);
 
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(1);
 
     // handling Add-to-cart
-    const handleAddItem = () => {
-        addItem(product);
+    const handleAddItemToGuestCart = () => {
+        const newItem = { id: prodId, quantity: 1 };
+        addItemCartGuest(newItem, 1);
+    };
+    let obj = {
+        "productId": prodId,
+        "quantity": 1
     };
 
+    let json = JSON.stringify(obj);
+
+    const addToUserCart = () => {
+        addItemCartUser(json);
+    }
+
+    const handleAddToCart = () => {
+        if (auth.user === null) {
+            handleAddItemToGuestCart();
+        }
+        else {
+            addToUserCart();
+        }
+    }
 
     // setting the very-first image on re-render
     useEffect(() => {
@@ -78,8 +98,6 @@ const ProductDetails = () => {
     const handleToppingClick = (topping) => {
         setSelectedTopping(topping);
     };
-
-    console.log("sản phẩm chi tiết này này: ", product);
 
     return (
         <>
@@ -152,15 +170,7 @@ const ProductDetails = () => {
                                     </span>
                                 ))}
                             </div>
-
-                            <div class="counter">
-                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
-                                <span className="counter__count">{count}</span>
-                                <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
-                            </div>
-
                             <div className="separator"></div>
-
                             <div class='topping'>
                                 <h4>Topping:</h4>
                                 {product?.toppingOptions.map((topping) => (
@@ -176,6 +186,34 @@ const ProductDetails = () => {
                                 ))}
                             </div>
 
+                            {/* <div class="counter">
+                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
+                                <span className="counter__count">{count}</span>
+                                <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
+                            </div> */}
+
+                            <div className="separator"></div>
+
+                            <div class="counter">
+                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
+                                <span className="counter__count">{count}</span>
+                                <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
+                            </div>
+                            {/* <div class='topping'>
+                                <h4>Topping:</h4>
+                                {product?.toppingOptions.map((topping) => (
+                                    <ul>
+                                        <li
+                                            key={topping.id}
+                                            className={`topping-option ${selectedTopping === topping.name ? 'selected' : ''}`}
+                                            onClick={() => handleToppingClick(topping.name)}
+                                        >
+                                            {topping.name}
+                                        </li>
+                                    </ul>
+                                ))}
+                            </div> */}
+
                             <div className="separator"></div>
 
 
@@ -183,7 +221,7 @@ const ProductDetails = () => {
                                 <button
                                     type="button"
                                     className="btn"
-                                    onClick={handleAddItem}
+                                    onClick={handleAddToCart}
                                 >
                                     Thêm vào giỏ
                                 </button>

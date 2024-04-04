@@ -1,27 +1,26 @@
-import { ADD_TO_USER_CART_FAILURE, ADD_TO_USER_CART_REQUEST, ADD_TO_USER_CART_SUCCESS } from "./cart.actionTYPE";
+import { GET_ALL_CATEGORY_FAILURE, GET_ALL_CATEGORY_REQUEST, GET_ALL_CATEGORY_SUCCESS } from "./category.actionTYPE"
 
 const initialState = {
     error: null,
     loading: false,
-    message:null,
-    cartUser: [],
+    category: [],
 }
 
-export const cartUserReducer = (state=initialState, action) =>{
+export const categoryReducer = (state=initialState, action) =>{
     switch (action.type) {
-        case ADD_TO_USER_CART_REQUEST:
+        case GET_ALL_CATEGORY_REQUEST:
             return {
                 ...state,
                 loading: true,
                 error: null,
             }
-        case ADD_TO_USER_CART_SUCCESS:
+        case GET_ALL_CATEGORY_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                message: action.payload
+                category: action.payload
             }
-        case ADD_TO_USER_CART_FAILURE:
+        case GET_ALL_CATEGORY_FAILURE:
             return {
                 ...state,
                 loading:false,

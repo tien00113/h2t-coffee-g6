@@ -10,7 +10,6 @@ export const loginUserAction = (loginData) => async (dispatch) => {
 
         if (data.token) {
             localStorage.setItem("jwt", data.token)
-
         }
         console.log("đã đăng nhập", data)
         dispatch({ type: LOGIN_SUCCESS, payload: data.jwt })
@@ -45,7 +44,7 @@ export const getUserAction = (jwt) => async (dispatch) => {
     try {
         const { data } = await axios.get(`${API_BASE_URL}/api/users/profile`, {
             headers: {
-                "Authorization": `Bearer ${jwt}`,
+                "Authorization" : `Bearer ${jwt}`,
             },
         });
         console.log("Thông tin tài khoản-------", data)

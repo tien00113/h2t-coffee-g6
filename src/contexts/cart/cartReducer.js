@@ -1,68 +1,131 @@
+
 const cartReducer = (state, action) => {
     switch (action.type) {
-
-        case 'ADD_TO_CART':
-            const newItemId = action.payload.item.id;
-            const itemExist = state.cartItems.some(item => item.id === newItemId);
-
-            let updatedCartItems = null;
-
-            if (itemExist) {
-                updatedCartItems = state.cartItems.map(item => {
-                    if (item.id === newItemId) {
-                        return {
-                            ...item,
-                            quantity: item.quantity + 1
-                        };
-                    }
-                    return item;
-                });
+        case 'ADD_TO_CART_GUEST':
+            const existingItem = state.cartGuests.find(cartItem => cartItem.id === action.payload.item.id);
+            let newCartGuest;
+            if (existingItem) {
+                newCartGuest = state.cartGuests.map(cartItem =>
+                    cartItem.id === action.payload.item.id
+                        ? { ...cartItem, quantity: cartItem.quantity + action.payload.quantity }
+                        : cartItem
+                );
             } else {
-                updatedCartItems = [...state.cartItems, action.payload.item];
+                const newItem = { id: action.payload.item.id, quantity: action.payload.quantity };
+                newCartGuest = [...state.cartGuests, newItem];
             }
-
+            localStorage.setItem('cart', JSON.stringify(newCartGuest));
             return {
                 ...state,
-                cartItems: updatedCartItems
+                cartGuests: newCartGuest,
             };
 
 
         case 'REMOVE_FROM_CART':
             return {
                 ...state,
-                cartItems: state.cartItems.filter(item => item.id !== action.payload.itemId)
+                cartGuests: state.cartGuests.filter(item => item.id !== action.payload.itemId)
             };
-
 
         case 'INCREMENT_ITEM':
+            const incrementedCartGuests = state.cartGuests.map(item => {
+                if (item.id === action.payload.itemId) {
+                    return {
+                        ...item,
+                        quantity: item.quantity + 1
+                    };
+                }
+                return item;
+            });
+            localStorage.setItem('cart', JSON.stringify(incrementedCartGuests));
             return {
                 ...state,
-                cartItems: state.cartItems.map(item => {
-                    if (item.id === action.payload.itemId) {
-                        return {
-                            ...item,
-                            quantity: item.quantity + 1
-                        };
-                    }
-                    return item;
-                })
+                cartGuests: incrementedCartGuests,
             };
-
 
         case 'DECREMENT_ITEM':
+            const decrementedCartGuests = state.cartGuests.map(item => {
+                if (item.id === action.payload.itemId) {
+                    return {
+                        ...item,
+                        quantity: item.quantity - 1
+                    };
+                }
+                return item;
+            }).filter(item => item.quantity !== 0);
+            localStorage.setItem('cart', JSON.stringify(decrementedCartGuests));
             return {
                 ...state,
-                cartItems: state.cartItems.map(item => {
-                    if (item.id === action.payload.itemId) {
-                        return {
-                            ...item,
-                            quantity: item.quantity - 1
-                        };
-                    }
-                    return item;
-                }).filter(item => item.quantity !== 0)
+                cartGuests: decrementedCartGuests,
             };
 
+        case 'ADD_TO_CART_USER':
+            return {
+                ...state,
+                message: action.payload,
+                cartUser: {
+                    ...state.cartUser,
+                    cartItems: [...state.cartUser.cartItems, action.payload]
+                }
+            }
+
+        case 'REMOVE_ITEM_FROM_CART_USER':
+            return {
+                ...state,
+                message: action.payload,
+                cartUser: {
+                    ...state.cartUser,
+                    cartItems: state.cartUser.cartItems.filter(item => item.id !== action.itemId)
+                }
+            }
+        case 'GET_USER_CART':
+            return {
+                ...state,
+                cartUser: action.payload,
+            }
+        case 'INCREMENT_CART_ITEM':
+            return {
+                ...state,
+                cartUser: {
+                    ...state.cartUser,
+                    cartItems: state.cartUser.cartItems.map(item =>
+                        item.id === action.itemId
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    ),
+                    totalPrice: state.cartUser.cartItems.reduce((total, item) =>
+                        total + (item.id === action.itemId ? item.product.price * (item.quantity + 1) : item.product.price * item.quantity), 0),
+                    totalSalePrice: state.cartUser.cartItems.reduce((total, item) =>
+                        total + (item.id === action.itemId ? item.product.salePrice * (item.quantity + 1) : item.product.salePrice * item.quantity), 0),
+                }
+            };
+
+        case 'DECREMENT_CART_ITEM':
+            let downPrice;
+            let downSalePrice;
+            let newCartItems = state.cartUser.cartItems.map(item => {
+                if (item.id === action.itemId) {
+                    downPrice = item.product.price;
+                    downSalePrice = item.product.salePrice;
+                    return {
+                        ...item, quantity: item.quantity - 1
+                    };
+                }
+                return item;
+            }).filter(item => item.quantity > 0);
+
+            let newTotalPrice = state.cartUser.totalPrice - downPrice;
+            let newTotalSalePrice = state.cartUser.totalSalePrice - downSalePrice;
+
+            return {
+                ...state,
+                cartUser: {
+                    ...state.cartUser,
+                    cartItems: newCartItems,
+                    totalPrice: newTotalPrice,
+                    totalSalePrice: newTotalSalePrice
+                }
+            };
 
         default:
             return state;

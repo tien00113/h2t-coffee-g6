@@ -1,79 +1,58 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { BsCartX } from 'react-icons/bs';
-import { calculateTotal, displayMoney } from '../helpers/utils';
+import { displayMoney } from '../helpers/utils';
 import useDocTitle from '../hooks/useDocTitle';
 import cartContext from '../contexts/cart/cartContext';
 import CartItem from '../components/cart/CartItem';
 import EmptyView from '../components/common/EmptyView';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductInCartGuest, getUserCartAction } from '../Redux/Product/product.action';
-
+import { getProductInCartGuest } from '../Redux/Product/product.action';
 
 
 const Cart = () => {
+    const [price, setPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
     const dispatch = useDispatch();
 
     const { product, auth } = useSelector(store => store);
 
-    console.log("user hieen tai la : ", auth)
-    console.log("product store hien tai : ", product)
-
     useDocTitle('Cart');
 
-    const { cartItems } = useContext(cartContext);
-
-    const cartQuantity = cartItems.length;
-
-    // total original price
-    const cartTotal = cartItems.map(item => {
-        return item.originalPrice * item.quantity;
-    });
-
-    const calculateCartTotal = calculateTotal(cartTotal);
-    const displayCartTotal = displayMoney(calculateCartTotal);
-
-
-    // total discount
-    const cartDiscount = cartItems.map(item => {
-        return (item.originalPrice - item.finalPrice) * item.quantity;
-    });
-
-    const calculateCartDiscount = calculateTotal(cartDiscount);
-    const displayCartDiscount = displayMoney(calculateCartDiscount);
-
-
-    // final total amount
-    const totalAmount = calculateCartTotal - calculateCartDiscount;
-    const displayTotalAmount = displayMoney(totalAmount);
-
-    const [cartGuest, setCartGuest] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+    const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
 
     useEffect(() => {
         if (auth.user === null) {
-            const productIds = cartGuest.map(item => item.id);
+            const productIds = cartGuests.map(item => item.id);
             dispatch(getProductInCartGuest(productIds));
-            console.log("alo auth daaty")
         }
         else {
-            dispatch(getUserCartAction());
-            console.log("alo auth day day day day nay", product)
+            getUserCart();
+            localStorage.removeItem('cart');
         }
+    }, [cartGuests, auth.user]);
 
-    }, [cartGuest])
-    
-    useEffect(()=>{
-        dispatch(getUserCartAction());
-    },[dispatch])
+    useEffect(() => {
+        let p = 0;
+        let ps = 0;
+        product.cartGuest.map(item => {
+            let cartItem = cartGuests.find(cartItem => cartItem.id === item.id)
+            p += item.price * cartItem?.quantity;
+            ps += item.salePrice * cartItem?.quantity;
+        });
+        setPrice(p);
+        setDiscount(p - ps);
+    }, [cartGuests, product.cartGuest]);
+
     return (
         <>
             <section id="cart" className="section">
                 {auth.user === null ? (<div className="container">
                     {
-                        cartGuest.length === 0 ? (
+                        cartGuests.length === 0 ? (
                             <EmptyView
                                 icon={<BsCartX />}
-                                msg="Gior Hàng Rỗng"
+                                msg="Giỏ Hàng Rỗng"
                                 link="/all-products"
                                 btnText="Mua Ngay"
                             />
@@ -93,17 +72,17 @@ const Cart = () => {
                                 <div className="cart_right_col">
                                     <div className="order_summary">
                                         <h3>
-                                            Mat hang thanh toan &nbsp;
-                                            ( {cartQuantity} {cartQuantity > 1 ? 'items' : 'item'} )
+                                            Tổng Sản Phẩm: &nbsp;
+                                            {cartGuests.length}
                                         </h3>
                                         <div className="order_summary_details">
                                             <div className="price">
                                                 <span>Giá niêm yết</span>
-                                                <b>{displayCartTotal}</b>
+                                                <b>{displayMoney(price)}</b>
                                             </div>
                                             <div className="discount">
                                                 <span>Khuyến mãi</span>
-                                                <b>- {displayCartDiscount}</b>
+                                                <b>- {displayMoney(discount)}</b>
                                             </div>
                                             <div className="delivery">
                                                 <span>Vận chuyển</span>
@@ -112,7 +91,7 @@ const Cart = () => {
                                             <div className="separator"></div>
                                             <div className="total_price">
                                                 <b><small>Tổng tiền</small></b>
-                                                <b>{displayTotalAmount}</b>
+                                                <b>{displayMoney(price - discount)}</b>
                                             </div>
                                         </div>
                                         <button type="button" className="btn checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
@@ -123,7 +102,7 @@ const Cart = () => {
                     }
                 </div>) : (<div className="container">
                     {
-                        product.cart.length === 0 ? (
+                        cartUser?.cartItems && cartUser?.cartItems.length === 0 ? (
                             <EmptyView
                                 icon={<BsCartX />}
                                 msg="Giỏ Hàng Rỗng"
@@ -134,10 +113,12 @@ const Cart = () => {
                             <div className="wrapper cart_wrapper">
                                 <div className="cart_left_col">
                                     {
-                                        product.cart.map(item => (
+                                        cartUser?.cartItems.map(item => (
                                             <CartItem
-                                                key={item.product.id}
-                                                item={item.product}
+                                                key={item.id}
+                                                item={item?.product}
+                                                quantityItem={item?.quantity}
+                                                cartId={item?.id}
                                             />
                                         ))
                                     }
@@ -146,17 +127,17 @@ const Cart = () => {
                                 <div className="cart_right_col">
                                     <div className="order_summary">
                                         <h3>
-                                            tong thanh taon item &nbsp;
-                                            ( {cartQuantity} {cartQuantity > 1 ? 'items' : 'item'} )
+                                            Tổng sản phẩm &nbsp;
+                                            {cartUser?.totalItem}
                                         </h3>
                                         <div className="order_summary_details">
                                             <div className="price">
                                                 <span>Giá niêm yết</span>
-                                                <b>{displayCartTotal}</b>
+                                                <b>{displayMoney(cartUser?.totalPrice)}</b>
                                             </div>
                                             <div className="discount">
                                                 <span>Khuyến mãi</span>
-                                                <b>- {displayCartDiscount}</b>
+                                                <b>- {displayMoney(cartUser?.totalPrice - cartUser?.totalSalePrice)}</b>
                                             </div>
                                             <div className="delivery">
                                                 <span>Vận chuyển</span>
@@ -165,7 +146,7 @@ const Cart = () => {
                                             <div className="separator"></div>
                                             <div className="total_price">
                                                 <b><small>Tổng tiền</small></b>
-                                                <b>{displayTotalAmount}</b>
+                                                <b>{displayMoney(cartUser?.totalSalePrice)}</b>
                                             </div>
                                         </div>
                                         <button type="button" className="btn checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>

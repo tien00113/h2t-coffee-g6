@@ -7,8 +7,6 @@ import Services from '../components/common/Services';
 import QuiltedImageList from '../components/common/QuiltedImageList';
 
 
-
-
 const Home = () => {
 
     return (
@@ -19,20 +17,20 @@ const Home = () => {
 
             <section id="featured" className="section">
                 <div className="container">
-                    <SectionsHead heading="Featured Products" />
+                    <SectionsHead heading="Sản Phẩm Bán Chạy" />
                     <FeaturedSlider />
                 </div>
             </section>
 
             <section id="products" className="section">
                 <div className="container">
-                    <SectionsHead heading="Top Products" />
+                    <SectionsHead heading="Sản Phẩm Nổi Bật" />
                     <TopProducts />
                 </div>
             </section>
 
             <section className="section">
-                <SectionsHead heading="Top Products" />
+                <SectionsHead heading="Coffee Chill" />
                 <QuiltedImageList />
             </section>
 

@@ -1,11 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import filtersContext from '../../contexts/filters/filtersContext';
 import { sortMenu } from '../../data/filterBarData';
 import { displayMoney } from '../../helpers/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCategoryAction } from '../../Redux/Category/category.action';
 
 
 const FilterBarOptions = () => {
 
+    const dispatch = useDispatch()
+    const {category} = useSelector(store=> store.category);
+    useEffect(()=>{
+        dispatch(getAllCategoryAction());
+    }, [dispatch])
+    console.log("phan loai:", category)
     const {
         sortedValue,
         setSortedValue,
@@ -90,7 +98,7 @@ const FilterBarOptions = () => {
                 <div className="separator"></div>
 
                 {/* Filter by Brands */}
-                <div className="filter_block">
+                {/* <div className="filter_block">
                     <h4>Brands</h4>
                     <ul className="filter_menu">
                         {
@@ -111,14 +119,14 @@ const FilterBarOptions = () => {
                             })
                         }
                     </ul>
-                </div>
+                </div> */}
 
                 {/* Filter by Category */}
                 <div className="filter_block">
                     <h4>Category</h4>
                     <ul className="filter_menu">
                         {
-                            updatedCategoryMenu.map(item => {
+                            category.map(item => {
                                 const { id, checked, label } = item;
                                 return (
                                     <li key={id} className="filter_btn">
@@ -129,7 +137,7 @@ const FilterBarOptions = () => {
                                             checked={checked}
                                             onChange={() => handleCategoryMenu(id)}
                                         />
-                                        <label htmlFor={label}>{label}</label>
+                                        <label htmlFor={label}>{item.name}</label>
                                     </li>
                                 );
                             })
@@ -139,7 +147,7 @@ const FilterBarOptions = () => {
 
                 {/* Filter by Price */}
                 <div className="filter_block">
-                    <h4>Price</h4>
+                    <h4>Giá</h4>
                     <div className="price_filter">
                         <p>{displayPrice}</p>
                         <input

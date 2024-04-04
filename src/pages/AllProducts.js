@@ -4,7 +4,6 @@ import useDocTitle from '../hooks/useDocTitle';
 import FilterBar from '../components/filters/FilterBar';
 import ProductCard from '../components/product/ProductCard';
 import Services from '../components/common/Services';
-import filtersContext from '../contexts/filters/filtersContext';
 import EmptyView from '../components/common/EmptyView';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction } from '../Redux/Product/product.action';
@@ -14,16 +13,14 @@ const AllProducts = () => {
 
     const dispatch = useDispatch();
     const { product } = useSelector(store => store);
+    const { search } = useSelector(store => store);
     useDocTitle('All Products');
 
     useEffect(() => {
         if (product) {
             dispatch(getAllProductAction());
         }
-    }, []);
-
-    console.log("tatadad cả sản phẩm nẹ, ", product);
-
+    }, [dispatch]);
 
     return (
         <>
@@ -31,8 +28,21 @@ const AllProducts = () => {
                 <FilterBar />
 
                 <div className="container">
-                    {
-                        product.products && product.products.length ? (
+                    {search.resultProducts.length > 0 ? (<div>
+                        {search.queryValue !== "" && <div>Tìm kiếm với từ khóa: "{search.queryValue}" thấy {search.resultProducts.length} kết quả.</div>}
+                        <div className='wrapper products_wrapper'>
+                            {
+                                search.resultProducts.map(item => (
+                                    <ProductCard
+                                        key={item.id}
+                                        item={item}
+                                    />
+
+                                ))
+                            }
+                        </div>
+                    </div>) : (
+                        search.queryValue === null && product.products && product.products.length > 0 ? (
                             <div className="wrapper products_wrapper">
                                 {
                                     product.products.map(item => (
@@ -47,10 +57,11 @@ const AllProducts = () => {
                         ) : (
                             <EmptyView
                                 icon={<BsExclamationCircle />}
-                                msg="No Results Found"
+                                msg="Không tìm thấy sản phẩm"
                             />
                         )
-                    }
+                    )}
+
                 </div>
             </section>
 

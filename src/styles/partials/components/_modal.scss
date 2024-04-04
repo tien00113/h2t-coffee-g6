@@ -1,0 +1,127 @@
+.modal-box {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.6);
+    @include transition(all, 0.2s, ease-in-out);
+    top: 0;
+    left: 0;
+    z-index: 3;
+    color: #000000;
+  }
+  
+  .modal-content{
+    width: 60%;
+    height: 66%;
+    background-color: #ffffff;
+  }
+  
+  .modal-first{
+    display: flex;
+    margin: 10px 0 0 10px;
+    position: relative;
+    .first-left{
+      display: flex;
+      img {
+        width: 18%;
+        background-size: cover;
+        border-radius: 6px;
+      }
+      h4{
+        font-weight: 500;
+        color:var(--main-color);
+        margin-left: 5px;
+      }
+    }
+    button{
+      margin-right: 10px;
+      position: absolute;
+      font-size: 20px;
+      right: 0;
+      cursor: pointer;
+      @include transition(all, 0.2s, ease-in-out);
+  
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+  } 
+  
+  .modal-details{
+    .size{
+      margin-left: 10px;
+      h4{
+        margin-bottom: 8px;
+      }
+      .size-options{
+        label{
+          display: inline-block;
+          width: 33.333%;
+        }
+      }
+    }
+  
+    .topping{
+      margin-left: 10px;
+      h4{
+        margin-bottom: 8px;
+      }
+      .topping-options{
+        label{
+          display: inline-block;
+          width: 50%;
+        }
+      }
+    }
+  
+    .note{
+      text-align: center;
+      textarea{
+        color: #333;
+        border: 1px solid #7f7f7f;
+        box-shadow: none;
+        padding: 10px 10px 10px 40px;
+        height: 40px;
+        width: 96%;
+      }
+    }
+  
+    .quantity-add_cart{
+      display: flex;
+      justify-content: space-between;
+      margin: 0 10px;
+      .counter {
+        & {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 3px;
+            user-select: none;
+            overflow: hidden;
+  
+            &__button {
+                @include dimension(1.6rem, 1.6rem);
+                background-color: var(--main-color);
+                @include transition(color, 0.2s);
+                border-radius: 50%;
+  
+                &[disabled] {
+                    cursor: not-allowed;
+                    color: var(--text-muted);
+                }
+            }
+        }
+  
+        &__count {
+            @include dimension(2rem, 2rem);
+            color: var(--main-color);
+            font-size: 1.2rem;
+            line-height: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+        }
+      }
+    }
+  }

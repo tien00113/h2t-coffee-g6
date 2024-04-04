@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TbTrash } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { displayMoney } from '../../helpers/utils';
 import QuantityBox from '../common/QuantityBox';
+import cartContext from '../../contexts/cart/cartContext';
 
-
-const CartItem = ({ item}) => {
-    const [cartGuest, setCartGuest] = useState(() => {
-        const cartData = localStorage.getItem('cart');
-        return cartData ? JSON.parse(cartData) : [];
-    });
+const CartItem = ({ item, quantityItem, cartId }) => {
+    const { removeItem, cartGuests, removeItemCartUser } = useContext(cartContext);
     const newPrice = displayMoney(item?.salePrice);
     const oldPrice = displayMoney(item?.price);
 
@@ -19,28 +16,14 @@ const CartItem = ({ item}) => {
         setSelectedSize(size);
     };
 
-    const cartitem = cartGuest.find(cartitem => cartitem.id === item.id);
+    const cartItem = cartGuests.find(cartItem => cartItem.id === item.id);
+    const quantity = cartItem ? cartItem.quantity : 1;
 
-    const quantity = cartitem? cartitem.quantity : 1;
-
-    const handleRemoveCartItem = (itemId) => {
-        const newcart = cartGuest.filter(it => it.id !== itemId);
-
-        setCartGuest(newcart);
-
-        localStorage.setItem('cart', JSON.stringify(newcart));
-        alert("đã xóa item khỏi cart");
-    }
-
-    useEffect(()=>{
-        
-    },[cartGuest])
-    
     return (
         <>
             <div className="cart_item">
                 <figure className="cart_item_img">
-                    <Link to="{`${path}${id}`}">
+                    <Link to={`/product-details/${item?.id}`}>
                         <img src={item?.image[0].imageUrl} alt="product-img" />
                     </Link>
                 </figure>
@@ -50,7 +33,7 @@ const CartItem = ({ item}) => {
                             <Link to={`/product-details/${item?.id}`}>{item?.name}</Link>
                         </h4>
                         <div className="cart_item_del">
-                            <span onClick={() => handleRemoveCartItem(item?.id)}>
+                            <span onClick={() => { cartGuests ? removeItemCartUser(cartId) : removeItem(item?.id) }}>
                                 <TbTrash />
                             </span>
                             <div className="tooltip">Xóa</div>
@@ -73,8 +56,7 @@ const CartItem = ({ item}) => {
                             </span>
                         ))}
                     </div>
-                    <QuantityBox itemId={item?.id} itemQuantity={quantity} />
-
+                    <QuantityBox itemId={item?.id} itemQuantity={cartGuests ? quantityItem : quantity} check={cartGuests ? true : false} cartItemId={cartId} />
                 </div>
             </div>
         </>

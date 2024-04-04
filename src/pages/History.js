@@ -1,4 +1,6 @@
 import React from 'react'
+import ProductModal from '../components/cart/ProductModal';
+
 
 
 const History = () => {
