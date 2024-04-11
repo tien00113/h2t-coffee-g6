@@ -1,10 +1,10 @@
 import axios from "axios"
-import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE"
+import { CLEAR_ERROR, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE"
 import { API_BASE_URL, api } from "../../config/api"
 
-
 export const loginUserAction = (loginData) => async (dispatch) => {
-    dispatch({ type: LOGIN_REQUEST })
+    dispatch({ type: LOGIN_REQUEST });
+    localStorage.removeItem("jwt");
     try {
         const { data } = await axios.post(`${API_BASE_URL}/auth/signin`, loginData.data)
 
@@ -47,13 +47,11 @@ export const getUserAction = (jwt) => async (dispatch) => {
                 "Authorization" : `Bearer ${jwt}`,
             },
         });
-        console.log("Thông tin tài khoản-------", data)
         dispatch({ type: GET_USER_SUCCESS, payload: data })
 
         if (data.token) {
             localStorage.setItem("jwt", data.token)
         }
-        console.log("hoàn tất đăng nhập-------", data)
         dispatch({ type: GET_USER_SUCCESS, payload: data })
 
     } catch (error) {
@@ -72,5 +70,11 @@ export const logoutAction = () => async (dispatch) => {
     } catch (error) {
         console.log("lỗi rồi mày--------", error)
         dispatch({ type: LOGOUT_FAILURE, payload: error })
+    }
+}
+
+export const clearErrorAction = () => {
+    return {
+        type:CLEAR_ERROR
     }
 }

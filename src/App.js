@@ -8,18 +8,21 @@ import { FiltersProvider } from './contexts/filters/filtersContext';
 
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { OrderProvider } from './contexts/order/orderContext';
 
 const App = () => {
-  
+
   return (
     <>
       <CommonProvider>
         <FiltersProvider>
           <CartProvider>
-            <Header />
-            <RouteRouters/>
-            <Footer />
-            <BackTop />
+            <OrderProvider>
+              <Header />
+              <RouteRouters />
+              <Footer />
+              <BackTop />
+            </OrderProvider>
           </CartProvider>
         </FiltersProvider>
       </CommonProvider>

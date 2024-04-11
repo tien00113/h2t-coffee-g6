@@ -2,16 +2,16 @@
 const cartReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_TO_CART_GUEST':
-            const existingItem = state.cartGuests.find(cartItem => cartItem.id === action.payload.item.id);
+            const existingItem = state.cartGuests.find(cartItem => ((cartItem.product.id === action.payload.item.product.id) && cartItem.sizeOption.id === action.payload.item.sizeOption.id && ((cartItem.toppingOption === null && action.payload.item.toppingOption === null) || cartItem.toppingOption.id === action.payload.item.toppingOption.id)));
             let newCartGuest;
             if (existingItem) {
                 newCartGuest = state.cartGuests.map(cartItem =>
-                    cartItem.id === action.payload.item.id
+                    cartItem.product.id === action.payload.item.product.id
                         ? { ...cartItem, quantity: cartItem.quantity + action.payload.quantity }
                         : cartItem
                 );
             } else {
-                const newItem = { id: action.payload.item.id, quantity: action.payload.quantity };
+                const newItem = { id: action.payload.item.id, product: action.payload.item.product, quantity: action.payload.quantity, sizeOption: action.payload.item.sizeOption, toppingOption: action.payload.item.toppingOption };
                 newCartGuest = [...state.cartGuests, newItem];
             }
             localStorage.setItem('cart', JSON.stringify(newCartGuest));
@@ -60,6 +60,17 @@ const cartReducer = (state, action) => {
             };
 
         case 'ADD_TO_CART_USER':
+            // const cartIt = state.cartUser.cartItems.find(i => i.product.id === action.payload.request.productId && i.sizeOption.id === action.payload.request.sizeOption.id && ((i.toppingOption === null && action.payload.request.toppingOption === null) || i.toppingOption.id === action.payload.request.toppingOption.id));
+            // if (cartIt) {
+            //     cartIt.quantity += 1;
+            //     return {
+            //         ...state,
+            //         cartUser: {
+            //             ...state.cartUser,
+            //             cartItems: [...state.cartUser.cartItems]
+            //         }
+            //     }
+            // } else {
             return {
                 ...state,
                 message: action.payload,
@@ -68,6 +79,7 @@ const cartReducer = (state, action) => {
                     cartItems: [...state.cartUser.cartItems, action.payload]
                 }
             }
+        // }
 
         case 'REMOVE_ITEM_FROM_CART_USER':
             return {
@@ -94,9 +106,9 @@ const cartReducer = (state, action) => {
                             : item
                     ),
                     totalPrice: state.cartUser.cartItems.reduce((total, item) =>
-                        total + (item.id === action.itemId ? item.product.price * (item.quantity + 1) : item.product.price * item.quantity), 0),
+                        total + (item?.id === action.itemId ? (item?.product?.price + item?.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0)) * (item?.quantity + 1) : (item?.product?.price + item?.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0)) * item?.quantity), 0),
                     totalSalePrice: state.cartUser.cartItems.reduce((total, item) =>
-                        total + (item.id === action.itemId ? item.product.salePrice * (item.quantity + 1) : item.product.salePrice * item.quantity), 0),
+                        total + (item?.id === action.itemId ? (item?.product?.salePrice + item?.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0)) * (item?.quantity + 1) : (item?.product?.salePrice + item?.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0)) * item?.quantity), 0),
                 }
             };
 
@@ -105,8 +117,8 @@ const cartReducer = (state, action) => {
             let downSalePrice;
             let newCartItems = state.cartUser.cartItems.map(item => {
                 if (item.id === action.itemId) {
-                    downPrice = item.product.price;
-                    downSalePrice = item.product.salePrice;
+                    downPrice = (item.product?.price + item.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0));
+                    downSalePrice = (item.product?.salePrice + item.sizeOption?.price + ((item?.toppingOption !== null) ? item?.toppingOption?.price : 0));
                     return {
                         ...item, quantity: item.quantity - 1
                     };

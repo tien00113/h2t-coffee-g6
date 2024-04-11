@@ -2,9 +2,7 @@ const filtersReducer = (state, action) => {
     switch (action.type) {
 
         case 'LOAD_ALL_PRODUCTS':
-
             const { products, minPrice, maxPrice } = action.payload;
-
             return {
                 ...state,
                 allProducts: products,
@@ -16,13 +14,11 @@ const filtersReducer = (state, action) => {
                 }
             };
 
-
         case 'SET_SORTED_VALUE':
             return {
                 ...state,
                 sortedValue: action.payload.sortValue
             };
-
 
         case 'CHECK_BRANDS_MENU':
             return {
@@ -39,22 +35,24 @@ const filtersReducer = (state, action) => {
                 })
             };
 
-
         case 'CHECK_CATEGORY_MENU':
-            return {
-                ...state,
-                updatedCategoryMenu: state.updatedCategoryMenu.map(item => {
-                    if (item.id === action.payload.id) {
-                        return {
-                            ...item,
-                            checked: !item.checked
-                        };
-                    } else {
-                        return item;
+            if (state.selectedCategory.id === action.payload) {
+                return {
+                    ...state,
+                    selectedCategory: {
+                        id: null,
+                        checked: false
                     }
-                })
-            };
-
+                };
+            } else {
+                return {
+                    ...state,
+                    selectedCategory: {
+                        id: action.payload,
+                        checked: true
+                    }
+                };
+            }
 
         case 'HANDLE_PRICE':
             return {
@@ -72,7 +70,6 @@ const filtersReducer = (state, action) => {
                 allProducts: action.payload.updatedProducts,
             };
 
-
         case 'MOB_SORT_VISIBILITY':
             return {
                 ...state,
@@ -81,7 +78,6 @@ const filtersReducer = (state, action) => {
                     isMobSortVisible: action.payload.toggle
                 }
             };
-
 
         case 'MOB_FILTER_VISIBILITY':
             return {
@@ -92,13 +88,11 @@ const filtersReducer = (state, action) => {
                 }
             };
 
-
         case 'CLEAR_FILTERS':
             return {
                 ...state,
                 sortedValue: null,
             };
-
 
         default:
             return state;

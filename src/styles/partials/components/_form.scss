@@ -77,6 +77,10 @@
         @include margin-y(0.8rem, 0.4rem);
     }
 
+    .error_message {
+        color: red;
+    }
+
 }
 
 .form_foot {

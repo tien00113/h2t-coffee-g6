@@ -7,14 +7,10 @@ import cartContext from '../../contexts/cart/cartContext';
 
 const CartItem = ({ item, quantityItem, cartId }) => {
     const { removeItem, cartGuests, removeItemCartUser } = useContext(cartContext);
-    const newPrice = displayMoney(item?.salePrice);
-    const oldPrice = displayMoney(item?.price);
+    const newPrice = displayMoney(item?.product?.salePrice + item?.sizeOption?.price + ((item?.toppingOption !== null)? item?.toppingOption?.price : 0));
+    const oldPrice = displayMoney(item?.product?.price + item?.sizeOption?.price + ((item?.toppingOption !== null)? item?.toppingOption?.price : 0));
 
     const [selectedSize, setSelectedSize] = useState(null);
-
-    const handleSizeClick = (size) => {
-        setSelectedSize(size);
-    };
 
     const cartItem = cartGuests.find(cartItem => cartItem.id === item.id);
     const quantity = cartItem ? cartItem.quantity : 1;
@@ -23,17 +19,17 @@ const CartItem = ({ item, quantityItem, cartId }) => {
         <>
             <div className="cart_item">
                 <figure className="cart_item_img">
-                    <Link to={`/product-details/${item?.id}`}>
-                        <img src={item?.image[0].imageUrl} alt="product-img" />
+                    <Link to={`/product-details/${item?.product?.id}`}>
+                        <img src={item?.product?.image[0].imageUrl} alt="product-img" />
                     </Link>
                 </figure>
                 <div className="cart_item_info">
                     <div className="cart_item_head">
                         <h4 className="cart_item_title">
-                            <Link to={`/product-details/${item?.id}`}>{item?.name}</Link>
+                            <Link to={`/product-details/${item?.product?.id}`}>{item?.product?.name}</Link>
                         </h4>
                         <div className="cart_item_del">
-                            <span onClick={() => { cartGuests ? removeItemCartUser(cartId) : removeItem(item?.id) }}>
+                            <span onClick={() => { cartGuests.length === 0 ? removeItemCartUser(cartId) : removeItem(item?.id) }}>
                                 <TbTrash />
                             </span>
                             <div className="tooltip">Xóa</div>
@@ -46,17 +42,21 @@ const CartItem = ({ item, quantityItem, cartId }) => {
                     </h2>
                     <div className="size-select">
                         <h4>Size:</h4>
-                        {item?.sizeOptions.map((size) => (
-                            <span
-                                key={size.id}
-                                className={`size-option ${selectedSize === size.name ? 'selected' : ''}`}
-                                onClick={() => handleSizeClick(size)}
-                            >
-                                {size.name}
-                            </span>
-                        ))}
+                        <span
+                            className='size-option'
+                        >
+                            {item?.sizeOption?.name}
+                        </span>
                     </div>
-                    <QuantityBox itemId={item?.id} itemQuantity={cartGuests ? quantityItem : quantity} check={cartGuests ? true : false} cartItemId={cartId} />
+                    {item?.toppingOption && <div className="size-select">
+                        <h4>Topping:</h4>
+                        <span
+                            className='size-option'
+                        >
+                            {item?.toppingOption?.name}
+                        </span>
+                    </div>}
+                    <QuantityBox itemId={item?.id} itemQuantity={cartGuests.length === 0 ? quantityItem : quantity} check={cartGuests.length === 0 ? true : false} cartItemId={cartId} />
                 </div>
             </div>
         </>

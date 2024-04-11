@@ -13,6 +13,7 @@ const initialState = {
     sortedValue: null,
     updatedBrandsMenu: brandsMenu,
     updatedCategoryMenu: categoryMenu,
+    selectedCategory: {id: null, checked: false},
     selectedPrice: {
         price: 0,
         minPrice: 0,
@@ -29,8 +30,6 @@ const initialState = {
 const FiltersProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(filtersReducer, initialState);
-
-
     /* Loading All Products on the initial render */
     useEffect(() => {
 
@@ -141,7 +140,7 @@ const FiltersProvider = ({ children }) => {
     const handleCategoryMenu = (id) => {
         return dispatch({
             type: 'CHECK_CATEGORY_MENU',
-            payload: { id }
+            payload: id ,
         });
     };
 

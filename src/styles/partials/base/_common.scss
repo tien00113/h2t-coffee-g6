@@ -76,6 +76,22 @@
         color:#30271C; 
     }
 }
+.btn-2 {
+    display: inline-block;
+    background-color:  transparent;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--main-color);
+    border-radius: 3px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    @include transition(background-color, 0.3s, ease-out);
+
+    &:hover {
+        background-color: #c7a17a;
+        color:#fff; 
+    }
+}
 
 .input_box {
     position: relative;

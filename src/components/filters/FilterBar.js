@@ -4,17 +4,16 @@ import filtersContext from '../../contexts/filters/filtersContext';
 import FilterBarOptions from './FilterBarOptions';
 
 
-const FilterBar = () => {
+const FilterBar = ({products}) => {
 
     const { handleMobSortVisibility, handleMobFilterVisibility } = useContext(filtersContext);
-
 
     return (
         <>
             {/*===== Filterbar-default =====*/}
             <aside id="filterbar">
                 <div className="filterbar_wrapper">
-                    <FilterBarOptions />
+                    <FilterBarOptions/>
                 </div>
             </aside>
 

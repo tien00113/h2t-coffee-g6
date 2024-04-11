@@ -22,7 +22,8 @@
     "redux-thunk": "^3.1.0",
     "sass": "^1.53.0",
     "swiper": "^8.3.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

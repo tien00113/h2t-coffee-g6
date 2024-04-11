@@ -1,127 +1,338 @@
 .modal-box {
-    position: fixed;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.6);
+  @include transition(all, 0.2s, ease-in-out);
+  top: 0;
+  left: 0;
+  z-index: 3;
+  color: #000000;
+}
+
+.modal-content {
+  width: 60%;
+  height: auto;
+  background-color: #ffffff;
+}
+
+.modal-first {
+  display: flex;
+  margin: 10px 0 0 10px;
+  position: relative;
+
+  .first-left {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    background: rgba($color: #000000, $alpha: 0.6);
+
+    img {
+      width: 18%;
+      background-size: cover;
+      border-radius: 6px;
+    }
+
+    h4 {
+      font-weight: 500;
+      color: var(--main-color);
+      margin-left: 5px;
+    }
+  }
+
+  button {
+    margin-right: 10px;
+    position: absolute;
+    font-size: 20px;
+    right: 0;
+    cursor: pointer;
     @include transition(all, 0.2s, ease-in-out);
-    top: 0;
-    left: 0;
-    z-index: 3;
-    color: #000000;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
-  
-  .modal-content{
-    width: 60%;
-    height: 66%;
-    background-color: #ffffff;
+}
+
+.modal-details {
+  .size {
+    margin-left: 10px;
+
+    h4 {
+      margin-bottom: 8px;
+    }
+
+    .size-options {
+      label {
+        display: inline-block;
+        width: 33.333%;
+      }
+    }
   }
-  
-  .modal-first{
+
+  .topping {
+    margin-left: 10px;
+
+    h4 {
+      margin-bottom: 8px;
+    }
+
+    .topping-options {
+      label {
+        display: inline-block;
+        width: 50%;
+      }
+    }
+  }
+
+  .note {
+    text-align: center;
+
+    textarea {
+      color: #333;
+      border: 1px solid #7f7f7f;
+      box-shadow: none;
+      padding: 10px 10px 10px 40px;
+      height: 40px;
+      width: 96%;
+    }
+  }
+
+  .quantity-add_cart {
     display: flex;
-    margin: 10px 0 0 10px;
-    position: relative;
-    .first-left{
-      display: flex;
-      img {
-        width: 18%;
-        background-size: cover;
-        border-radius: 6px;
+    justify-content: space-between;
+    margin: 0 10px;
+
+    .counter {
+      & {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 3px;
+        user-select: none;
+        overflow: hidden;
+
+        &__button {
+          @include dimension(1.6rem, 1.6rem);
+          background-color: var(--main-color);
+          @include transition(color, 0.2s);
+          border-radius: 50%;
+
+          &[disabled] {
+            cursor: not-allowed;
+            color: var(--text-muted);
+          }
+        }
       }
-      h4{
-        font-weight: 500;
-        color:var(--main-color);
-        margin-left: 5px;
+
+      &__count {
+        @include dimension(2rem, 2rem);
+        color: var(--main-color);
+        font-size: 1.2rem;
+        line-height: 2.25rem;
+        font-weight: bold;
+        text-align: center;
       }
     }
-    button{
-      margin-right: 10px;
-      position: absolute;
-      font-size: 20px;
-      right: 0;
+  }
+}
+
+// CheckoutModal
+
+.modal-checkout {
+  width: 40%;
+  height: auto;
+  color: #ffffff;
+  background: rgba($color: #000000, $alpha: 0.8);
+  box-shadow: 0 0 5px 5px #171717;
+
+  .modal-checkout-head {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+
+    h3 {
+      color: var(--main-color);
+      text-transform: uppercase;
+    }
+
+    button {
+      font-size: 24px;
+    }
+  }
+
+  .modal-checkout-mid {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      color: #ffffff;
+    }
+  }
+
+  .form-select {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+
+    select {
+      font-size: 1rem;
+      padding: 0.3rem;
+      outline: none;
+      background: #000;
+      color: #ccc;
+      border-radius: 0.2rem;
       cursor: pointer;
-      @include transition(all, 0.2s, ease-in-out);
-  
-      &:hover{
-        opacity: 0.8;
-      }
     }
-  } 
-  
-  .modal-details{
-    .size{
-      margin-left: 10px;
-      h4{
-        margin-bottom: 8px;
-      }
-      .size-options{
-        label{
-          display: inline-block;
-          width: 33.333%;
-        }
-      }
+
+    select:disabled {
+      cursor: not-allowed;
     }
-  
-    .topping{
-      margin-left: 10px;
-      h4{
-        margin-bottom: 8px;
-      }
-      .topping-options{
-        label{
-          display: inline-block;
-          width: 50%;
-        }
-      }
+  }
+
+  .form-group {
+    margin: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
     }
-  
-    .note{
-      text-align: center;
-      textarea{
-        color: #333;
-        border: 1px solid #7f7f7f;
-        box-shadow: none;
-        padding: 10px 10px 10px 40px;
-        height: 40px;
-        width: 96%;
-      }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      color: #ffffff;
     }
-  
-    .quantity-add_cart{
+
+    .container {
       display: flex;
       justify-content: space-between;
-      margin: 0 10px;
-      .counter {
-        & {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 3px;
-            user-select: none;
-            overflow: hidden;
-  
-            &__button {
-                @include dimension(1.6rem, 1.6rem);
-                background-color: var(--main-color);
-                @include transition(color, 0.2s);
-                border-radius: 50%;
-  
-                &[disabled] {
-                    cursor: not-allowed;
-                    color: var(--text-muted);
-                }
-            }
+      margin-bottom: 20px;
+
+      // .left, .middle, .right {
+      //   width: 33%;
+      // }
+
+      .left {
+        .input_checkbox {
+          display: flex;
+          margin-top: 0.3rem;
+
+          input {
+            cursor: pointer;
+          }
         }
-  
-        &__count {
-            @include dimension(2rem, 2rem);
+
+        input[type="checkbox"] {
+          display: flex;
+        }
+      }
+
+      .middle {
+        width: 80%;
+
+        .info {
+          display: flex;
+
+          .fullname {
             color: var(--main-color);
-            font-size: 1.2rem;
-            line-height: 2.25rem;
-            font-weight: bold;
-            text-align: center;
+            font-size: 16px;
+            padding: 0 0.2rem 0.5rem 0.5rem;
+          }
+
+          .telephone {
+            font-size: 14px;
+            padding: 0.2rem 0 0.4rem 0rem;
+          }
+        }
+
+        .address_detail {
+          padding-left: 0.5rem;
+          opacity: 0.6;
+          font-size: 10px;
+        }
+      }
+
+      .right {
+        .button_update {
+          button {
+          display: inline-flex;
+
+            color: rgb(82, 158, 239);
+            font-size: 14px;
+          }
+
+          button:hover {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+
+    .add_address {
+      border: 1px solid black;
+      width: 100%;
+      padding-left: 0.8rem;
+
+      .btn_add {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--main-color);
+        border-radius: 0.2rem;
+        padding: 0.3rem 0.4rem 0.3rem 0;
+
+        .text {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+          color: var(--main-color);
         }
       }
     }
   }
+
+
+  .map {
+    padding: 1rem;
+  }
+
+  .form-address {
+    display: flex;
+    margin-left: 1rem;
+    margin-bottom: 1.5rem;
+
+    p {
+      margin-left: 0.4rem;
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0.4rem 0.5rem;
+
+    .btn_cancel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--main-color);
+      border-radius: 0.2rem;
+      width: 20%;
+      margin-right: 0.4rem;
+    }
+  }
+}

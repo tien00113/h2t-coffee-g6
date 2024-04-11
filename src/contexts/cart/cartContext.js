@@ -23,7 +23,7 @@ const CartProvider = ({ children }) => {
 
     // Dispatched Actions
     const addItemCartGuest = (item, quantity) => {
-        dispatch({
+        return dispatch({
             type: 'ADD_TO_CART_GUEST',
             payload: { item, quantity }
         });
@@ -58,7 +58,7 @@ const CartProvider = ({ children }) => {
             console.log("Đã thêm sản phẩm vào giỏ hàng", data);
             dispatch({
                 type: 'ADD_TO_CART_USER',
-                payload: data, request
+                payload: {data, request}
             });
         } catch (error) {
             console.log("lỗi add to user cart--------", error);

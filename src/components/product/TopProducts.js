@@ -14,9 +14,14 @@ const TopProducts = () => {
     const dispatch = useDispatch();
     const { product } = useSelector(store=> store);
     const { category } = useSelector(state => state.category);
-    const [products, setProducts] = useState(productsData);
     const { activeClass, handleActive } = useActive(0);
+    const [products, setProducts] = useState([]);
 
+    useEffect(() => {
+        if (product.products) {
+            setProducts(product.products);
+        }
+    }, [product.products]);
     useEffect(() => {
         if (product) {
             dispatch(getAllProductAction());
@@ -24,44 +29,37 @@ const TopProducts = () => {
         }
     }, []);
 
-    console.log("tất cả sản phẩm nẹ, ", product);
-    console.log("tất cả phan loai ne ", category);
-
     // making a unique set of product's category
     const productsCategory = [
-        'All',
-        ...new Set(productsData.map(item => item.category))
+        'Tất Cả',
+        ...new Set(category.map(item => item.name))
     ];
 
     // handling product's filtering
     const handleProducts = (category, i) => {
-        if (category === 'All') {
-            setProducts(productsData);
+        if (category === 'Tất Cả') {
+            setProducts(product.products);
             handleActive(i);
             return;
         }
 
-        const filteredProducts = productsData.filter(item => item.category === category);
+        const filteredProducts = product.products.filter(item => item.category.name === category);
         setProducts(filteredProducts);
         handleActive(i);
     };
-
 
     return (
         <>
             <div className="products_filter_tabs">
                 <ul className="tabs">
-                    <li className='tabs_item'>
-                        Tất cả
-                    </li>
                     {
-                        category.map(item => (
+                        productsCategory.map((item, i) => (
                             <li
-                                key={item.id}
-                                className={`tabs_item ${activeClass(item.id)}`}
-                                onClick={() => handleProducts(item, item.id)}
+                                key={i}
+                                className={`tabs_item ${activeClass(i)}`}
+                                onClick={() => handleProducts(item, i)}
                             >
-                                {item.name}
+                                {item}
                             </li>
                         ))
                     }
@@ -69,7 +67,7 @@ const TopProducts = () => {
             </div>
             <div className="wrapper products_wrapper">
                 {
-                    product.products.slice(0, 14).map(item => (
+                    products.slice(0, 14).map(item => (
                         <ProductCard
                             key={item.id}
                             item={item}

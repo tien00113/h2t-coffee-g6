@@ -1,12 +1,72 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdClose } from 'react-icons/md';
 import { displayMoney } from '../../helpers/utils';
+import orderContext from '../../contexts/order/orderContext';
+import cartContext from '../../contexts/cart/cartContext';
 
+const ProductModal = ({ onClose, item, auth, status }) => {
 
-const ProductModal = ({ onClose, item }) => {
-
+    const { createOrderItem, changeSize, changeTopping, changeQuantity } = useContext(orderContext);
+    const navigate = useNavigate();
     const [count, setCount] = useState(1);
+    const [selectedSize, setSelectedSize] = useState(null);
+
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+    };
+    const [selectedTopping, setSelectedTopping] = useState(null);
+    const handleToppingClick = (topping) => {
+        if (selectedTopping === topping) {
+            setSelectedTopping(null);
+        } else {
+            setSelectedTopping(topping);
+        }
+    };
+
+    const handleChangeOrderItem = () => {
+        createOrderItem(item, selectedSize, selectedTopping, count, auth.user?.id);
+        changeSize(selectedSize);
+        changeTopping(selectedTopping);
+        changeQuantity(count);
+        navigate("/checkout");
+    }
+
+    const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
+
+    let currentId = localStorage.getItem('currentId');
+    currentId = currentId ? Number(currentId) : 1;
+    console.log("currentId modal: ", currentId)
+    const handleAddItemToGuestCart = () => {
+        const newItem = { id: currentId,product: item, sizeOption: selectedSize, toppingOption: selectedTopping, quantity:count };
+        addItemCartGuest(newItem,count);
+        currentId++;
+        localStorage.setItem("currentId",currentId);
+    };
+
+    let obj = {
+        "productId": item.id,
+        "quantity": count,
+        "sizeOption": selectedSize,
+        "toppingOption": selectedTopping,
+    };
+
+    let json = JSON.stringify(obj);
+
+    const addToUserCart = () => {
+        addItemCartUser(json);
+    }
+
+    const handleAddToCart = () => {
+        if (auth.user === null) {
+            handleAddItemToGuestCart();
+            onClose();
+        }
+        else {
+            addToUserCart();
+            onClose();
+        }
+    }
 
     return (
         <div className="modal-box">
@@ -14,7 +74,13 @@ const ProductModal = ({ onClose, item }) => {
                 <div class="modal-first">
                     <div className="first-left">
                         <img src={item.image[0].imageUrl} alt="Bac Xiu" />
-                        <h4>{item?.name}</h4>
+                        <div>
+                            <h4>{item?.name}</h4>
+                            <h4 className="cart_item_price">
+                                {displayMoney(item.salePrice)} &nbsp;
+                                <small><del>{displayMoney(item.price)}</del></small>
+                            </h4>
+                        </div>
                     </div>
                     <button className="close-button" onClick={onClose}><MdClose /></button>
                 </div>
@@ -22,41 +88,56 @@ const ProductModal = ({ onClose, item }) => {
                 <div className="separator"></div>
 
                 <div className="modal-details">
+                    <h4>Size:</h4>
+                    {/* <div className="separator"></div> */}
                     <div className="size">
-                        <h4>Size:</h4>
-                        <div className="size-options">
-                            {item?.sizeOptions.map((size) => (
-                                <label><input type="radio" name="size" value="small" checked />{size.name}</label>
-                            ))}
-                        </div>
+                        {item?.sizeOptions.map((size) => (
+                            <>
+                                <span
+                                    key={size.id}
+                                    className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                    onClick={() => handleSizeClick(size)}
+                                >
+                                    {size.name}
+                                </span>
+                            </>
+
+                        ))}
                     </div>
 
-                    <div className="separator"></div>
+                    {item?.toppingOptions.length !== 0 && (<div><div className="separator"></div>
 
-                    <div className="topping">
                         <h4>Topping:</h4>
-                        <div className="topping-options">
+                        {/* <div className="separator"></div> */}
+                        <div className="size">
                             {item?.toppingOptions.map((topping) => (
-                                <label><input type="checkbox" name="topping" value="white-pearls" />{topping.name} (+{displayMoney(topping.price)})</label>
+                                <ul>
+                                    <li
+                                        key={topping.id}
+                                        className={`size-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                        onClick={() => handleToppingClick(topping)}
+                                    >
+                                        {topping.name}
+                                    </li>
+                                </ul>
                             ))}
-                        </div>
-                    </div>
+                        </div> </div>)}
 
-                    <div className="separator"></div>
+                    {/* <div className="separator"></div> */}
 
-                    <div className="note">
+                    {/* <div className="note">
                         <textarea placeholder="Thêm ghi chú"></textarea>
-                    </div>
+                    </div> */}
 
                     <div className="separator"></div>
 
                     <div className="quantity-add_cart">
-                        <div class="counter">
+                        <div className="counter">
                             <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
                             <span className="counter__count">{count}</span>
                             <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                         </div>
-                        <button className="btn-1 add-to-cart"><Link to="/checkout">Mua Ngay</Link></button>
+                        {status ? (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleChangeOrderItem}>Mua Ngay</button>) : (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleAddToCart}>Thêm Vào Giỏ</button>)}
                     </div>
                 </div>
 

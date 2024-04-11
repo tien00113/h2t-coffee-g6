@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductInCartGuest } from '../Redux/Product/product.action';
 
 
-const Cart = () => {
+const Cart = ({ auth }) => {
     const [price, setPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
     const dispatch = useDispatch();
 
-    const { product, auth } = useSelector(store => store);
+    const { product } = useSelector(store => store);
 
     useDocTitle('Cart');
 
@@ -23,8 +23,8 @@ const Cart = () => {
 
     useEffect(() => {
         if (auth.user === null) {
-            const productIds = cartGuests.map(item => item.id);
-            dispatch(getProductInCartGuest(productIds));
+            const productIds = cartGuests.map(item => item.productId);
+            // dispatch(getProductInCartGuest(productIds));
         }
         else {
             getUserCart();
@@ -35,15 +35,15 @@ const Cart = () => {
     useEffect(() => {
         let p = 0;
         let ps = 0;
-        product.cartGuest.map(item => {
-            let cartItem = cartGuests.find(cartItem => cartItem.id === item.id)
-            p += item.price * cartItem?.quantity;
-            ps += item.salePrice * cartItem?.quantity;
+        cartGuests.map(item => {
+            p += (item.product.price + item.sizeOption.price + ((item.toppingOption) ? item.toppingOption.price : 0)) * item?.quantity;
+            ps += (item.product.salePrice + item.sizeOption.price + ((item.toppingOption) ? item.toppingOption.price : 0)) * item?.quantity;
         });
         setPrice(p);
         setDiscount(p - ps);
-    }, [cartGuests, product.cartGuest]);
-
+    }, [cartGuests]);
+    console.log("cart guest: ", cartGuests);
+    console.log("cart currentId: ", localStorage.getItem("currentId"));
     return (
         <>
             <section id="cart" className="section">
@@ -60,10 +60,11 @@ const Cart = () => {
                             <div className="wrapper cart_wrapper">
                                 <div className="cart_left_col">
                                     {
-                                        product.cartGuest.map(item => (
+                                        cartGuests.map(item => (
                                             <CartItem
                                                 key={item.id}
                                                 item={item}
+                                                quantityItem={item.quantity}
                                             />
                                         ))
                                     }
@@ -94,7 +95,7 @@ const Cart = () => {
                                                 <b>{displayMoney(price - discount)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
+                                        <button type="button" className="btn-2 checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +117,7 @@ const Cart = () => {
                                         cartUser?.cartItems.map(item => (
                                             <CartItem
                                                 key={item.id}
-                                                item={item?.product}
+                                                item={item}
                                                 quantityItem={item?.quantity}
                                                 cartId={item?.id}
                                             />
@@ -149,7 +150,7 @@ const Cart = () => {
                                                 <b>{displayMoney(cartUser?.totalSalePrice)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
+                                        <button type="button" className="btn-2 checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
                                     </div>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ const initialState = {
     error: null,
     loading: false,
     resultProducts: [],
-    queryValue:null,
+    queryValue:"",
 }
 
 export const searchReducer = (state=initialState, action) =>{

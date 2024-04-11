@@ -10,6 +10,7 @@ const QuantityBox = (props) => {
     const { incrementItem, decrementItem, incrementItemCartUser, decrementItemCartUser } = useContext(cartContext);
 
 
+    console.log("check uanbtity guset cartItem: ", itemQuantity)
     return (
         <>
             <div className="quantity_box">

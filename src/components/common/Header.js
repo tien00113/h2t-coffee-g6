@@ -28,7 +28,7 @@ const Header = () => {
             getUserCart();
             setCheck(true);
         }
-    }, [jwt]);
+    }, [jwt, auth?.user?.address]);
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
     }
@@ -126,7 +126,7 @@ const Header = () => {
                                     <AiOutlineUser />
                                 </span>
                                 <div className="dropdown_menu">
-                                    {auth.user && <h4>Hello! {<Link to="*">&nbsp;{auth.user.lastName}</Link>}</h4>}
+                                    {auth.user && <h4>Xin chào! {<Link to="*">&nbsp;{auth.user.username}</Link>}</h4>}
                                     <p>Tài Khoản</p>
                                     {
                                         !auth.user && (

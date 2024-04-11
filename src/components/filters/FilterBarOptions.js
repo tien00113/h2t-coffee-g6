@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import filtersContext from '../../contexts/filters/filtersContext';
 import { sortMenu } from '../../data/filterBarData';
 import { displayMoney } from '../../helpers/utils';
@@ -8,18 +8,15 @@ import { getAllCategoryAction } from '../../Redux/Category/category.action';
 
 const FilterBarOptions = () => {
 
-    const dispatch = useDispatch()
-    const {category} = useSelector(store=> store.category);
-    useEffect(()=>{
+    const dispatch = useDispatch();
+    const { category } = useSelector(store => store.category);
+    useEffect(() => {
         dispatch(getAllCategoryAction());
-    }, [dispatch])
-    console.log("phan loai:", category)
+    }, [dispatch]);
+    const { selectedCategory } = useContext(filtersContext);
     const {
         sortedValue,
         setSortedValue,
-        updatedBrandsMenu,
-        updatedCategoryMenu,
-        handleBrandsMenu,
         handleCategoryMenu,
         handlePrice,
         selectedPrice: { price, minPrice, maxPrice },
@@ -97,47 +94,21 @@ const FilterBarOptions = () => {
 
                 <div className="separator"></div>
 
-                {/* Filter by Brands */}
-                {/* <div className="filter_block">
-                    <h4>Brands</h4>
-                    <ul className="filter_menu">
-                        {
-                            updatedBrandsMenu.map(item => {
-                                const { id, checked, label } = item;
-                                return (
-                                    <li key={id} className="filter_btn">
-                                        <input
-                                            type="checkbox"
-                                            id={label}
-                                            value={label}
-                                            checked={checked}
-                                            onChange={() => handleBrandsMenu(id)}
-                                        />
-                                        <label htmlFor={label}>{label}</label>
-                                    </li>
-                                );
-                            })
-                        }
-                    </ul>
-                </div> */}
-
                 {/* Filter by Category */}
                 <div className="filter_block">
                     <h4>Category</h4>
                     <ul className="filter_menu">
                         {
                             category.map(item => {
-                                const { id, checked, label } = item;
                                 return (
-                                    <li key={id} className="filter_btn">
+                                    <li key={item?.id} className="filter_btn">
                                         <input
                                             type="checkbox"
-                                            id={label}
-                                            value={label}
-                                            checked={checked}
-                                            onChange={() => handleCategoryMenu(id)}
+                                            id={item?.name}
+                                            onChange={() => handleCategoryMenu(item?.id)}
+                                            checked={selectedCategory.id === item?.id && selectedCategory.checked}
                                         />
-                                        <label htmlFor={label}>{item.name}</label>
+                                        <label htmlFor={item?.name}>{item?.name}</label>
                                     </li>
                                 );
                             })

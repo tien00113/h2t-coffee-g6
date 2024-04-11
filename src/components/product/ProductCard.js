@@ -5,13 +5,14 @@ import { displayMoney } from '../../helpers/utils';
 import cartContext from '../../contexts/cart/cartContext';
 import useActive from '../../hooks/useActive';
 import { FaHeart } from "react-icons/fa";
-import { useSelector } from 'react-redux';
 import ProductModal from '../cart/ProductModal';
+import { useSelector } from 'react-redux';
 
 const ProductCard = ({ item }) => {
-    const { auth } = useSelector(state => state)
+    const {auth} = useSelector(store=> store);
     const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
     const { active, handleActive, activeClass } = useActive(false);
+    const [status, setStatus] = useState(false);
 
     const handleAddItemToGuestCart = () => {
         const newItem = { id: item.id, quantity: 1 };
@@ -23,9 +24,8 @@ const ProductCard = ({ item }) => {
             handleActive(false);
         }, 3000);
     };
-    
 
-    const newPrice = displayMoney(item?.price);
+    const newPrice = displayMoney(item?.salePrice);
     const oldPrice = displayMoney(item?.price);
 
     let obj = {
@@ -46,6 +46,7 @@ const ProductCard = ({ item }) => {
         else {
             addToUserCart();
         }
+        setStatus(false);
 
         handleActive(item?.id);
         setTimeout(() => {
@@ -65,6 +66,11 @@ const ProductCard = ({ item }) => {
      const [modalVisible, setModalVisible] = useState(false);
      const handleBuyNowClick = () => {
          setModalVisible(true);
+         setStatus(true)
+     };
+     const handleAddToCartClick = () => {
+         setModalVisible(true);
+         setStatus(false)
      };
      const handleCloseModal = () => {
          setModalVisible(false);
@@ -81,7 +87,8 @@ const ProductCard = ({ item }) => {
                         <button
                             type="button"
                             className={`btn products_btn ${activeClass(item?.id)}`}
-                            onClick={handleAddToCart}
+                            // onClick={handleAddToCart}
+                            onClick={handleAddToCartClick}
                         >
                             {active ? 'Đã Thêm' : 'Giỏ Hàng'}
                         </button>
@@ -120,7 +127,7 @@ const ProductCard = ({ item }) => {
                     </div>
                 </div>
             </div>
-            {modalVisible && <ProductModal item={item} onClose={handleCloseModal} />}
+            {modalVisible && <ProductModal key={item.id} item={item} auth={auth} status={status} onClose={handleCloseModal} />}
         </>
     );
 };

@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import commonContext from '../../contexts/common/commonContext';
 // import useForm from '../../hooks/useForm';
 // import useOutsideClose from '../../hooks/useOutsideClose';
 // import useScrollDisable from '../../hooks/useScrollDisable';
+import { object, string, ref } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUserAction, loginUserAction, getUserAction } from '../../Redux/Auth/auth.action';
+import { registerUserAction, loginUserAction, clearErrorAction } from '../../Redux/Auth/auth.action';
 import { Field, Form, Formik } from 'formik';
 
 const AccountForm = () => {
@@ -15,24 +16,30 @@ const AccountForm = () => {
 
     const initialValues = isSignupVisible ? { email: "", password: "", confirmpassword: "", username: "" } : { email: "", password: "" }
 
+    const SignupSchema = object().shape({
+        confirmpassword: string()
+            .oneOf([ref('password'), null], 'Mật khẩu không khớp'),
+    });
+
     const { auth } = useSelector(store => store);
 
     const handleController = () => {
-        setIsSignupVisible(!isSignupVisible)
+        setIsSignupVisible(!isSignupVisible);
+        dispatch(clearErrorAction());
     }
 
     const handleSubmitSignin = (values) => {
-        console.log("da bam dang nhap", values)
         dispatch(loginUserAction({ data: values }));
     }
     useEffect(() => {
         if (auth.user) {
             window.location.reload();
+        } else {
+            localStorage.removeItem("jwt")
         }
     }, [auth.user])
 
     const handleSubmitSignup = (values) => {
-        console.log("đã bấm đăng ký", values);
         dispatch(registerUserAction({ data: values }));
     }
 
@@ -46,8 +53,8 @@ const AccountForm = () => {
                 !isFormOpen && (
                     <div className="backdrop">
                         <div className="modal_centered">
-                            <Formik onSubmit={isSignupVisible ? handleSubmitSignup : handleSubmitSignin} initialValues={initialValues}>
-                                <Form id="account_form">
+                            <Formik onSubmit={isSignupVisible ? handleSubmitSignup : handleSubmitSignin} initialValues={initialValues} validationSchema={SignupSchema} >
+                                {({ errors, touched }) => (<Form id="account_form">
                                     {/*===== Form-Header =====*/}
                                     <div className="form_head">
                                         <h2>{isSignupVisible ? 'Đăng ký' : 'Đăng nhập'}</h2>
@@ -62,6 +69,13 @@ const AccountForm = () => {
 
                                     {/*===== Form-Body =====*/}
                                     <div className="form_body">
+                                        {
+                                            auth.error && (
+                                                <div className="error_message">
+                                                    {isSignupVisible ? 'Username hoặc Email đã tồn tại!' : 'Tài khoản hoặc mật khẩu không chính xác!'}
+                                                </div>
+                                            )
+                                        }
                                         {
                                             isSignupVisible && (
                                                 <div className="input_box">
@@ -78,12 +92,12 @@ const AccountForm = () => {
 
                                         <div className="input_box">
                                             <Field
-                                                type="email"
+                                                type="text"
                                                 name="email"
                                                 className="input_field"
                                                 required
                                             />
-                                            <label className="input_label">Email</label>
+                                            <label className="input_label">Email hoặc Username</label>
                                         </div>
 
                                         <div className="input_box">
@@ -101,16 +115,19 @@ const AccountForm = () => {
                                                 <div className="input_box">
                                                     <Field
                                                         type="password"
-                                                        name="conf_password"
+                                                        name="confirmpassword"
                                                         className="input_field"
                                                         required
                                                     />
-                                                    <label className="input_label">Confirm Password</label>
+                                                    {errors.confirmpassword && touched.confirmpassword ? (
+                                                        <p>{errors.confirmpassword}</p>
+                                                    ) : null}
+                                                    <label className="input_label">Xác Nhận Password</label>
                                                 </div>
                                             )
                                         }
 
-                                        <button className="btn login_btn">
+                                        <button type='submit' className="btn login_btn">
                                             {isSignupVisible ? 'Đăng Ký' : 'Đăng Nhập'}
                                         </button>
                                     </div>
@@ -134,7 +151,7 @@ const AccountForm = () => {
                                         &times;
                                     </div>
 
-                                </Form>
+                                </Form>)}
                             </Formik>
                         </div>
                     </div>

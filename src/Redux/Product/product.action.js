@@ -28,16 +28,17 @@ export const getProductDetail = (productId) => async (dispatch) => {
     }
 }
 
-export const getProductInCartGuest = (productId) => async (dispatch) => {
-    dispatch({ type: GET_PRODUCT_CART_GUEST_REQUEST })
-    try {
-        const { data } = await axios.post(`${API_BASE_URL}/allproduct/cart`, productId);
-        console.log("tất cả sản phẩm trong cartguest", data);
-        dispatch({ type: GET_PRODUCT_CART_GUEST_SUCCESS, payload: data })
+// export const getProductInCartGuest = (productId) => async (dispatch) => {
+//     dispatch({ type: GET_PRODUCT_CART_GUEST_REQUEST })
+//     try {
+//         const { data } = await axios.post(`${API_BASE_URL}/allproduct/cart`, productId);
+//         console.log("tất cả sản phẩm trong cartguest", data);
+//         dispatch({ type: GET_PRODUCT_CART_GUEST_SUCCESS, payload: data })
 
-    } catch (error) {
-        console.log("lỗi get product cart guest--------", error)
-        dispatch({ type: GET_PRODUCT_CART_GUEST_FAILURE, payload: error })
-    }
-}
+//     } catch (error) {
+//         console.log("lỗi get product cart guest--------", error);
+//         dispatch({ type: GET_PRODUCT_CART_GUEST_FAILURE, payload: error });
+//         localStorage.removeItem("cart");
+//     }
+// }
 

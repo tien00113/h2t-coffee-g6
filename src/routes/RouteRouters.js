@@ -10,10 +10,13 @@ import AboutUs from '../pages/AboutUs';
 import ContactUs from '../pages/ContactUs';
 import CheckOut from '../pages/CheckOut';
 import History from '../pages/History';
+import { useSelector } from 'react-redux';
 
 const RouterRoutes = () => {
 
     useScrollRestore();
+
+    const {auth} = useSelector(store=> store);
 
     return (
         <>
@@ -21,10 +24,10 @@ const RouterRoutes = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/contact" element={<ContactUs />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<Cart auth={auth}/>} />
                 <Route path="/all-products" element={<AllProducts />} />
-                <Route path="/product-details/:productId" element={<ProductDetails />} />
-                <Route path="/checkout" element={<CheckOut/>}/>
+                <Route path="/product-details/:productId" element={<ProductDetails auth={auth}/>} />
+                <Route path="/checkout" element={<CheckOut auth={auth}/>}/>
                 <Route path="*" element={<ErrorPage />} />
                 <Route path="/history" element={<History />} />
             </Routes>

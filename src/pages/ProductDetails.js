@@ -14,12 +14,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
 
 
-const ProductDetails = () => {
+const ProductDetails = ({ auth }) => {
     const { productId } = useParams();
     const prodId = parseInt(productId);
     const dispatch = useDispatch();
     const { product } = useSelector(state => state.product);
-    const {auth} = useSelector(state => state);
 
     useEffect(() => {
         dispatch(getProductDetail(prodId));
@@ -28,7 +27,7 @@ const ProductDetails = () => {
 
     const { handleActive, activeClass } = useActive(0);
 
-    const { addItemCartUser, addItemCartGuest} = useContext(cartContext);
+    const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
 
     // here the 'id' received has 'string-type', so converting it to a 'Number'
 
@@ -38,17 +37,39 @@ const ProductDetails = () => {
     // const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = products;
 
     const [previewImg, setPreviewImg] = useState(product?.image[0].imageUrl);
+    const [showError, setShowError] = useState(false);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedTopping, setSelectedTopping] = useState(null);
+
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+    };
+    const handleToppingClick = (topping) => {
+        if (selectedTopping === topping) {
+            setSelectedTopping(null);
+        } else {
+            setSelectedTopping(topping);
+        }
+    };
 
     const [count, setCount] = useState(1);
 
     // handling Add-to-cart
+    let currentId = localStorage.getItem('currentId');
+    currentId = currentId ? Number(currentId) : 1;
+    console.log("currentId modal: ", currentId)
     const handleAddItemToGuestCart = () => {
-        const newItem = { id: prodId, quantity: 1 };
-        addItemCartGuest(newItem, 1);
+        const newItem = { id: currentId, product: product, sizeOption: selectedSize, toppingOption: selectedTopping, quantity: count };
+        addItemCartGuest(newItem, count);
+        currentId++;
+        localStorage.setItem("currentId", currentId);
     };
+
     let obj = {
-        "productId": prodId,
-        "quantity": 1
+        "productId": product?.id,
+        "quantity": count,
+        "sizeOption": selectedSize,
+        "toppingOption": selectedTopping,
     };
 
     let json = JSON.stringify(obj);
@@ -58,11 +79,16 @@ const ProductDetails = () => {
     }
 
     const handleAddToCart = () => {
-        if (auth.user === null) {
-            handleAddItemToGuestCart();
-        }
-        else {
-            addToUserCart();
+        if (!selectedSize) {
+            setShowError(true);
+        } else {
+            setShowError(false);
+            if (auth.user === null) {
+                handleAddItemToGuestCart();
+            }
+            else {
+                addToUserCart();
+            }
         }
     }
 
@@ -86,18 +112,7 @@ const ProductDetails = () => {
     const newPrice = displayMoney(product?.salePrice);
     const oldPrice = displayMoney(product?.price);
     // const savedPrice = displayMoney(discountedPrice);
-    // const savedDiscount = calculateDiscount(discountedPrice, originalPrice);
-
-
-    const [selectedSize, setSelectedSize] = useState(null);
-    const [selectedTopping, setSelectedTopping] = useState(null);
-
-    const handleSizeClick = (size) => {
-        setSelectedSize(size);
-    };
-    const handleToppingClick = (topping) => {
-        setSelectedTopping(topping);
-    };
+    // const savedDiscount = calculateDiscount(discountedPrice, originalPrice)
 
     return (
         <>
@@ -135,7 +150,7 @@ const ProductDetails = () => {
                                         [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
                                     } */}
                                     {
-                                        product?.reViewProducts && product?.reViewProducts.length >0 ?
+                                        product?.reViewProducts && product?.reViewProducts.length > 0 ?
                                             [...Array(product?.reViewProducts)].map((_, i) => <IoMdStar key={i} />)
                                             :
                                             [...Array(5)].map((_, i) => <IoMdStar key={i} />)
@@ -157,14 +172,13 @@ const ProductDetails = () => {
                                 </div>
                             </div>
 
-
                             <div className="size-select">
                                 <h4>Size:</h4>
                                 {product?.sizeOptions.map((size) => (
                                     <span
                                         key={size.id}
-                                        className={`size-option ${selectedSize === size.name ? 'selected' : ''}`}
-                                        onClick={() => handleSizeClick(size.name)}
+                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                        onClick={() => handleSizeClick(size)}
                                     >
                                         {size.name}
                                     </span>
@@ -177,20 +191,14 @@ const ProductDetails = () => {
                                     <ul>
                                         <li
                                             key={topping.id}
-                                            className={`topping-option ${selectedTopping === topping.name ? 'selected' : ''}`}
-                                            onClick={() => handleToppingClick(topping.name)}
+                                            className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                            onClick={() => handleToppingClick(topping)}
                                         >
                                             {topping.name}
                                         </li>
                                     </ul>
                                 ))}
                             </div>
-
-                            {/* <div class="counter">
-                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
-                                <span className="counter__count">{count}</span>
-                                <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
-                            </div> */}
 
                             <div className="separator"></div>
 
@@ -199,23 +207,10 @@ const ProductDetails = () => {
                                 <span className="counter__count">{count}</span>
                                 <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                             </div>
-                            {/* <div class='topping'>
-                                <h4>Topping:</h4>
-                                {product?.toppingOptions.map((topping) => (
-                                    <ul>
-                                        <li
-                                            key={topping.id}
-                                            className={`topping-option ${selectedTopping === topping.name ? 'selected' : ''}`}
-                                            onClick={() => handleToppingClick(topping.name)}
-                                        >
-                                            {topping.name}
-                                        </li>
-                                    </ul>
-                                ))}
-                            </div> */}
 
                             <div className="separator"></div>
 
+                            {showError && <div className="error_message">Bạn hãy chọn size để tiếp tục</div>}
 
                             <div className="prod_details_buy_btn">
                                 <button
@@ -225,6 +220,13 @@ const ProductDetails = () => {
                                 >
                                     Thêm vào giỏ
                                 </button>
+                                <button
+                                    type="button"
+                                    className="btn-1"
+                                    onClick={handleAddToCart}
+                                >
+                                    Mua Ngay
+                                </button>
                             </div>
 
                         </div>
@@ -232,7 +234,7 @@ const ProductDetails = () => {
                 </div>
             </section>
 
-            {/* <ProductSummary {...product} /> */}
+            <ProductSummary />
 
             <section id="related_products" className="section">
                 <div className="container">
