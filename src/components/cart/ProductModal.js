@@ -89,7 +89,6 @@ const ProductModal = ({ onClose, item, auth, status }) => {
 
                 <div className="modal-details">
                     <h4>Size:</h4>
-                    {/* <div className="separator"></div> */}
                     <div className="size">
                         {item?.sizeOptions.map((size) => (
                             <>
@@ -108,13 +107,12 @@ const ProductModal = ({ onClose, item, auth, status }) => {
                     {item?.toppingOptions.length !== 0 && (<div><div className="separator"></div>
 
                         <h4>Topping:</h4>
-                        {/* <div className="separator"></div> */}
-                        <div className="size">
+                        <div className="topping">
                             {item?.toppingOptions.map((topping) => (
                                 <ul>
                                     <li
                                         key={topping.id}
-                                        className={`size-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                        className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
                                         onClick={() => handleToppingClick(topping)}
                                     >
                                         {topping.name}
@@ -122,12 +120,6 @@ const ProductModal = ({ onClose, item, auth, status }) => {
                                 </ul>
                             ))}
                         </div> </div>)}
-
-                    {/* <div className="separator"></div> */}
-
-                    {/* <div className="note">
-                        <textarea placeholder="Thêm ghi chú"></textarea>
-                    </div> */}
 
                     <div className="separator"></div>
 

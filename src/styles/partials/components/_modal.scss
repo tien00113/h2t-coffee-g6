@@ -10,140 +10,168 @@
   top: 0;
   left: 0;
   z-index: 3;
-  color: #000000;
-}
+  color: #ffffff;
 
-.modal-content {
-  width: 60%;
-  height: auto;
-  background-color: #ffffff;
-}
+  .modal-content {
+    width: 50%;
+    height: auto;
+    background-color: #000000;
+    box-shadow: 0 0 5px 5px #2e2e2e;
 
-.modal-first {
-  display: flex;
-  margin: 10px 0 0 10px;
-  position: relative;
+    .modal-first {
+      display: flex;
+      margin: 10px 0 0 10px;
+      position: relative;
 
-  .first-left {
-    display: flex;
+      .first-left {
+        display: flex;
 
-    img {
-      width: 18%;
-      background-size: cover;
-      border-radius: 6px;
-    }
+        img {
+          width: 18%;
+          background-size: cover;
+          border-radius: 6px;
+        }
 
-    h4 {
-      font-weight: 500;
-      color: var(--main-color);
-      margin-left: 5px;
-    }
-  }
+        h4 {
+          font-weight: 500;
+          color: var(--main-color);
+          margin-left: 0.5rem;
+        }
+      }
 
-  button {
-    margin-right: 10px;
-    position: absolute;
-    font-size: 20px;
-    right: 0;
-    cursor: pointer;
-    @include transition(all, 0.2s, ease-in-out);
+      button {
+        margin-right: 10px;
+        position: absolute;
+        font-size: 20px;
+        right: 0;
+        cursor: pointer;
+        @include transition(all, 0.2s, ease-in-out);
 
-    &:hover {
-      opacity: 0.8;
-    }
-  }
-}
-
-.modal-details {
-  .size {
-    margin-left: 10px;
-
-    h4 {
-      margin-bottom: 8px;
-    }
-
-    .size-options {
-      label {
-        display: inline-block;
-        width: 33.333%;
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
-  }
 
-  .topping {
-    margin-left: 10px;
-
-    h4 {
-      margin-bottom: 8px;
-    }
-
-    .topping-options {
-      label {
-        display: inline-block;
-        width: 50%;
+    .modal-details {
+      h4 {
+        margin-left: 1rem;
       }
-    }
-  }
 
-  .note {
-    text-align: center;
+      // size
+      .size {
+        display: flex;
+        justify-content: first baseline;
+        width: 100%;
+        border-radius: 2px;
+        margin: 0.8rem 0 0 1rem;
+      }
+      .size-option {
+        opacity: 0.8;
+        width: 4rem;
+        height: auto;
+        text-align: center;
+        background-color: #fff;
+        color: #000;
+        cursor: pointer;
+        margin-right: 2rem;
+      }
+      .size-option.selected {
+        opacity: 1;
+        background-color: var(--main-color);
+        color: #fff;
+      }
 
-    textarea {
-      color: #333;
-      border: 1px solid #7f7f7f;
-      box-shadow: none;
-      padding: 10px 10px 10px 40px;
-      height: 40px;
-      width: 96%;
-    }
-  }
-
-  .quantity-add_cart {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 10px;
-
-    .counter {
-      & {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 3px;
-        user-select: none;
-        overflow: hidden;
-
-        &__button {
-          @include dimension(1.6rem, 1.6rem);
-          background-color: var(--main-color);
-          @include transition(color, 0.2s);
-          border-radius: 50%;
-
-          &[disabled] {
-            cursor: not-allowed;
-            color: var(--text-muted);
+      // topping
+      .topping {
+        display: flex;
+        margin: 0.8rem 0 0 1rem;
+        ul {
+          li {
+            border: 1px solid var(--main-color);
+            color: #ccc;
+            padding: 4px 6px;
+            font-size: 14px;
+            margin-right: 2rem;
+          }
+          .topping-option {
+            opacity: 0.8;
+            text-align: center;
+            cursor: pointer;
+          }
+          .topping-option.selected {
+            opacity: 1;
+            border: 1px solid rgb(0, 0, 0);
+            background-color: var(--main-color);
+            color: #fff;
           }
         }
       }
 
-      &__count {
-        @include dimension(2rem, 2rem);
-        color: var(--main-color);
-        font-size: 1.2rem;
-        line-height: 2.25rem;
-        font-weight: bold;
+      .note {
         text-align: center;
+
+        textarea {
+          color: #333;
+          border: 1px solid #7f7f7f;
+          box-shadow: none;
+          padding: 10px 10px 10px 40px;
+          height: 40px;
+          width: 96%;
+        }
+      }
+
+      .quantity-add_cart {
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem;
+
+        .counter {
+          & {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 3px;
+            user-select: none;
+            overflow: hidden;
+
+            &__button {
+              @include dimension(1.6rem, 1.6rem);
+              background-color: var(--main-color);
+              @include transition(color, 0.2s);
+              border-radius: 50%;
+
+              &[disabled] {
+                cursor: not-allowed;
+                color: var(--text-muted);
+              }
+            }
+          }
+
+          &__count {
+            @include dimension(2rem, 2rem);
+            color: var(--main-color);
+            font-size: 1.2rem;
+            line-height: 2.25rem;
+            font-weight: bold;
+            text-align: center;
+          }
+        }
       }
     }
   }
 }
 
+
+
+
 // CheckoutModal
 
 .modal-checkout {
-  width: 40%;
+  width: 50%;
   height: auto;
   color: #ffffff;
-  background: rgba($color: #000000, $alpha: 0.8);
-  box-shadow: 0 0 5px 5px #171717;
+  background: #000000;
+  box-shadow: 0 0 5px 5px #2e2e2e;
 
   .modal-checkout-head {
     display: flex;
@@ -162,8 +190,11 @@
 
   .modal-checkout-mid {
     display: flex;
-    justify-content: space-between;
     margin: 1rem;
+
+    .mid-text{
+      width: 50%;
+    }
 
     label {
       display: block;
@@ -172,10 +203,10 @@
 
     input[type="text"],
     input[type="tel"] {
-      width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      width: 90%;
       color: #ffffff;
     }
   }
@@ -268,7 +299,7 @@
       .right {
         .button_update {
           button {
-          display: inline-flex;
+            display: inline-flex;
 
             color: rgb(82, 158, 239);
             font-size: 14px;

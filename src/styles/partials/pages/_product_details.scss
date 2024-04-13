@@ -101,7 +101,7 @@
     // counter
 
     .counter {
-
+        margin-top: 2rem;
         & {
             display: inline-flex;
             align-items: center;
@@ -109,7 +109,6 @@
             border-radius: 3px;
             user-select: none;
             overflow: hidden;
-            margin-top: 1rem;
 
             &__button {
                 @include dimension(3.125rem, 2.25rem);
@@ -140,8 +139,9 @@
     // topping
     .topping{
         display: flex;
+        margin-top: 1.5rem;
         ul{
-            margin-left: 2rem;
+            margin-left: 1rem;
             li{
                 border: 1px solid var(--main-color);
                 color:#ccc;
@@ -160,7 +160,11 @@
                 color: #fff;
             }
         }
+    }
 
+    .error_message{
+        margin-bottom: 0.3rem;
+        color: var(--main-color-2);
     }
 }
 
@@ -184,8 +188,8 @@
 }
 
 .prod_details_price {
-    @include flexbox(space-between, center);
-
+    @include flexbox(space-between, end);
+    margin-top: 0.3rem;
     .price {
         font-size: 2rem;
     }
@@ -235,7 +239,8 @@
 }
 
 .prod_details_buy_btn {
-    .btn {
-        width: 200px;
+    margin-top: 2rem;
+    button{
+        margin-right: 2rem;
     }
 }

@@ -1,13 +1,17 @@
 .products_wrapper {
-    @include grid-cols(3, 1fr, 2rem);
-    margin: 0 3rem;
+    @include grid-cols(4, 1fr, 0.6rem);
+    margin: 0 2rem;
 
     @include devices(lg) {
-        @include grid-cols(2, 1fr, 1rem);
+        @include grid-cols(3, 1fr, 0.8rem);
     }
 
     @include devices(md) {
-        @include grid-cols(1, 1fr, 2rem);
+        @include grid-cols(2, 1fr, 1rem);
+    }
+
+    @include devices(sm) {
+        @include grid-cols(1, 1fr, 1rem);
     }
 }
 
@@ -21,8 +25,7 @@
     box-shadow: 0px 5px 10px rgba($color: #000000, $alpha: 0.5);
     overflow: hidden;
     background: #000;
-    margin: 0 10px;
-    height: 100%;
+    margin: 0 0.3rem 1rem 0.3rem;
 
     &.browse_card {
         @include centered;
@@ -50,7 +53,7 @@
     text-align: center;
     padding: 1rem;
     overflow: hidden;
-    height: 65%;
+    height: 13rem;
     position: relative;
     margin: auto;
     img {
@@ -136,36 +139,15 @@
 
     .products_wrapper {
         @include devices(xl) {
-            @include grid-cols(2, 1fr, 0.7rem);
-            .products_card{
-                width: 90%;
-                height: 96%;
-            }
+            @include grid-cols(3, 1fr, 0.3rem);
         }
 
         @include devices(md) {
-            @include grid-cols(1, 1fr, 0.6rem);
+            @include grid-cols(2, 1fr, 0.6rem);
         }
 
+        @include devices(sm) {
+            @include grid-cols(1, 1fr, 1rem);
+        }
     }
 }
-
-// @media (max-width: 1150px) {
-//     .products_card{
-//         padding-bottom: 10px;
-//         .price_box{
-//             .price{
-//                 font-size: 20px;
-//             }
-//             .del_price{
-//                 font-size: 18px;
-//             }
-//         }
-//         .icon_card {
-//             span {
-//                 font-size: 20px;
-//             }
-//         }
-
-//     }
-// }
