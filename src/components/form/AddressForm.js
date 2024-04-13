@@ -100,11 +100,11 @@ const AddressForm = ({ onClose, address }) => {
                                     <button className="close-button" onClick={onClose}><MdClose /></button>
                                 </div>
                                 <div className="modal-checkout-mid">
-                                    <div>
+                                    <div className='mid-text'>
                                         <label htmlFor="name">Họ và tên</label>
                                         <input type="text" id="recipientName" name='recipientName' placeholder='Tên...' onChange={handleChange} />
                                     </div>
-                                    <div>
+                                    <div className='mid-text'>
                                         <label for="phone">Số điện thoại</label>
                                         <input type="tel" id="phoneNumber" name='phoneNumber' placeholder="Số điện thoại..." onChange={handleChange} />
                                     </div>

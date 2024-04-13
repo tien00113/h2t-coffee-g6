@@ -40,7 +40,8 @@ const CartItem = ({ item, quantityItem, cartId }) => {
                         {newPrice} &nbsp;
                         <small><del>{oldPrice}</del></small>
                     </h2>
-                    <div className="size-select">
+
+                    <div className="size">
                         <h4>Size:</h4>
                         <span
                             className='size-option'
@@ -48,10 +49,10 @@ const CartItem = ({ item, quantityItem, cartId }) => {
                             {item?.sizeOption?.name}
                         </span>
                     </div>
-                    {item?.toppingOption && <div className="size-select">
+                    {item?.toppingOption && <div className="topping">
                         <h4>Topping:</h4>
                         <span
-                            className='size-option'
+                            className='topping-option'
                         >
                             {item?.toppingOption?.name}
                         </span>

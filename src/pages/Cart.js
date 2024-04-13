@@ -36,8 +36,8 @@ const Cart = ({ auth }) => {
         let p = 0;
         let ps = 0;
         cartGuests.map(item => {
-            p += (item.product.price + item.sizeOption.price + ((item.toppingOption) ? item.toppingOption.price : 0)) * item?.quantity;
-            ps += (item.product.salePrice + item.sizeOption.price + ((item.toppingOption) ? item.toppingOption.price : 0)) * item?.quantity;
+            p += (item?.product?.price + item?.sizeOption?.price + ((item?.toppingOption) ? item?.toppingOption?.price : 0)) * item?.quantity;
+            ps += (item?.product?.salePrice + item?.sizeOption?.price + ((item?.toppingOption) ? item?.toppingOption?.price : 0)) * item?.quantity;
         });
         setPrice(p);
         setDiscount(p - ps);
@@ -74,7 +74,7 @@ const Cart = ({ auth }) => {
                                     <div className="order_summary">
                                         <h3>
                                             Tổng Sản Phẩm: &nbsp;
-                                            {cartGuests.length}
+                                            {/* {cartGuests.length} */}
                                         </h3>
                                         <div className="order_summary_details">
                                             <div className="price">
@@ -129,7 +129,7 @@ const Cart = ({ auth }) => {
                                     <div className="order_summary">
                                         <h3>
                                             Tổng sản phẩm &nbsp;
-                                            {cartUser?.totalItem}
+                                            {/* {cartUser?.totalItem} */}
                                         </h3>
                                         <div className="order_summary_details">
                                             <div className="price">

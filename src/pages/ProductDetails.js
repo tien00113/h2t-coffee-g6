@@ -29,13 +29,6 @@ const ProductDetails = ({ auth }) => {
 
     const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
 
-    // here the 'id' received has 'string-type', so converting it to a 'Number'
-
-    // showing the Product based on the received 'id'
-    // const products = productsData.find(item => item.id === prodId);
-
-    // const { images, title, info, category, finalPrice, originalPrice, ratings, rateCount } = products;
-
     const [previewImg, setPreviewImg] = useState(product?.image[0].imageUrl);
     const [showError, setShowError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -96,23 +89,10 @@ const ProductDetails = ({ auth }) => {
     useEffect(() => {
         setPreviewImg(product?.image[0].imageUrl);
         handleActive(0);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [product?.image]);
 
-
-    // handling Preview image
-    // const handlePreviewImg = (i) => {
-    //     setPreviewImg(images[i]);
-    //     handleActive(i);
-    // };
-
-
-    // calculating Prices
-    // const discountedPrice = originalPrice - finalPrice;
     const newPrice = displayMoney(product?.salePrice);
     const oldPrice = displayMoney(product?.price);
-    // const savedPrice = displayMoney(discountedPrice);
-    // const savedDiscount = calculateDiscount(discountedPrice, originalPrice)
 
     return (
         <>
@@ -120,7 +100,6 @@ const ProductDetails = ({ auth }) => {
                 <div className="container">
                     <div className="wrapper prod_details_wrapper">
 
-                        {/*=== Product Details Left-content ===*/}
                         <div className="prod_details_left_col">
                             <div className="prod_details_tabs">
                                 {/* {
@@ -161,8 +140,6 @@ const ProductDetails = ({ auth }) => {
                                 <Link to="*"> Ratings</Link>
                             </div>
 
-                            <div className="separator"></div>
-
                             <div className="prod_details_price">
                                 <div className="price_box">
                                     <h2 className="price">
@@ -172,6 +149,8 @@ const ProductDetails = ({ auth }) => {
                                 </div>
                             </div>
 
+                            <div className="separator"></div>
+                            
                             <div className="size-select">
                                 <h4>Size:</h4>
                                 {product?.sizeOptions.map((size) => (
@@ -184,7 +163,6 @@ const ProductDetails = ({ auth }) => {
                                     </span>
                                 ))}
                             </div>
-                            <div className="separator"></div>
                             <div class='topping'>
                                 <h4>Topping:</h4>
                                 {product?.toppingOptions.map((topping) => (
@@ -200,7 +178,6 @@ const ProductDetails = ({ auth }) => {
                                 ))}
                             </div>
 
-                            <div className="separator"></div>
 
                             <div class="counter">
                                 <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
@@ -210,21 +187,17 @@ const ProductDetails = ({ auth }) => {
 
                             <div className="separator"></div>
 
-                            {showError && <div className="error_message">Bạn hãy chọn size để tiếp tục</div>}
+                            <div className="describe">
+                                <h4>Describe:</h4>
+
+                            </div>
 
                             <div className="prod_details_buy_btn">
-                                <button
-                                    type="button"
-                                    className="btn"
-                                    onClick={handleAddToCart}
-                                >
+                            {showError && <div className="error_message">Bạn hãy chọn size để tiếp tục</div>}
+                                <button type="button" className="btn" onClick={handleAddToCart}>
                                     Thêm vào giỏ
                                 </button>
-                                <button
-                                    type="button"
-                                    className="btn-1"
-                                    onClick={handleAddToCart}
-                                >
+                                <button type="button" className="btn-1" onClick={handleAddToCart}>
                                     Mua Ngay
                                 </button>
                             </div>

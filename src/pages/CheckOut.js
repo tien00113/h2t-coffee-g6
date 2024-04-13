@@ -30,6 +30,7 @@ const CheckOut = ({ auth }) => {
       <section class='payment'>
         <div class="payment-address">
           <h3>Thanh toán và giao hàng</h3>
+          <div className="separator"></div>
           {auth?.user?.address.length > 0 ? (<div class="address-info">
             <div>
               <p>Nguyễn Hiền Tiến (0986908668)</p>
@@ -39,11 +40,12 @@ const CheckOut = ({ auth }) => {
               <button className='btn-1' onClick={handleChangeClick}>Thay đổi</button>
             </div>
           </div>): (
-            <div>
-              Chọn Địa Chỉ Giao Hàng
+            <div className="select_address">
+              <h4>Chọn Địa Chỉ Giao Hàng</h4> 
               <button className='btn-2' onClick={handleChangeClick}>Thêm</button>
             </div>
           )}
+          <div className="separator"></div>
 
           <div class="payment-address-drop">
             <label for="store">Chọn chi nhánh gần bạn</label>
@@ -112,12 +114,20 @@ const CheckOut = ({ auth }) => {
           {/* product */}
           <div class="payment-checkout-product">
             <div class="product">
-              <div class="product-left" >
+              <div class="product-left" > 
                 <img src={orderItem?.product?.image[0]?.imageUrl} alt="product" />
                 <div class="product-details">
                   <span>{orderItem?.product?.name}</span>
-                  <p>Size: {size?.name}</p>
-                  <p>Topping: {topping?.name}</p>
+                  <div className="size-topping">
+                    <div className='size'>
+                      <p>Size: </p>
+                      <h4>{size?.name}</h4>
+                    </div>
+                    <div className='topping'>
+                      <p>Topping: </p>
+                      <h4>{topping?.name}</h4>
+                    </div>
+                  </div>
                   <h5>x{quantity}</h5>
                 </div>
               </div>
