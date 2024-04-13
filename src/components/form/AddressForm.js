@@ -4,9 +4,13 @@ import data from '../../data/addressData.json';
 import { IoAdd } from "react-icons/io5";
 import { Form, Formik } from 'formik';
 import orderContext from '../../contexts/order/orderContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAddressAction } from '../../Redux/Auth/auth.action';
 
+const AddressForm = ({ onClose}) => {
 
-const AddressForm = ({ onClose, address }) => {
+    const dispatch = useDispatch();
+    const address = useSelector(state => state.auth.user.address);
 
     const [showNew, setShowNew] = useState(false);
     const [cities, setCities] = useState(data);
@@ -16,7 +20,7 @@ const AddressForm = ({ onClose, address }) => {
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
 
-    const { createAddress, shippingAddress } = useContext(orderContext);
+    const { createAddress } = useContext(orderContext);
 
     const handleCityChange = (event, setFieldValue) => {
         if (event.target.value === "") {
@@ -77,16 +81,15 @@ const AddressForm = ({ onClose, address }) => {
 
     const handleAddAddress = (values) => {
 
-        console.log("values form gửi lên: ", values)
-        createAddress(values);
+        dispatch(createAddressAction(values));
         handleSetShowFormAdd();
     }
 
-    console.log("add_address", shippingAddress);
+    console.log("address ==============", address)
 
     useEffect(()=>{
-        
-    },[shippingAddress])
+
+    },[address])
 
     return (
         <>

@@ -28,7 +28,7 @@ const Header = () => {
             getUserCart();
             setCheck(true);
         }
-    }, [jwt, auth?.user?.address]);
+    }, [jwt]);
     const handleOpenLoginSignup = () => {
         setIsLoginSignup(!isOpenLoginSignup);
     }

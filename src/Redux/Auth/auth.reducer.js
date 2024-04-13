@@ -1,4 +1,4 @@
-import { CLEAR_ERROR, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE";
+import { CLEAR_ERROR, CREATE_ADDRESS, CREATE_ADDRESS_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE";
 
 const initialState = {
     jwt: null,
@@ -34,6 +34,15 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload, error: null, loading: false
+            }
+
+        case CREATE_ADDRESS_SUCCESS:
+            return {
+                ...state,
+                user:{
+                    ...state.user,
+                    address: [...state.user.address, action.payload]
+                }
             }
 
         case CLEAR_ERROR:

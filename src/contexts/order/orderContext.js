@@ -2,6 +2,7 @@ import { createContext, useReducer } from "react";
 import orderReducer from "./orderReducer";
 import { API_BASE_URL, api } from "../../config/api";
 import axios from "axios";
+import { CREATE_ADDRESS } from "../../Redux/Auth/auth.actionTYPE";
 
 const orderContext = createContext();
 
@@ -46,18 +47,19 @@ const OrderProvider = ({children}) => {
         });
     };
 
-    const createAddress = async(adr) =>{
-        try {
-            const {data} = await api.post(`${API_BASE_URL}/api/address/create`, adr);
-            console.log("đã thêm address vào user", data);
-            dispatch({
-                type:"CREATE_ADDRESS",
-                payload:data,
-            })
-        } catch (error) {
-            console.log("Lỗi add address: ", error);
-        }
-    }
+    // const createAddress = async(adr) =>{
+    //     try {
+    //         const {data} = await api.post(`${API_BASE_URL}/api/address/create`, adr);
+    //         console.log("đã thêm address vào user", data);
+    //         dispatch({
+    //             type:CREATE_ADDRESS,
+    //             payload:data,
+    //         });
+    //         console.log("đã dispatch");
+    //     } catch (error) {
+    //         console.log("Lỗi add address: ", error);
+    //     }
+    // }
     const order = async (order) => {
         try {
             const {data} = await api.post(`${API_BASE_URL}/api/order/now`, order);
@@ -78,7 +80,7 @@ const OrderProvider = ({children}) => {
         changeTopping,
         changeQuantity,
         order,
-        createAddress,
+        // createAddress,
     };
 
     return (

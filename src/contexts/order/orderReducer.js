@@ -1,3 +1,5 @@
+import { CREATE_ADDRESS } from "../../Redux/Auth/auth.actionTYPE";
+
 const orderReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_ORDER_ITEM':
@@ -33,11 +35,11 @@ const orderReducer = (state, action) => {
                 ...state,
                 order: action.payload,
             }
-        case "CREATE_ADDRESS":
-            return {
-                ...state,
-                shippingAddress: action.payload,
-            }
+        // case CREATE_ADDRESS:
+        //     return {
+        //         ...state,
+        //         shippingAddress: action.payload,
+        //     }
         default:
             return state;
     }

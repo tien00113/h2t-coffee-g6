@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router';
 import useScrollRestore from '../hooks/useScrollRestore';
 import AllProducts from '../pages/AllProducts';
@@ -17,6 +17,12 @@ const RouterRoutes = () => {
     useScrollRestore();
 
     const {auth} = useSelector(store=> store);
+
+    useEffect(()=>{
+
+    },auth?.user?.address);
+
+    console.log("tất cả các address: ", auth?.user?.address);
 
     return (
         <>

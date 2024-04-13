@@ -23,8 +23,6 @@ const CheckOut = ({ auth }) => {
     setModalVisible(false);
   };
 
-  console.log("usser nay la: ", auth.user);
-
   return (
     <>
       <section class='payment'>
