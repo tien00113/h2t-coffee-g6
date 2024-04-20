@@ -87,7 +87,6 @@ const ProductCard = ({ item }) => {
                         <button
                             type="button"
                             className={`btn products_btn ${activeClass(item?.id)}`}
-                            // onClick={handleAddToCart}
                             onClick={handleAddToCartClick}
                         >
                             {active ? 'Đã Thêm' : 'Giỏ Hàng'}

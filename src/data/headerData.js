@@ -25,7 +25,7 @@ export const dropdownMenu = [
     {
         id: 1,
         link: "Orders",
-        path: "history",
+        path: "order-manage",
     },
     {
         id: 2,

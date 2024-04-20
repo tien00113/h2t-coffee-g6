@@ -29,7 +29,7 @@
 }
 
 .section {
-    @include padding-y(5rem, 5rem);
+    @include padding-y(0rem, 5rem);
 }
 
 .section_head {
@@ -230,3 +230,5 @@
 .swiper-pagination-bullet-active {
     background: var(--main-color) !important;
 }
+
+

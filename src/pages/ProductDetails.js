@@ -101,22 +101,9 @@ const ProductDetails = ({ auth }) => {
                     <div className="wrapper prod_details_wrapper">
 
                         <div className="prod_details_left_col">
-                            <div className="prod_details_tabs">
-                                {/* {
-                                    images.map((img, i) => (
-                                        <div
-                                            key={i}
-                                            className={`tabs_item ${activeClass(i)}`}
-                                            onClick={() => handlePreviewImg(i)}
-                                        >
-                                            <img src={img} alt="product-img" />
-                                        </div>
-                                    ))
-                                } */}
-                            </div>
-                            <figure className="prod_details_img">
+                            <div className="prod_details_img">
                                 <img src={previewImg} alt="product-img" />
-                            </figure>
+                            </div>
                         </div>
 
                         {/*=== Product Details Right-content ===*/}
@@ -150,50 +137,58 @@ const ProductDetails = ({ auth }) => {
                             </div>
 
                             <div className="separator"></div>
-                            
-                            <div className="size-select">
-                                <h4>Size:</h4>
-                                {product?.sizeOptions.map((size) => (
-                                    <span
-                                        key={size.id}
-                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => handleSizeClick(size)}
-                                    >
-                                        {size.name}
-                                    </span>
-                                ))}
-                            </div>
-                            <div class='topping'>
-                                <h4>Topping:</h4>
-                                {product?.toppingOptions.map((topping) => (
-                                    <ul>
-                                        <li
-                                            key={topping.id}
-                                            className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
-                                            onClick={() => handleToppingClick(topping)}
+
+                            <div className="size">
+                                <h4>Size</h4>
+                                <div className="size-select">
+                                    {product?.sizeOptions.map((size) => (
+                                        <span
+                                            key={size.id}
+                                            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                            onClick={() => handleSizeClick(size)}
                                         >
-                                            {topping.name}
-                                        </li>
-                                    </ul>
-                                ))}
+                                            {size.name}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
 
-
-                            <div class="counter">
-                                <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
-                                <span className="counter__count">{count}</span>
-                                <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
+                            <div class='topping'>
+                                <h4>Topping</h4>
+                                <div className="topping-select">
+                                    {product?.toppingOptions.map((topping) => (
+                                    <span 
+                                        key={topping.id}
+                                        className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                        onClick={() => handleToppingClick(topping)}
+                                    >
+                                        {topping.name}
+                                    </span>
+                                    ))}
+                                </div>
                             </div>
+
+                            <div className='quantity'> 
+                                <h4>Số lượng</h4>
+                                <div class="counter">
+                                    <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
+                                    <span className="counter__count">{count}</span>
+                                    <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
+                                </div>
+                            </div>
+
 
                             <div className="separator"></div>
 
                             <div className="describe">
                                 <h4>Describe:</h4>
-
+                                <p>{product?.description}</p>
                             </div>
 
-                            <div className="prod_details_buy_btn">
+                            <div className="separator"></div>
+
                             {showError && <div className="error_message">Bạn hãy chọn size để tiếp tục</div>}
+                            <div className="prod_details_buy_btn">
                                 <button type="button" className="btn" onClick={handleAddToCart}>
                                     Thêm vào giỏ
                                 </button>

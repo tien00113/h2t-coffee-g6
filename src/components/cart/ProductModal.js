@@ -123,7 +123,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
 
                     <div className="separator"></div>
 
-                    <div className="quantity-add_cart">
+                    <div className="quantity">
                         <div className="counter">
                             <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>
                             <span className="counter__count">{count}</span>

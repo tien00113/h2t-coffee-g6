@@ -4,91 +4,54 @@
 }
 
 .prod_details_wrapper {
-    grid-template-columns: 1fr 0.7fr;
+    grid-template-columns: 0.7fr 1fr;
     gap: 4rem;
 
-    @include devices(lg) {
+    @include devices(md) {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
 }
 
 .prod_details_left_col {
-    display: grid;
-    grid-template-columns: 0.2fr 1fr;
-    gap: 1rem;
+  
+    .prod_details_img {
+        height: 26rem;
+        img {
+            @include img-fit;
+        }
+    }
 
     @include devices(sm) {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+    
 }
 
-.prod_details_tabs {
-    display: grid;
-    gap: 1rem;
 
-    .tabs_item {
-        @include dimension(6rem, 6rem);
-        @include bordered(2px, rgba($color: #ffffff, $alpha: 0.2));
-        border-radius: 3px;
-        padding: 0.5rem;
-        cursor: pointer;
-        @include transition(border-color, 0.2s);
-
-        &.active {
-            border-color: #eee;
-        }
-
-        img {
-            @include img-fit;
-        }
-
-        @include devices(sm) {
-            @include dimension();
-            padding: 0.3rem;
-        }
-    }
-
-    @include devices(sm) {
-        display: flex;
-        gap: 0.4rem;
-    }
-}
-
-.prod_details_img {
-
-    img {
-        @include img-fit;
-    }
-
-    @include devices(sm) {
-        grid-row: 1;
-    }
-}
 
 .prod_details_right_col {
     .separator {
         @include margin-y(2.2rem, 2.2rem);
     }
 
+    // size
+.size{
+    display: flex;
     .size-select {
-        display: flex;
-        justify-content: first baseline;
-        width: 100%;
-        border-radius: 2px;
-        margin-top: 20px;
+        margin-left: 5rem;
     }
 
     .size-option {
         opacity: 0.8;
-        width: 4rem;
-        height: auto;
+        padding: 5px 20px;
         text-align: center;
         background-color: #fff;
         color: #000;
         cursor: pointer;
-        margin-left: 1rem;
+        margin-right: 2rem;
+        border-radius: 2px;
     }
 
     .size-option.selected {
@@ -97,21 +60,56 @@
         background-color: var(--main-color);
         color: #fff;
     }
+}
 
-    // counter
 
+// topping
+.topping{
+    display: flex;
+    margin-top: 2rem;
+
+    .topping-select{
+        margin-left: 2.8rem;
+
+        .topping-option{
+            border: 1px solid var(--main-color);
+            color:#ccc;
+            padding: 4px 6px;
+            font-size: 14px;
+            opacity: 0.8;
+            text-align: center;
+            cursor: pointer;
+            margin-right: 2rem;
+
+        }
+        .topping-option.selected {
+            opacity: 1;
+            border: 1px solid rgb(0, 0, 0);
+            background-color: var(--main-color);
+            color: #fff;
+        }
+            
+    }
+}
+
+
+// quantity
+.quantity{
+    display: flex;
+    margin-top: 2rem;
+    align-items: center;
     .counter {
-        margin-top: 2rem;
-        & {
+        & { 
             display: inline-flex;
             align-items: center;
             @include bordered(1px, #444);
             border-radius: 3px;
             user-select: none;
             overflow: hidden;
+            margin-left: 2.5rem;
 
             &__button {
-                @include dimension(3.125rem, 2.25rem);
+                @include dimension(2.125rem, 2.25rem);
                 background-color: var(--bg-color-3);
                 @include transition(color, 0.2s);
 
@@ -127,44 +125,26 @@
         }
 
         &__count {
-            @include dimension(3.75rem, 2.25rem);
+            @include dimension(2.75rem, 2.25rem);
             color: var(--main-color);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             line-height: 2.25rem;
             font-weight: bold;
             text-align: center;
         }
     }
-
-    // topping
-    .topping{
-        display: flex;
-        margin-top: 1.5rem;
-        ul{
-            margin-left: 1rem;
-            li{
-                border: 1px solid var(--main-color);
-                color:#ccc;
-                padding: 4px 6px;
-                font-size: 14px;
-            }
-            .topping-option {
-                opacity: 0.8;
-                text-align: center;
-                cursor: pointer;
-            }
-            .topping-option.selected {
-                opacity: 1;
-                border: 1px solid rgb(0, 0, 0);
-                background-color: var(--main-color);
-                color: #fff;
-            }
-        }
-    }
+}
 
     .error_message{
-        margin-bottom: 0.3rem;
+        text-align: right;
         color: var(--main-color-2);
+    }
+
+    .describe{
+        display: flex;
+        p{
+            margin-left: 0.5rem;
+        }
     }
 }
 
@@ -239,8 +219,10 @@
 }
 
 .prod_details_buy_btn {
-    margin-top: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
     button{
-        margin-right: 2rem;
+        margin-left: 2rem;
     }
 }
