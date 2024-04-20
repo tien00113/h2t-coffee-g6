@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { registerUserAction, loginUserAction, clearErrorAction } from '../../Redux/Auth/auth.action';
 import { Field, Form, Formik } from 'formik';
 
-const AccountForm = () => {
+const AccountForm = ({onClose}) => {
     const dispatch = useDispatch();
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [isSignupVisible, setIsSignupVisible] = useState(false);
@@ -146,7 +146,7 @@ const AccountForm = () => {
                                     <div
                                         className="close_btn"
                                         title="Close"
-                                        onClick={handClose}
+                                        onClick={onClose}
                                     >
                                         &times;
                                     </div>

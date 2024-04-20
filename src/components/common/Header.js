@@ -18,15 +18,16 @@ const Header = () => {
     const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
     const [isSticky, setIsSticky] = useState(false);
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
-    const [check, setCheck] = useState(false);
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt");
     const { auth } = useSelector(store => store);
+
     useEffect(() => {
         if (jwt) {
             dispatch(getUserAction(jwt));
-            getUserCart();
-            setCheck(true);
+            if (auth?.user) {
+                getUserCart();
+            }
         }
     }, [jwt]);
     const handleOpenLoginSignup = () => {
@@ -36,6 +37,7 @@ const Header = () => {
     const handleLogout = () => {
         dispatch(logoutAction());
         localStorage.removeItem("jwt");
+        localStorage.removeItem("cart");
         alert("đã đăng xuất thành công")
     }
 
@@ -56,6 +58,10 @@ const Header = () => {
     const hideMenu = () => {
         setIsActive(false);
     };
+
+    const handleClose = () => {
+        setIsLoginSignup(false);
+    }
 
     return (
         <>
@@ -111,9 +117,9 @@ const Header = () => {
                                 <Link to="/cart">
                                     <AiOutlineShoppingCart />
                                     {
-                                        check ? (
-                                            cartUser?.cartItems.length > 0 && (<span className="badge">{cartUser?.cartItems.length}</span>)
-                                        ): (
+                                        auth?.user ? (
+                                             <span className="badge">{cartUser?.cartItems.length}</span>
+                                        ) : (
                                             cartGuests.length > 0 && (<span className="badge">{cartGuests.length}</span>)
                                         )
                                     }
@@ -172,7 +178,7 @@ const Header = () => {
                     </div>
                 </div>
             </header>
-            {isOpenLoginSignup && <AccountForm />}
+            {isOpenLoginSignup && <AccountForm onClose={handleClose}/>}
             <SearchBar />
         </>
     );

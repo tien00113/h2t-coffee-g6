@@ -5,7 +5,7 @@ import useDocTitle from '../hooks/useDocTitle';
 import cartContext from '../contexts/cart/cartContext';
 import CartItem from '../components/cart/CartItem';
 import EmptyView from '../components/common/EmptyView';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductInCartGuest } from '../Redux/Product/product.action';
 
@@ -13,20 +13,14 @@ import { getProductInCartGuest } from '../Redux/Product/product.action';
 const Cart = ({ auth }) => {
     const [price, setPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const dispatch = useDispatch();
-
-    const { product } = useSelector(store => store);
+    const navigate = useNavigate();
 
     useDocTitle('Cart');
 
     const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
 
     useEffect(() => {
-        if (auth.user === null) {
-            const productIds = cartGuests.map(item => item.productId);
-            // dispatch(getProductInCartGuest(productIds));
-        }
-        else {
+        if(auth?.user) {
             getUserCart();
             localStorage.removeItem('cart');
         }
@@ -42,8 +36,7 @@ const Cart = ({ auth }) => {
         setPrice(p);
         setDiscount(p - ps);
     }, [cartGuests]);
-    console.log("cart guest: ", cartGuests);
-    console.log("cart currentId: ", localStorage.getItem("currentId"));
+
     return (
         <>
             <section id="cart" className="section">
@@ -95,7 +88,7 @@ const Cart = ({ auth }) => {
                                                 <b>{displayMoney(price - discount)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn-2 checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
+                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", {state: {item: cartGuests}})}>Thanh Toán</button>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +143,7 @@ const Cart = ({ auth }) => {
                                                 <b>{displayMoney(cartUser?.totalSalePrice)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn-2 checkout_btn"><Link to="/checkout">Thanh Toán</Link></button>
+                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", {state: {item: cartUser?.cartItems}})}>Thanh Toán</button>
                                     </div>
                                 </div>
                             </div>

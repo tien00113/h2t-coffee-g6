@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MdClose } from 'react-icons/md';
 import { displayMoney } from '../../helpers/utils';
-import orderContext from '../../contexts/order/orderContext';
 import cartContext from '../../contexts/cart/cartContext';
 
 const ProductModal = ({ onClose, item, auth, status }) => {
 
-    const { createOrderItem, changeSize, changeTopping, changeQuantity } = useContext(orderContext);
     const navigate = useNavigate();
     const [count, setCount] = useState(1);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -24,13 +22,17 @@ const ProductModal = ({ onClose, item, auth, status }) => {
         }
     };
 
-    const handleChangeOrderItem = () => {
-        createOrderItem(item, selectedSize, selectedTopping, count, auth.user?.id);
-        changeSize(selectedSize);
-        changeTopping(selectedTopping);
-        changeQuantity(count);
-        navigate("/checkout");
-    }
+    const orderItems = [
+        {
+            product: item,
+            sizeOption: selectedSize,
+            toppingOption: selectedTopping,
+            quantity: count,
+            price: (item?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            priceSale: (item?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            userId: auth?.user?.id
+        }
+    ]
 
     const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
 
@@ -129,7 +131,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
                             <span className="counter__count">{count}</span>
                             <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                         </div>
-                        {status ? (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleChangeOrderItem}>Mua Ngay</button>) : (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleAddToCart}>Thêm Vào Giỏ</button>)}
+                        {status ? (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={() => {navigate("/checkout", {state: {item: orderItems}})}}>Mua Ngay</button>) : (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleAddToCart}>Thêm Vào Giỏ</button>)}
                     </div>
                 </div>
 
