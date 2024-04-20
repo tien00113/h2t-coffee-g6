@@ -94,7 +94,6 @@ const CheckOut = ({ auth }) => {
               <label htmlFor='address'>Ghi chú</label>
               <textarea ref={textAreaRef} name='additional-info' placeholder='Ghi chú về đơn hàng '></textarea>
               <div className="separator"></div>
-
               <input type="checkbox" />
               Đồng ý với các điều kiện mua hàng.
             </form>

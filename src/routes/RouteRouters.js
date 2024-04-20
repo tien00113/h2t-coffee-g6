@@ -9,7 +9,8 @@ import ErrorPage from '../pages/ErrorPage';
 import AboutUs from '../pages/AboutUs';
 import ContactUs from '../pages/ContactUs';
 import CheckOut from '../pages/CheckOut';
-import History from '../pages/History';
+import OrderManage from '../pages/OrderManage';
+import OrderDetails from '../pages/OrderDetails';
 import { useSelector } from 'react-redux';
 
 const RouterRoutes = () => {
@@ -35,7 +36,8 @@ const RouterRoutes = () => {
                 <Route path="/product-details/:productId" element={<ProductDetails auth={auth}/>} />
                 <Route path="/checkout" element={<CheckOut auth={auth}/>}/>
                 <Route path="*" element={<ErrorPage />} />
-                <Route path="/history" element={<History />} />
+                <Route path="/order-manage" element={<OrderManage />} />
+                <Route path="/checkout/order-details" element={<OrderDetails />} />
             </Routes>
         </>
     );

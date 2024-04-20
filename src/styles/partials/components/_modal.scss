@@ -63,19 +63,21 @@
         display: flex;
         justify-content: first baseline;
         width: 100%;
-        border-radius: 2px;
         margin: 0.8rem 0 0 1rem;
       }
+
       .size-option {
+        padding: 4px 16px;
         opacity: 0.8;
-        width: 4rem;
-        height: auto;
         text-align: center;
         background-color: #fff;
         color: #000;
         cursor: pointer;
         margin-right: 2rem;
+        border-radius: 2px;
+
       }
+
       .size-option.selected {
         opacity: 1;
         background-color: var(--main-color);
@@ -86,6 +88,7 @@
       .topping {
         display: flex;
         margin: 0.8rem 0 0 1rem;
+
         ul {
           li {
             border: 1px solid var(--main-color);
@@ -94,11 +97,13 @@
             font-size: 14px;
             margin-right: 2rem;
           }
+
           .topping-option {
             opacity: 0.8;
             text-align: center;
             cursor: pointer;
           }
+
           .topping-option.selected {
             opacity: 1;
             border: 1px solid rgb(0, 0, 0);
@@ -121,24 +126,30 @@
         }
       }
 
-      .quantity-add_cart {
+      // quantity
+      .quantity {
         display: flex;
         justify-content: space-between;
-        margin: 1rem;
-
+        align-items: center;
+        margin: 2rem 1rem 1rem 1rem;
+        
         .counter {
           & {
             display: inline-flex;
             align-items: center;
+            @include bordered(1px, #444);
             border-radius: 3px;
             user-select: none;
             overflow: hidden;
 
             &__button {
-              @include dimension(1.6rem, 1.6rem);
-              background-color: var(--main-color);
+              @include dimension(2.125rem, 2.25rem);
+              background-color: var(--bg-color-3);
               @include transition(color, 0.2s);
-              border-radius: 50%;
+
+              &:hover {
+                color: #eee;
+              }
 
               &[disabled] {
                 cursor: not-allowed;
@@ -148,9 +159,9 @@
           }
 
           &__count {
-            @include dimension(2rem, 2rem);
+            @include dimension(2.75rem, 2.25rem);
             color: var(--main-color);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             line-height: 2.25rem;
             font-weight: bold;
             text-align: center;
@@ -192,7 +203,7 @@
     display: flex;
     margin: 1rem;
 
-    .mid-text{
+    .mid-text {
       width: 50%;
     }
 

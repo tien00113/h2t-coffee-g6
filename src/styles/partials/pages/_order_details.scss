@@ -1,0 +1,136 @@
+.order_details {
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    margin-top: 5rem;
+}
+
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+
+    .step {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+
+        .stepLabel {
+            padding-top: 8px;
+        }
+
+        .connector {
+            width: 100%;
+            height: 2px;
+            background-color: #cccccc;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            z-index: -1;
+        }
+
+        .circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .active {
+            background-color: rgb(73, 175, 243);
+        }
+    }
+}
+
+.detail {
+    display: flex;
+    margin-top: 2rem;
+    
+    .detail_order,
+    .detail_address {
+        padding: 1rem;
+        margin: 1rem;
+    }
+    
+    .detail_order{
+        width: 70%;
+
+        .code{
+            margin: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            p{
+                padding: 0.5rem;
+                display: inline-block;
+                background-color: var(--track-color);
+            }
+            h5{
+                margin-top: 1rem;
+                margin-right: 0.6rem;
+            }
+        }
+
+        .purchase-history{
+            .order{
+                background: #000;
+                .order-right{
+                    h3{
+                        margin-top: 4.5rem;
+                    }
+                }
+            }
+        }
+
+        .note{
+            display: flex;
+            margin-left: 0.5rem;
+            p{
+                margin-left: 0.5rem;
+            }
+        }
+
+        .info{
+            table {
+                border-collapse: collapse;
+                width: 60%;
+                float: right;
+            }
+            td, th {
+                text-align: right;
+                padding: 8px;
+            }
+            #info-pay{
+                font-weight: 600;
+            }
+        }
+
+    }
+    
+    .detail_address {
+        height: 30%;
+        background: var(--track-color);
+        h3{
+            color: var(--main-color);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .address {
+            p{
+                font-weight: 600;
+                margin: 0.5rem 0;
+                span{
+                    font-weight: 300;
+                    margin-left: 0.3rem;
+                }
+            }
+        }
+    }
+}
