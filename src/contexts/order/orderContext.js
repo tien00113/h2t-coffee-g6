@@ -18,7 +18,8 @@ const OrderProvider = ({children}) => {
             dispatch({
                 type:'ORDER',
                 payload: data,
-            })
+            });
+            return data;
         } catch (error) {
             console.log("Lỗi order ------------", error);
         }

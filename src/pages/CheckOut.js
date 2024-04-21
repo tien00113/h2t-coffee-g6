@@ -3,12 +3,13 @@ import orderContext from '../contexts/order/orderContext';
 import { displayMoney } from '../helpers/utils';
 import AddressForm from '../components/form/AddressForm';
 import AccountForm from '../components/form/AccountForm';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CheckOut = ({ auth }) => {
 
   const { order } = useContext(orderContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const textAreaRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
   const [login, setLogin] = useState(false);
@@ -44,13 +45,15 @@ const CheckOut = ({ auth }) => {
     setLogin(false);
   }
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     const addOrder = {
       orderItems: checkoutItem,
       note: textAreaRef.current.value,
       shipAddress: shipAddress
     }
-    order(addOrder);
+    const newOrder = await order(addOrder);
+
+    navigate("/order-manage", {state: newOrder});
 
   }
 

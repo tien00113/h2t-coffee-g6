@@ -161,7 +161,7 @@ const Header = () => {
                                                 const { id, link, path } = item;
                                                 return (
                                                     <li key={id}>
-                                                        <Link to={path}>{link}</Link>
+                                                        {link !== "Orders" ? <Link to={path}>{link}</Link> : (auth?.user ? <Link to={path}>{link}</Link> : <Link to="/">{link}</Link>)}
                                                     </li>
                                                 );
                                             })
