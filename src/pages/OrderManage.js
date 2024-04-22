@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ModalReview from '../components/product/ModalReview';
+
 
 // Sidebar Component
 function Sidebar({ onSelect }) {
@@ -25,12 +27,6 @@ function Sidebar({ onSelect }) {
                 Chờ Xác Nhận
             </button>
             <button
-                onClick={() => handleSelect('delivery')}
-                style={{ backgroundColor: selected === 'delivery' ? 'gray' : 'transparent' }}
-            >
-                Vận Chuyển
-            </button>
-            <button
                 onClick={() => handleSelect('cancel')}
                 style={{ backgroundColor: selected === 'cancel' ? 'gray' : 'transparent' }}
             >
@@ -48,77 +44,129 @@ function Sidebar({ onSelect }) {
 
 // ContentArea Component
 function ContentArea({ selectedOption }) {
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleChangeClick = () => {
+        setModalVisible(true);
+    };
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
     return (
-        <div className="content-area">
-            {selectedOption === 'all' && <div>Thông tin tài khoản</div>}
-            {selectedOption === 'wait_payment' && <div>Danh sách đơn hàng</div>}
-            {selectedOption === 'delivery' && <div>Thông báo mới nhất</div>}
-            {selectedOption === 'cancel' && <div>Thông tin Shopee Xu</div>}
-            {selectedOption === 'history' &&
-                <div class="purchase-history">
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src="https://cdn.pixabay.com/photo/2020/03/28/14/38/egg-coffee-4977310_1280.jpg" alt="Sản phẩm 1" />
-                            <div class="order-details">
-                                <h3>Cà Phê Trứng</h3>
-                                <p>Size: M</p>
-                                <p>Topping: Kem Foam</p>
-                                <h5>x2</h5>
-                            </div>
+        <>
+            <div className="content-area">
+                {selectedOption === 'all' && <div>Thông tin tài khoản</div>}
+                {selectedOption === 'wait_payment' &&
+                    <div class="purchase-history">
+                        <div class="order">
+                            <dev className='order_info'>
+                                <div class="order-left" >
+                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <div class="order-details">
+                                        <h3>Xiên Rau Củ</h3>
+                                        <p>Size: S</p>
+                                        <h5>x2</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    {/* <p class="status completed">Giao hoàn thành</p> */}
+                                    <p class="status_wait">Chờ Xác Nhận</p>
+                                    <h3>55.000đ</h3>
+                                </div>
+                            </dev>
+
                         </div>
-                        <div class="order-right" >
-                            {/* <p class="status pending">Chờ xác nhận</p> */}
-                            <p class="status in-progress">Đã giao</p>
-                            <h3>Thành tiền: 60.000đ</h3>
+                    </div>}
+                {selectedOption === 'cancel' &&
+                    <div class="purchase-history">
+                        <div class="order">
+                            <dev className='order_info'>
+                                <div class="order-left" >
+                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <div class="order-details">
+                                        <h3>Xiên Rau Củ</h3>
+                                        <p>Size: S</p>
+                                        <h5>x2</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    {/* <p class="status completed">Giao hoàn thành</p> */}
+                                    <p class="status_failure">Đã huỷ</p>
+                                    <h3>55.000đ</h3>
+                                </div>
+                            </dev>
+                            <div className="separator"></div>
+                            <dev className='btn_review'>
+                                {/* <button className='btn-2'>Đánh giá</button> */}
+                                <button className='btn-1'>Mua Lại</button>
+                            </dev>
                         </div>
-                    </div>
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src="https://cdn.pixabay.com/photo/2024/02/12/15/23/ai-generated-8568762_1280.jpg" alt="Sản phẩm 2" />
-                            <div class="order-details">
-                                <h3>Bánh Mỳ Kẹp</h3>
-                                <p>Size: L</p>
-                                <h5>x1</h5>
-                            </div>
+                    </div>}
+                {selectedOption === 'history' &&
+                    <div class="purchase-history">
+                        <div class="order">
+                            <dev className='order_info'>
+                                <div class="order-left" >
+                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <div class="order-details">
+                                        <h3>Xiên Rau Củ</h3>
+                                        <p>Size: S</p>
+                                        <h5>x2</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    <p class="status_success">Đã giao</p>
+                                    <h3>55.000đ</h3>
+                                </div>
+                            </dev>
+                            <div className="separator"></div>
+                            <dev className='btn_review'>
+                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                <button className='btn-1'>Mua Lại</button>
+                            </dev>
                         </div>
-                        <div class="order-right" >
-                            <p class="status in-progress">Đã giao</p>
-                            <h3>Thành tiền: 35.000đ</h3>
+
+                        <div class="order">
+                            <dev className='order_info'>
+                                <div class="order-left" >
+                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <div class="order-details">
+                                        <h3>Xiên Rau Củ</h3>
+                                        <p>Size: S</p>
+                                        <h5>x2</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    <p class="status_success">Đã giao</p>
+                                    <h3>90.000đ</h3>
+                                </div>
+                            </dev>
+                            <div className="separator"></div>
+                            <dev className='btn_review'>
+                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                <button className='btn-1'>Mua Lại</button>
+                            </dev>
                         </div>
-                    </div>
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
-                            <div class="order-details">
-                                <h3>Xiên Rau Củ</h3>
-                                <p>Size: S</p>
-                                <h5>x2</h5>
-                            </div>
-                        </div>
-                        <div class="order-right" >
-                            {/* <p class="status completed">Giao hoàn thành</p> */}
-                            <p class="status in-progress">Đã giao</p>
-                            <h3>Thành tiền: 55.000đ</h3>
-                        </div>
-                    </div>
-                </div>}
-        </div>
+                    </div>}
+            </div>
+            {modalVisible && <ModalReview onClose={handleCloseModal} />}
+            </>
     );
 }
 
 // MainLayout Component
 function OrderManage() {
     const [selectedOption, setSelectedOption] = useState('account');
-
     const handleSelect = (option) => {
         setSelectedOption(option);
     };
 
     return (
         <div className="main-layout">
-            <Sidebar onSelect={handleSelect} />
+            <Sidebar onSelect={handleSelect} /> 
             <ContentArea selectedOption={selectedOption} />
         </div>
+        
     );
 }
 
