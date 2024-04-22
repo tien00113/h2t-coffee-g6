@@ -60,17 +60,6 @@ const cartReducer = (state, action) => {
             };
 
         case 'ADD_TO_CART_USER':
-            // const cartIt = state.cartUser.cartItems.find(i => i.product.id === action.payload.request.productId && i.sizeOption.id === action.payload.request.sizeOption.id && ((i.toppingOption === null && action.payload.request.toppingOption === null) || i.toppingOption.id === action.payload.request.toppingOption.id));
-            // if (cartIt) {
-            //     cartIt.quantity += 1;
-            //     return {
-            //         ...state,
-            //         cartUser: {
-            //             ...state.cartUser,
-            //             cartItems: [...state.cartUser.cartItems]
-            //         }
-            //     }
-            // } else {
             return {
                 ...state,
                 message: action.payload,

@@ -8,18 +8,21 @@ const ProductReviews = (props) => {
     return (
         <>
             <li>
+                <div className='user_avatar'>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrEJMXA4HU6NNsX9ImmYWYEvithsfvIwliyw&s" alt="" />
+                </div>
                 <div className="user_info">
-                    <img src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png" alt="user-img" />
+                    {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrEJMXA4HU6NNsX9ImmYWYEvithsfvIwliyw&s" alt="" /> */}
                     <div>
                         <h4>{name}</h4>
                         <div className="user_ratings">
-                            <span className="rating_star">
+                            <div className="rating_star">
                                 {
                                     [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
                                 }
-                            </span>
-                            <span>|</span>
-                            <span className="date">{date}</span>
+                            </div>
+                            {/* <span>|</span> */}
+                            <div className="date">14-08-2024 14:47</div>
                         </div>
                     </div>
                 </div>

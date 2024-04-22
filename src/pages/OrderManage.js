@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllOrderAction } from '../Redux/Order/order.action';
 import AccountForm from '../components/form/AccountForm';
+import ModalReview from '../components/product/ModalReview';
 
 // Sidebar Component
 function Sidebar({ onSelect }) {
@@ -67,7 +68,16 @@ function ContentArea({ allOrder, onSelect }) {
     const cancelledOrdes = allOrder.filter(item => item?.status === 'CANCELLED');
     const deliveredOrders = allOrder.filter(item => item?.status === 'DELIVERED');
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const handleChangeClick = () => {
+        setModalVisible(true);
+    };
+    const handleCloseModal = () => {
+        setModalVisible(false);
+    };
+
     return (
+        <>
         <div className="content-area">
             {/* PLACED ORDER*/}
             {
@@ -110,7 +120,6 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                         </div>
                         <div class="order-right" >
-                            {/* <p class="status pending">Chờ xác nhận</p> */}
                             <p class="status in-progress">Chờ Giao Hàng</p>
                             <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                         </div>
@@ -138,6 +147,10 @@ function ContentArea({ allOrder, onSelect }) {
                             {/* <p class="status pending">Chờ xác nhận</p> */}
                             <p class="status in-progress">Đang Giao Hàng</p>
                             <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
+                            {/* <div className='btn_review'>
+                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                <button className='btn-1'>Mua Lại</button>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -159,7 +172,6 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                         </div>
                         <div class="order-right" >
-                            {/* <p class="status pending">Chờ xác nhận</p> */}
                             <p class="status in-progress">Đã Hủy</p>
                             <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                         </div>
@@ -171,7 +183,7 @@ function ContentArea({ allOrder, onSelect }) {
 
             {/*DELIVERED ORDER*/}
 
-            {onSelect === 'DELIVERED' && (deliveredOrders.length > 0 ?
+            {/* {onSelect === 'DELIVERED' && (deliveredOrders.length > 0 ?
                 deliveredOrders.map((order) => (
                     <div className='purchase-history'>
                         <div class="order">
@@ -185,15 +197,66 @@ function ContentArea({ allOrder, onSelect }) {
                                 </div>
                             </div>
                             <div class="order-right" >
-                                {/* <p class="status pending">Chờ xác nhận</p> */}
                                 <p class="status in-progress">Đã Hoàn Thành</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
+                                <div className='btn_review'>
+                                    <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                    <button className='btn-1'>Mua Lại</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                )) : "Chưa có đơn hàng")}
+                )) : "Chưa có đơn hàng")} */}
+            {onSelect === 'DELIVERED' &&
+                <div class="purchase-history">
+                    <div class="order">
+                        <div className='order_info'>
+                            <div class="order-left" >
+                                <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                <div class="order-details">
+                                    <h3>Xiên Rau Củ</h3>
+                                    <p>Size: S</p>
+                                    <h5>x2</h5>
+                                </div>
+                            </div>
+                            <div class="order-right" >
+                                <p class="status_success">Đã giao</p>
+                                <h3>55.000đ</h3>
+                            </div>
+                        </div>
+                        <div className="separator"></div>
+                        <div className='btn_review'>
+                            <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                            <button className='btn-1'>Mua Lại</button>
+                        </div>
+                    </div>
+
+                    <div class="order">
+                        <div className='order_info'>
+                            <div class="order-left" >
+                                <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                <div class="order-details">
+                                    <h3>Xiên Rau Củ</h3>
+                                    <p>Size: S</p>
+                                    <h5>x2</h5>
+                                </div>
+                            </div>
+                            <div class="order-right" >
+                                <p class="status_success">Đã giao</p>
+                                <h3>90.000đ</h3>
+                            </div>
+                        </div>
+                        <div className="separator"></div>
+                        <div className='btn_review'>
+                            <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                            <button className='btn-1'>Mua Lại</button>
+                        </div>
+                    </div>
+                </div>}
             {/* END DELIVERED ORDER*/}
         </div>
+        {modalVisible && <ModalReview onClose={handleCloseModal} />}
+        </>
     );
 }
 
@@ -213,10 +276,12 @@ function OrderManage() {
     };
 
     return (
-        <div className="main-layout">
-            <Sidebar onSelect={handleSelect} />
-            <ContentArea allOrder={order} onSelect={selectedOption} />
-        </div>
+        <>
+            <div className="main-layout">
+                <Sidebar onSelect={handleSelect} />
+                <ContentArea allOrder={order} onSelect={selectedOption} />
+            </div>
+        </>
     );
 }
 

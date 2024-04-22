@@ -132,7 +132,7 @@
         justify-content: space-between;
         align-items: center;
         margin: 2rem 1rem 1rem 1rem;
-        
+
         .counter {
           & {
             display: inline-flex;
@@ -375,6 +375,95 @@
       border-radius: 0.2rem;
       width: 20%;
       margin-right: 0.4rem;
+    }
+  }
+}
+
+// Review Modal
+
+.modal_review {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba($color: #000000, $alpha: 0.6);
+  @include transition(all, 0.2s, ease-in-out);
+  top: 0;
+  left: 0;
+  z-index: 3;
+  color: #ffffff;
+
+  .modal_content {
+    width: 50%;
+    height: auto;
+    background-color: #000000;
+    box-shadow: 0 0 5px 5px #2e2e2e;
+    max-height: 58%;
+    overflow-y: auto;
+
+    .close-button {
+      position: sticky;
+      font-size: 1.5rem;
+      top: 0;
+      float: right;
+      z-index: 10
+    }
+
+    .order {
+      background: #000;
+
+      .payment-address-form {
+        margin-top: 0.8rem;
+
+        textarea {
+          width: 100%;
+          height: 6rem;
+          padding: 0.3rem;
+          border: 1px solid #343434;
+        }
+      }
+
+      .serviceRating {
+        .service {
+          margin-bottom: 0.6rem;
+          display: flex;
+          align-items: baseline;
+
+          .stars {
+            cursor: pointer;
+            font-size: 24px;
+            margin-left: 1rem;
+          }
+
+          .star {
+            display: inline-block;
+            margin: 0 0.1rem;
+          }
+
+          .star:hover,
+          .star.selected {
+            color: gold;
+          }
+        }
+      }
+    }
+
+    .v-1 {
+      margin-top: 5rem;
+    }
+
+    .btn-group {
+      position: sticky;
+      bottom: 0;
+      background: #000;
+      float: right;
+      bottom: 1rem;
+
+      .btn-primary {
+        margin-left: 1rem;
+      }
     }
   }
 }
