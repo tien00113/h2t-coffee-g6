@@ -263,10 +263,6 @@
       justify-content: space-between;
       margin-bottom: 20px;
 
-      // .left, .middle, .right {
-      //   width: 33%;
-      // }
-
       .left {
         .input_checkbox {
           display: flex;
@@ -393,7 +389,6 @@
   top: 0;
   left: 0;
   z-index: 3;
-  color: #ffffff;
 
   .modal_content {
     width: 50%;
@@ -409,6 +404,24 @@
       top: 0;
       float: right;
       z-index: 10
+    }
+
+    .modal_content-box {
+      padding: 1rem;
+      .order-left {
+        display: flex;
+        .order-details {
+          h3,p,h5 {
+            margin: 3px 0;
+          }
+        }
+        img {
+          width: 100px;
+          height: 100px;
+          margin-right: 20px;
+        }
+      }
+
     }
 
     .order {
@@ -451,7 +464,7 @@
     }
 
     .v-1 {
-      margin-top: 5rem;
+      margin-top: 4.5rem;
     }
 
     .btn-group {
@@ -460,6 +473,8 @@
       background: #000;
       float: right;
       bottom: 1rem;
+      padding-right: 0.6rem;
+      padding-top: 0.6rem;
 
       .btn-primary {
         margin-left: 1rem;

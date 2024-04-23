@@ -3,7 +3,7 @@ const reviewsData = [
         id: 1,
         name: "Atharva Kumar",
         date: "4 Aug 2022",
-        review: "Tôi đã uống nó rất nhiều lần và cảm thấy không ngon, Tôi đã uống nó rất nhiều lần và cảm thấy không ngon. Tôi đã uống nó rất nhiều lần và cảm thấy không ngon.",
+        review: "Tôi đã uống nó rất nhiều lần và cảm thấy không ngon.",
         rateCount: 5,
     },
     {

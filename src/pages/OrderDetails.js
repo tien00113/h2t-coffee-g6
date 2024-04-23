@@ -50,22 +50,6 @@ const OrderDetails = () => {
 
     return (
         <div className="order_details">
-            {/* code cũ này  */}
-            {/* <div className="stepper">
-                {steps.map((label, index) => (
-                    <div key={label} className="step">
-                        {index < steps.length - 1 && (
-                            <div className={` connector ${index < activeStep ? 'active' : ''}`} />
-                        )}
-                        <div className={`circle ${index <= activeStep ? "active" : ''}`}>
-                            {index + 1}
-                        </div>
-                        <div className="stepLabel">{label}</div>
-                    </div>
-                ))}
-            </div> */}
-            {/* hết code cũ */}
-
             <div className="stepper">
                 {steps.map((label, index) => (
                     <div key={label} className="step">
@@ -92,7 +76,6 @@ const OrderDetails = () => {
                     </div>
                     <div className="separator"></div>
                     <div class="purchase-history">
-
                         {orderDetail?.orderItems.map((item) => (
                             <div class="order">
                                 <div class="order-left" >

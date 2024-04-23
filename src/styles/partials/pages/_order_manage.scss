@@ -1,38 +1,4 @@
-// .main-layout{
-//     display: flex;
-//     flex-direction: row;
-//     min-height: 100vh;
-//     margin-top: 3rem;
 
-//     .sidebar{
-//         width: 26%;
-//         padding: 20px;
-//         height: 0%;
-
-//         h3{
-//             text-align: center;
-//             margin-bottom: 1.5rem;
-//             text-transform: uppercase;
-//             background-color: var(--main-color);
-//             padding: 0.3rem 0.6rem;
-//         }
-
-//         button {
-//             display: block;
-//             width: 100%;
-//             padding: 10px;
-//             margin-bottom: 10px;
-//             cursor: pointer;
-//             text-align: left;
-//         }
-//     }
-
-//     .content-area {
-//         width: 100%;
-//         padding: 20px;
-//         background: var(--bg-color);
-//     }
-//   }
 
 // // history
 // .purchase-history{
@@ -112,100 +78,77 @@
     }
 }
 
-// history
-// .purchase-history {
-//     .order {
-//         padding: 10px;
-//         margin-bottom: 20px;
-//         width: 100%;
-//         background: var(--bg-color-3);
+.purchase-history {
+    margin-bottom: 1rem;
+    background: var(--bg-color-3);
+    .order {
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
 
-//         .order_info {
-//             display: flex;
-//             justify-content: space-between;
-
-//             .order-right {
-//                 p {
-//                     text-align: right;
-//                 }
-
-//                 h3 {
-//                     margin-top: 3.5rem;
-//                     color: var(--main-color);
-//                     float: right;
-//                 }
-//             }
-
-//             .order-left {
-//                 display: flex;
-
-//                 .order-details {
-
-//                     h3,
-//                     p,
-//                     h5 {
-//                         margin: 3px 0;
-//                     }
-//                 }
-
-//                 img {
-//                     width: 100px;
-//                     height: 100px;
-//                     margin-right: 20px;
-//                 }
-//             }
-//         }
-
-//         .btn_review {
-//             display: flex;
-//             justify-content: flex-end;
-
-//             .btn-2 {
-//                 margin-right: 1rem;
-//             }
-//         }
-//     }
-// }
-
-.purchase-history{
-        .order {
-            padding: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            background: var(--bg-color-3);
-            .order-right{
-                p{
-                    text-align: right;
-                }
-                h3{
-                    margin-top: 3.5rem;
-                    color: var(--main-color);
-                }
-                .btn_review{
-                    display: flex;
-                    justify-content: flex-end;
-                    .btn-2{
-                        margin-right: 1rem;
-                    }
-                }
+        .order-right {
+            p {
+                text-align: right;
             }
-            .order-left{
+
+            h3 {
+                margin-top: 3.5rem;
+                float:right;
+                color: var(--main-color);
+            }
+
+            .btn_review {
                 display: flex;
-                .order-details{
-                    h3,p,h5{
-                        margin: 3px 0;
-                    }
-                }
-                img {
-                    width: 100px;
-                    height: 100px;
-                    margin-right: 20px;
+                justify-content: flex-end;
+
+                .btn-2 {
+                    margin-right: 1rem;
                 }
             }
         }
+
+        .order-left {
+            display: flex;
+
+            .order-details {
+
+                h3,
+                p,
+                h5 {
+                    margin: 3px 0;
+                }
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                margin-right: 20px;
+            }
+        }
+
     }
+    .add_product{
+        text-align: center;
+        padding-bottom:1rem;
+        h5{ 
+            &:hover{
+                opacity: 0.8;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .btn_review{
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 1rem;
+        padding-right: 0.6rem;
+        .btn-2{
+            margin-right: 1rem;
+        }
+    }
+}
 
 .status_success {
     color: rgb(42, 224, 42);

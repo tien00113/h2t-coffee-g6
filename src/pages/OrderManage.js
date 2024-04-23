@@ -19,12 +19,6 @@ function Sidebar({ onSelect }) {
     return (
         <div className="sidebar">
             <h3>Quản lý đơn hàng</h3>
-            {/* <button
-                onClick={() => handleSelect('all')}
-                style={{ backgroundColor: selected === 'all' ? 'gray' : 'transparent' }}
-            >
-                Tất cả
-            </button> */}
             <button
                 onClick={() => handleSelect('PLACED')}
                 style={{ backgroundColor: selected === 'PLACED' ? 'gray' : 'transparent' }}
@@ -78,113 +72,39 @@ function ContentArea({ allOrder, onSelect }) {
 
     return (
         <>
-        <div className="content-area">
-            {/* PLACED ORDER*/}
-            {
-                onSelect === 'PLACED' && (placedOrders.length > 0 ? placedOrders.map((order) => (
-                    // <Link key={order?.id} to={`/order-details/${order?.id}`}>
-                    <div className='purchase-history' onClick={() => { navigate("/order-details", { state: order }) }}>
-                        <div class="order">
-                            <div class="order-left" >
-                                <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                <div class="order-details">
-                                    <h3>{order?.orderItems[0]?.product?.name}</h3>
-                                    <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
-                                    <h5>x{order?.orderItems[0]?.quantity}</h5>
+            <div className="content-area">
+                {/* PLACED ORDER*/}
+                {
+                    onSelect === 'PLACED' && (placedOrders.length > 0 ? placedOrders.map((order) => (
+                        // <Link key={order?.id} to={`/order-details/${order?.id}`}>
+                        <div className='purchase-history' onClick={() => { navigate("/order-details", { state: order }) }}>
+                            <div class="order">
+                                <div class="order-left" >
+                                    <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
+                                    <div class="order-details">
+                                        <h3>{order?.orderItems[0]?.product?.name}</h3>
+                                        <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
+                                        <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                        <h5>x{order?.orderItems[0]?.quantity}</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    <p class="status in-progress">Chờ Xác Nhận</p>
+                                    <h3>Thành Tiền: {displayMoney(order?.totalSalePrice)}</h3>
                                 </div>
                             </div>
-                            <div class="order-right" >
-                                <p class="status in-progress">Chờ Xác Nhận</p>
-                                <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
+                            <div className="separator"></div>
+                            <div className='add_product'>
+                                <h5>Hiện thị thêm đơn hàng</h5>
                             </div>
                         </div>
-                    </div>
-                    // </Link>
-                )) : "Chưa có đơn hàng")
-            }
-            {/*END PLACED ORDER*/}
+                        // </Link>
+                    )) : "Chưa có đơn hàng")}
 
-            {/*CONFIRED ORDER*/}
+                {/*END PLACED ORDER*/}
+                {/*CONFIRED ORDER*/}
 
-            {onSelect === 'CONFIRMED' && (confirmedOrders.length > 0 ? confirmedOrders.map((order) => (
-                <div className='purchase-history'>
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                            <div class="order-details">
-                                <h3>{order?.orderItems[0]?.product?.name}</h3>
-                                <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
-                                <h5>x{order?.orderItems[0]?.quantity}</h5>
-                            </div>
-                        </div>
-                        <div class="order-right" >
-                            <p class="status in-progress">Chờ Giao Hàng</p>
-                            <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
-                        </div>
-                    </div>
-                </div>
-            )) : "Chưa có đơn hàng")
-            }
-            {/*END CONFIRED ORDER*/}
-
-            {/*SHIPPED ORDER*/}
-
-            {onSelect === 'SHIPPED' && (shippedOrders.length > 0 ? shippedOrders.map((order) => (
-                <div className='purchase-history'>
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                            <div class="order-details">
-                                <h3>{order?.orderItems[0]?.product?.name}</h3>
-                                <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
-                                <h5>x{order?.orderItems[0]?.quantity}</h5>
-                            </div>
-                        </div>
-                        <div class="order-right" >
-                            {/* <p class="status pending">Chờ xác nhận</p> */}
-                            <p class="status in-progress">Đang Giao Hàng</p>
-                            <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
-                            {/* <div className='btn_review'>
-                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                                <button className='btn-1'>Mua Lại</button>
-                            </div> */}
-                        </div>
-                    </div>
-                </div>
-            )) : "Chưa có đơn hàng")}
-
-            {/*END SHIPPED ORDER*/}
-            {/*CANCELLED ORDER*/}
-
-            {onSelect === 'CANCELLED' && (cancelledOrdes.length > 0 ? cancelledOrdes.map((order) => (
-                <div className='purchase-history'>
-                    <div class="order">
-                        <div class="order-left" >
-                            <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                            <div class="order-details">
-                                <h3>{order?.orderItems[0]?.product?.name}</h3>
-                                <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
-                                <h5>x{order?.orderItems[0]?.quantity}</h5>
-                            </div>
-                        </div>
-                        <div class="order-right" >
-                            <p class="status in-progress">Đã Hủy</p>
-                            <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
-                        </div>
-                    </div>
-                </div>
-            )) : "Chưa có đơn hàng")}
-
-            {/*END CANCELLED ORDER*/}
-
-            {/*DELIVERED ORDER*/}
-
-            {/* {onSelect === 'DELIVERED' && (deliveredOrders.length > 0 ?
-                deliveredOrders.map((order) => (
+                {onSelect === 'CONFIRMED' && (confirmedOrders.length > 0 ? confirmedOrders.map((order) => (
                     <div className='purchase-history'>
                         <div class="order">
                             <div class="order-left" >
@@ -197,65 +117,101 @@ function ContentArea({ allOrder, onSelect }) {
                                 </div>
                             </div>
                             <div class="order-right" >
-                                <p class="status in-progress">Đã Hoàn Thành</p>
+                                <p class="status in-progress">Chờ Giao Hàng</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
-                                <div className='btn_review'>
-                                    <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                                    <button className='btn-1'>Mua Lại</button>
-                                </div>
                             </div>
                         </div>
                     </div>
-                )) : "Chưa có đơn hàng")} */}
-            {onSelect === 'DELIVERED' &&
-                <div class="purchase-history">
-                    <div class="order">
-                        <div className='order_info'>
+                )) : "Chưa có đơn hàng")}
+
+                {/*END CONFIRED ORDER*/}
+                {/*SHIPPED ORDER*/}
+
+                {onSelect === 'SHIPPED' && (shippedOrders.length > 0 ? shippedOrders.map((order) => (
+                    <div className='purchase-history'>
+                        <div class="order">
                             <div class="order-left" >
-                                <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
                                 <div class="order-details">
-                                    <h3>Xiên Rau Củ</h3>
-                                    <p>Size: S</p>
-                                    <h5>x2</h5>
+                                    <h3>{order?.orderItems[0]?.product?.name}</h3>
+                                    <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
+                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                    <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
                             <div class="order-right" >
-                                <p class="status_success">Đã giao</p>
-                                <h3>55.000đ</h3>
+                                {/* <p class="status pending">Chờ xác nhận</p> */}
+                                <p class="status in-progress">Đang Giao Hàng</p>
+                                <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
+                                {/* <div className='btn_review'>
+                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                <button className='btn-1'>Mua Lại</button>
+                            </div> */}
                             </div>
                         </div>
-                        <div className="separator"></div>
-                        <div className='btn_review'>
-                            <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                            <button className='btn-1'>Mua Lại</button>
+                    </div>
+                )) : "Chưa có đơn hàng")}
+
+                {/*END SHIPPED ORDER*/}
+                {/*CANCELLED ORDER*/}
+
+                {onSelect === 'CANCELLED' && (cancelledOrdes.length > 0 ? cancelledOrdes.map((order) => (
+                    <div className='purchase-history'>
+                        <div class="order">
+                            <div class="order-left" >
+                                <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
+                                <div class="order-details">
+                                    <h3>{order?.orderItems[0]?.product?.name}</h3>
+                                    <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
+                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                    <h5>x{order?.orderItems[0]?.quantity}</h5>
+                                </div>
+                            </div>
+                            <div class="order-right" >
+                                <p class="status in-progress">Đã Hủy</p>
+                                <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
+                            </div>
+                        </div>
+                    </div>
+                )) : "Chưa có đơn hàng")}
+
+                {/*END CANCELLED ORDER*/}
+                {/*DELIVERED ORDER*/}
+
+                {onSelect === 'DELIVERED' &&
+                    <div id='history_product_buy'>
+                        <div className='purchase-history'>
+                            <div class="order">
+                                <div class="order-left" >
+                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <div class="order-details">
+                                        <h3>Cà Phê</h3>
+                                        <p>Size: S</p>
+                                        <p>Topping: Đá</p>
+                                        <h5>x1</h5>
+                                    </div>
+                                </div>
+                                <div class="order-right" >
+                                    <p class="status in-progress">Đã Hủy</p>
+                                    <h3>Thành tiền: 2000</h3>
+                                </div>
+                            </div>
+                            <div className="separator"></div>
+                            <div className='add_product'>
+                                <h5>Hiện thị thêm đơn hàng</h5>
+                            </div>
+                            <div className='btn_review'>
+                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
+                                <button className='btn-1'>Mua Lại</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="order">
-                        <div className='order_info'>
-                            <div class="order-left" >
-                                <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
-                                <div class="order-details">
-                                    <h3>Xiên Rau Củ</h3>
-                                    <p>Size: S</p>
-                                    <h5>x2</h5>
-                                </div>
-                            </div>
-                            <div class="order-right" >
-                                <p class="status_success">Đã giao</p>
-                                <h3>90.000đ</h3>
-                            </div>
-                        </div>
-                        <div className="separator"></div>
-                        <div className='btn_review'>
-                            <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                            <button className='btn-1'>Mua Lại</button>
-                        </div>
-                    </div>
-                </div>}
-            {/* END DELIVERED ORDER*/}
-        </div>
-        {modalVisible && <ModalReview onClose={handleCloseModal} />}
+                }
+
+                {/* END DELIVERED ORDER*/}
+            </div>
+            {modalVisible && <ModalReview onClose={handleCloseModal} />}
         </>
     );
 }

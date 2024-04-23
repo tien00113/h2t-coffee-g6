@@ -57,13 +57,13 @@
 
     &:hover {
         background-color: #c7a17a;
-        color:#fff; 
+        color: #fff;
     }
 }
 
 .btn-1 {
     display: inline-block;
-    background-color:  #c7a17a;
+    background-color: #c7a17a;
     color: #fff;
     padding: 0.8rem 1.5rem;
     border-radius: 3px;
@@ -73,12 +73,13 @@
 
     &:hover {
         background-color: #fff;
-        color:#30271C; 
+        color: #30271C;
     }
 }
+
 .btn-2 {
     display: inline-block;
-    background-color:  transparent;
+    background-color: transparent;
     color: #fff;
     padding: 0.8rem 1.5rem;
     border: 1px solid var(--main-color);
@@ -89,7 +90,7 @@
 
     &:hover {
         background-color: #c7a17a;
-        color:#fff; 
+        color: #fff;
     }
 }
 
@@ -158,7 +159,7 @@
         &.active,
         &:hover {
             background-color: #c7a17a;
-            color:#30271C; 
+            color: #30271C;
         }
 
         @include devices(sm) {
@@ -231,4 +232,9 @@
     background: var(--main-color) !important;
 }
 
-
+#img_quilted{
+    @include transition(transform, 0.25s, ease);
+    &:hover{
+        transform: scale(0.9);
+    }
+}
