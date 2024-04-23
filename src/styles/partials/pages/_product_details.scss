@@ -165,6 +165,18 @@
             opacity: 1;
         }
     }
+    .rating_text {
+        font-size: small;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .rating_star {
+        font-size: large;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .prod_details_price {

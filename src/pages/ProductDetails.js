@@ -12,6 +12,7 @@ import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
+import ProductRating from '../components/product/ProductRating';
 
 
 const ProductDetails = ({ auth }) => {
@@ -111,20 +112,9 @@ const ProductDetails = ({ auth }) => {
                             <h1 className="prod_details_title">{product?.name}</h1>
 
                             <div className="prod_details_ratings">
-                                <span className="rating_star">
-                                    {/* {
-                                        [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
-                                    } */}
-                                    {
-                                        product?.reViewProducts && product?.reViewProducts.length > 0 ?
-                                            [...Array(product?.reViewProducts)].map((_, i) => <IoMdStar key={i} />)
-                                            :
-                                            [...Array(5)].map((_, i) => <IoMdStar key={i} />)
-
-                                    }
-                                </span>
-                                <span>|</span>
-                                <Link to="*"> Ratings</Link>
+                                <ProductRating rating={product?.averageRating || 5} />
+                                {/* <span>{product?.averageRating}</span> */}
+                                {product?.reViewProducts.length > 0 && <span className='rating_text'>({product?.averageRating + "/5"})</span>}
                             </div>
 
                             <div className="prod_details_price">
@@ -157,18 +147,18 @@ const ProductDetails = ({ auth }) => {
                                 <h4>Topping</h4>
                                 <div className="topping-select">
                                     {product?.toppingOptions.map((topping) => (
-                                    <span 
-                                        key={topping.id}
-                                        className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
-                                        onClick={() => handleToppingClick(topping)}
-                                    >
-                                        {topping.name}
-                                    </span>
+                                        <span
+                                            key={topping.id}
+                                            className={`topping-option ${selectedTopping === topping ? 'selected' : ''}`}
+                                            onClick={() => handleToppingClick(topping)}
+                                        >
+                                            {topping.name}
+                                        </span>
                                     ))}
                                 </div>
                             </div>
 
-                            <div className='quantity'> 
+                            <div className='quantity'>
                                 <h4>Số lượng</h4>
                                 <div class="counter">
                                     <button className="counter__button" onClick={() => setCount(Math.max(count - 1, 1))}>-</button>

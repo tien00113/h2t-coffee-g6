@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CLEAR_ERROR, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE"
+import { CLEAR_ERROR, CREATE_ADDRESS, CREATE_ADDRESS_FAILURE, CREATE_ADDRESS_SUCCESS, GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_FAILURE, LOGOUT_REQUEST, LOGOUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./auth.actionTYPE"
 import { API_BASE_URL, api } from "../../config/api"
 
 export const loginUserAction = (loginData) => async (dispatch) => {
@@ -44,7 +44,7 @@ export const getUserAction = (jwt) => async (dispatch) => {
     try {
         const { data } = await axios.get(`${API_BASE_URL}/api/users/profile`, {
             headers: {
-                "Authorization" : `Bearer ${jwt}`,
+                "Authorization": `Bearer ${jwt}`,
             },
         });
         dispatch({ type: GET_USER_SUCCESS, payload: data })
@@ -73,8 +73,24 @@ export const logoutAction = () => async (dispatch) => {
     }
 }
 
+export const createAddressAction = (adr) => async (dispatch) => {
+    dispatch({ type: CREATE_ADDRESS });
+    try {
+        const { data } = await api.post(`${API_BASE_URL}/api/address/create`, adr);
+        console.log("đã thêm address vào user", data);
+        dispatch({
+            type: CREATE_ADDRESS_SUCCESS,
+            payload: data,
+        });
+        console.log("đã dispatch");
+    } catch (error) {
+        console.log("Lỗi add address: ", error);
+        dispatch({type: CREATE_ADDRESS_FAILURE, payload: error});
+    }
+}
+
 export const clearErrorAction = () => {
     return {
-        type:CLEAR_ERROR
+        type: CLEAR_ERROR
     }
 }

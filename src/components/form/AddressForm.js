@@ -1,12 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import data from '../../data/addressData.json';
 import { IoAdd } from "react-icons/io5";
 import { Form, Formik } from 'formik';
-import orderContext from '../../contexts/order/orderContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAddressAction } from '../../Redux/Auth/auth.action';
 
+const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
 
-const AddressForm = ({ onClose, address }) => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state?.auth?.user) ?? null;
+    const address = useSelector(state => state.auth?.user?.address) ?? [];
+    address && address?.length > 0 && address.sort((a, b) => b.isDefault - a.isDefault);
 
     const [showNew, setShowNew] = useState(false);
     const [cities, setCities] = useState(data);
@@ -15,8 +20,7 @@ const AddressForm = ({ onClose, address }) => {
     const [selectedCity, setSelectedCity] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
-
-    const { createAddress, shippingAddress } = useContext(orderContext);
+    const [shipAddress, setShipAddress] = useState(defaultAddress);
 
     const handleCityChange = (event, setFieldValue) => {
         if (event.target.value === "") {
@@ -77,16 +81,15 @@ const AddressForm = ({ onClose, address }) => {
 
     const handleAddAddress = (values) => {
 
-        console.log("values form gửi lên: ", values)
-        createAddress(values);
+        dispatch(createAddressAction(values));
         handleSetShowFormAdd();
     }
 
-    console.log("add_address", shippingAddress);
+    console.log("address chọn==============", shipAddress);
 
     useEffect(()=>{
-        
-    },[shippingAddress])
+
+    },[address])
 
     return (
         <>
@@ -101,7 +104,7 @@ const AddressForm = ({ onClose, address }) => {
                                 </div>
                                 <div className="modal-checkout-mid">
                                     <div className='mid-text'>
-                                        <label htmlFor="name">Họ và tên</label>
+                                        <label htmlFor="recipientName">Họ và tên</label>
                                         <input type="text" id="recipientName" name='recipientName' placeholder='Tên...' onChange={handleChange} />
                                     </div>
                                     <div className='mid-text'>
@@ -161,9 +164,9 @@ const AddressForm = ({ onClose, address }) => {
                             <div>Địa Chỉ Của Bạn</div>
                             <div className='separator'></div>
 
-                            {address.length > 0 && address.map(item => (<div className="container">
+                            {address.length > 0 && address.map((item, index) => (<div className="container">
                                 <div className="left">
-                                    <div className="input_checkbox"><input type="checkbox" /></div>
+                                    <div className="input_checkbox"><input type="checkbox" checked={shipAddress===item} onChange={() => {setShipAddress(item);}} /></div>
                                 </div>
                                 <div className="middle">
                                     <div className="info">
@@ -185,7 +188,7 @@ const AddressForm = ({ onClose, address }) => {
                         <div className='separator'></div>
                         <div className="btn-group">
                             <button type="button" className="btn_cancel" onClick={onClose}>Hủy</button>
-                            <button type="button" className="btn-1 btn-primary">Xác Nhận</button>
+                            <button type="button" className="btn-1 btn-primary" onClick={()=> {setShippingAddress(shipAddress); onClose()}}>Xác Nhận</button>
                         </div>
                     </div>
                 </div>)
