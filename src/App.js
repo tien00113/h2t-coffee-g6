@@ -9,6 +9,7 @@ import { FiltersProvider } from './contexts/filters/filtersContext';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { OrderProvider } from './contexts/order/orderContext';
+import { ReviewProvider } from './contexts/review/reviewContext';
 
 const App = () => {
 
@@ -18,10 +19,12 @@ const App = () => {
         <FiltersProvider>
           <CartProvider>
             <OrderProvider>
+              <ReviewProvider>
               <Header />
               <RouteRouters />
               <Footer />
               <BackTop />
+              </ReviewProvider>
             </OrderProvider>
           </CartProvider>
         </FiltersProvider>
