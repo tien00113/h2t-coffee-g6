@@ -25,9 +25,37 @@ const OrderProvider = ({children}) => {
         }
     }
 
+    const completedOrder = async (orderId) => {
+        try {
+            const {data} = await api.put(`${API_BASE_URL}/api/order/delivered`, orderId);
+            dispatch({
+                type: "COMPLETED_ORDER",
+                payload: data,
+            })
+            return data;
+        } catch (error) {
+            console.log("Lỗi xác nhận nhận đơn: ", error);
+        }
+    }
+
+    const cancelledOrder = async (orderId) => {
+        try {
+            const {data} = await api.put(`${API_BASE_URL}/api/order/cancelled`, orderId);
+            dispatch({
+                type: "CANCELLED_ORDER",
+                payload: data,
+            })
+            return data;
+        } catch (error) {
+            console.log("Lỗi hủy đơn: ", error);
+        }
+    }
+
     const values = {
         ...state,
         order,
+        completedOrder,
+        cancelledOrder,
     };
 
     return (

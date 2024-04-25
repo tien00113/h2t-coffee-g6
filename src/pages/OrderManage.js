@@ -29,7 +29,7 @@ function Sidebar({ onSelect }) {
                 onClick={() => handleSelect('CONFIRMED')}
                 style={{ backgroundColor: selected === 'CONFIRMED' ? 'gray' : 'transparent' }}
             >
-                Chờ Giao Hàng
+                Chờ Lấy Hàng
             </button>
             <button
                 onClick={() => handleSelect('SHIPPED')}
@@ -77,7 +77,7 @@ function ContentArea({ allOrder, onSelect }) {
                 {
                     onSelect === 'PLACED' && (placedOrders.length > 0 ? placedOrders.map((order) => (
                         // <Link key={order?.id} to={`/order-details/${order?.id}`}>
-                        <div className='purchase-history' onClick={() => { navigate("/order-details", { state: order }) }}>
+                        <div className='purchase-history'>
                             <div class="order">
                                 <div class="order-left" >
                                     <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
@@ -89,13 +89,18 @@ function ContentArea({ allOrder, onSelect }) {
                                     </div>
                                 </div>
                                 <div class="order-right" >
-                                    <p class="status in-progress">Chờ Xác Nhận</p>
+                                    <p class="status_wait in-progress">Chờ Xác Nhận</p>
                                     <h3>Thành Tiền: {displayMoney(order?.totalSalePrice)}</h3>
                                 </div>
                             </div>
                             <div className="separator"></div>
-                            <div className='add_product'>
-                                <h5>Hiện thị thêm đơn hàng</h5>
+                            <div className='add_product' >
+                                <div className='quantity_item'>
+                                    <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                   <p>
+                                    {order?.orderItems.length} Sản Phẩm
+                                   </p>
+                                </div>
                             </div>
                         </div>
                         // </Link>
@@ -117,9 +122,13 @@ function ContentArea({ allOrder, onSelect }) {
                                 </div>
                             </div>
                             <div class="order-right" >
-                                <p class="status in-progress">Chờ Giao Hàng</p>
+                                <p class="status_confirm in-progress">Chờ Lấy Hàng</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                             </div>
+                        </div>
+                        <div className="separator"></div>
+                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
+                            <h5>Xem Chi Tiết</h5>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -140,14 +149,13 @@ function ContentArea({ allOrder, onSelect }) {
                                 </div>
                             </div>
                             <div class="order-right" >
-                                {/* <p class="status pending">Chờ xác nhận</p> */}
-                                <p class="status in-progress">Đang Giao Hàng</p>
+                                <p class="status_shipping in-progress">Đang Giao Hàng</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
-                                {/* <div className='btn_review'>
-                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                                <button className='btn-1'>Mua Lại</button>
-                            </div> */}
                             </div>
+                        </div>
+                        <div className="separator"></div>
+                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
+                            <h5>Xem Chi Tiết</h5>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -168,9 +176,14 @@ function ContentArea({ allOrder, onSelect }) {
                                 </div>
                             </div>
                             <div class="order-right" >
-                                <p class="status in-progress">Đã Hủy</p>
+                                <p class="status_failure in-progress">Đã Hủy</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                             </div>
+                        </div>
+                        <div className="separator"></div>
+                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
+                            <h5>Xem Chi Tiết</h5>
+                            <div className='quantity_item'>2 Sản phẩm</div>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -178,40 +191,40 @@ function ContentArea({ allOrder, onSelect }) {
                 {/*END CANCELLED ORDER*/}
                 {/*DELIVERED ORDER*/}
 
-                {onSelect === 'DELIVERED' &&
-                    <div id='history_product_buy'>
+                {onSelect === 'DELIVERED' && (deliveredOrders.length > 0 ? deliveredOrders.map((order, index) => (
+                    <React.Fragment key={index}>
                         <div className='purchase-history'>
                             <div class="order">
                                 <div class="order-left" >
-                                    <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
+                                    <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
                                     <div class="order-details">
-                                        <h3>Cà Phê</h3>
-                                        <p>Size: S</p>
-                                        <p>Topping: Đá</p>
-                                        <h5>x1</h5>
+                                        <h3>{order?.orderItems[0]?.product?.name}</h3>
+                                        <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
+                                        <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                        <h5>x{order?.orderItems[0]?.quantity}</h5>
                                     </div>
                                 </div>
                                 <div class="order-right" >
-                                    <p class="status in-progress">Đã Hủy</p>
-                                    <h3>Thành tiền: 2000</h3>
+                                    <p class="status_success in-progress">Hoàn Thành</p>
+                                    <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                                 </div>
                             </div>
                             <div className="separator"></div>
                             <div className='add_product'>
-                                <h5>Hiện thị thêm đơn hàng</h5>
+                                <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                <div className='btn_review'>
+                                    {order?.deliveryDateTime && !(order?.deliveryDateTime < order?.updateStatusAt) && < button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>}
+                                    <button className='btn-1'>Mua Lại</button>
+                                </div>
                             </div>
-                            <div className='btn_review'>
-                                <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
-                                <button className='btn-1'>Mua Lại</button>
-                            </div>
-                        </div>
-                    </div>
-
-                }
+                        </div >
+                        {modalVisible && <ModalReview onClose={handleCloseModal} order={order} />}
+                    </React.Fragment>
+                )) : "Chưa có đơn hàng")}
 
                 {/* END DELIVERED ORDER*/}
-            </div>
-            {modalVisible && <ModalReview onClose={handleCloseModal} />}
+            </div >
+
         </>
     );
 }

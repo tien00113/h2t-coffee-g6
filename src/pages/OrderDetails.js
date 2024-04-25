@@ -1,52 +1,56 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MdDone } from "react-icons/md";
 import { displayMoney } from '../helpers/utils';
+import orderContext from '../contexts/order/orderContext';
 
 const steps = [
     'Chờ Xác Nhận',
-    'Chờ Giao Hàng',
+    'Chờ Lấy Hàng',
     'Đang Giao',
-    'Hoàn Thành',
+    'Đánh Giá',
 ];
-
-const orderInfo = {
-    id: "ORD123456",
-    date: "2023-12-01 14:22",
-    items: [
-        {
-            image: "path_to_image.jpg",
-            price: "$19.99",
-            size: "Medium",
-            toppings: ["Cheese", "Pepperoni", "Mushrooms"]
-        }
-    ],
-    customer: {
-        name: "Hoàng China",
-        phone: "123-456-7890",
-        address: "1234 Hồ Tùng Mậu, Cầu Giấy, Hà Nội"
-    }
-};
 
 const OrderDetails = () => {
     const location = useLocation();
     const orderDetail = location?.state;
+    const { completedOrder, cancelledOrder } = useContext(orderContext);
+    const [step, setStep] = useState();
 
     console.log("order là: ", orderDetail);
     let activeStep;
 
-    if (orderDetail?.status === 'PLACED') {
-        activeStep = 1;
-    } else if (orderDetail?.status === 'CONFIRMED') {
-        activeStep = 2;
-    } else if (orderDetail?.status === 'SHIPPED') {
-        activeStep = 3;
-    } else {
-        activeStep = 4;
-    }
+    useEffect(() => {
+        switch (orderDetail?.status) {
+            case 'PLACED':
+                setStep(1);
+                break;
+            case 'CONFIRMED':
+                setStep(2);
+                break;
+            case 'SHIPPED':
+                setStep(3);
+                break;
+            default:
+                setStep(4);
+        }
+    }, [orderDetail?.status]);
 
     const date = new Date(orderDetail?.createAt);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+
+    const updateStatusOrder = () => {
+        if (orderDetail?.status === 'SHIPPED') {
+            completedOrder(orderDetail?.id);
+            setStep(4)
+        } else if (step < 3) {
+            cancelledOrder(orderDetail?.id)
+        } else if (orderDetail?.status === 'DELIVERED') {
+            console.log("dánh giá đi");
+        }
+    }
+
+    console.log("step là: ", step)
 
     return (
         <div className="order_details">
@@ -54,14 +58,18 @@ const OrderDetails = () => {
                 {steps.map((label, index) => (
                     <div key={label} className="step">
                         {index < steps.length - 1 && (
-                            <div className={`connector ${index < activeStep ? 'active' : ''}`} />
+                            <div className={`connector ${index < step - 1 ? 'active' : ''}`} />
                         )}
-                        <div className={`circle ${index <= activeStep ? "active" : ''}`}>
-                            {index < activeStep ? <MdDone style={{ fontSize: "20" }} /> : index + 1}
+                        <div className={`circle ${index <= step -1 ? "active" : ''}`}>
+                            {(step <= 4 && index < step - 1) ? <MdDone style={{ fontSize: "20" }} /> : (step === 4 && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime < orderDetail?.updateStatusAt)) ? <MdDone style={{ fontSize: "20" }} /> : index + 1}
                         </div>
                         <div className="stepLabel">
                             {
-                                activeStep === 4 && orderDetail?.status === 'CANCELLED' ? "Đã Hủy" : label
+                                step === 4 && orderDetail?.status === 'CANCELLED' ? "Đã Hủy" :
+                                    orderDetail?.status === 'CONFIRMED' && label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" :
+                                        orderDetail?.status === 'SHIPPED' && (label === 'Chờ Lấy Hàng' || label === 'Chờ Xác Nhận') ? label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : "Đã Xác Nhận" :
+                                            step ===4  && (label === 'Chờ Xác Nhận' || label === 'Chờ Lấy Hàng' || label === 'Đang Giao' || label === 'Đánh Giá') ? label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" : label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : label === 'Đang Giao' ? "Đã Giao" : (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime < orderDetail?.updateStatusAt) ? "Hoàn Thành" : "Đánh Giá" :
+                                                label
                             }
                         </div>
                     </div>
@@ -102,9 +110,9 @@ const OrderDetails = () => {
                     <div className="separator"></div>
 
                     <div className='info'>
-                        <button className='btn-2'>
+                        <button className='btn-2' onClick={updateStatusOrder}>
                             {
-                                activeStep < 4 ? "Hủy Đơn" : "Mua Lại"
+                                step ===3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' ? "Đánh Giá" : "Mua Lại"
                             }
                         </button>
                         <table>

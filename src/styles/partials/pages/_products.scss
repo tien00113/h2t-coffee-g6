@@ -51,13 +51,16 @@
 .products_img {
     background: var(--bg-color-2);
     text-align: center;
-    padding: 1rem;
+    // padding: 1rem;
+    width: 100%;
     overflow: hidden;
-    height: 13rem;
+    height: 14rem;
     position: relative;
     margin: auto;
+    object-fit: fill;
     img {
-        width: 80%;
+        width: 100%;
+        aspect-ratio: 3/4;
     }
     .btn_card {
         position: absolute;
