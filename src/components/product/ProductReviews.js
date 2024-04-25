@@ -6,7 +6,7 @@ const ProductReviews = (props) => {
     const { name, date, review, rateCount } = props;
 
     return (
-        <>
+        <dev className='review_user'>
             <dev className='comment_review'>
                 <div className='user_avatar'>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrEJMXA4HU6NNsX9ImmYWYEvithsfvIwliyw&s" alt="" />
@@ -24,7 +24,7 @@ const ProductReviews = (props) => {
                     <p className="user_review">{review}</p>
                 </div>
             </dev>
-        </>
+        </dev>
     );
 };
 

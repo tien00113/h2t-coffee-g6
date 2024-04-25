@@ -72,6 +72,7 @@
 
 .nav_text{
     display: flex;
+    
     .box{
         margin: 0 20px;
         cursor: pointer;
@@ -85,7 +86,6 @@
             padding: 1.4rem;
             @include bordered(1px, var(--text-muted));
             @include toggleVisibility(hidden, 0);
-            @include transition(all, 0.2s, ease-in-out);
 
             li {
                 &:not(:last-child) {
@@ -207,6 +207,7 @@
         align-items: center;
         width: 30%;
         margin-right: 5px;
+        
     }
 
     .hamburger {
