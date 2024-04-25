@@ -1,30 +1,30 @@
 import React from 'react';
 import { IoMdStar } from 'react-icons/io';
 
-const ProductReviews = (props) => {
-
-    const { name, date, review, rateCount } = props;
+const ProductReviews = ({ userReview }) => {
 
     return (
-        <dev className='review_user'>
-            <dev className='comment_review'>
+        <div className='review_user'>
+            <div className='comment_review'>
                 <div className='user_avatar'>
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrEJMXA4HU6NNsX9ImmYWYEvithsfvIwliyw&s" alt="" />
                 </div>
                 <div className="user_info">
-                    <h4>{name}</h4>
+                    <h4>{userReview?.user?.username}</h4>
                     <div className="user_ratings">
                         <div className="rating_star">
                             {
-                                [...Array(rateCount)].map((_, i) => <IoMdStar key={i} />)
+                                [...Array(userReview?.rating)].map((_, i) => <IoMdStar key={i} />)
                             }
                         </div>
                         <div className="date">14-08-2024 14:47</div>
                     </div>
-                    <p className="user_review">{review}</p>
+                    <p className="user_review">
+                        {userReview?.comment}
+                    </p>
                 </div>
-            </dev>
-        </dev>
+            </div>
+        </div>
     );
 };
 

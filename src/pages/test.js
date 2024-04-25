@@ -59,7 +59,7 @@ function ContentArea({ selectedOption }) {
                 {selectedOption === 'wait_payment' &&
                     <div class="purchase-history">
                         <div class="order">
-                            <dev className='order_info'>
+                            <div className='order_info'>
                                 <div class="order-left" >
                                     <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
                                     <div class="order-details">
@@ -73,14 +73,14 @@ function ContentArea({ selectedOption }) {
                                     <p class="status_wait">Chờ Xác Nhận</p>
                                     <h3>55.000đ</h3>
                                 </div>
-                            </dev>
+                            </div>
 
                         </div>
                     </div>}
                 {selectedOption === 'cancel' &&
                     <div class="purchase-history">
                         <div class="order">
-                            <dev className='order_info'>
+                            <div className='order_info'>
                                 <div class="order-left" >
                                     <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
                                     <div class="order-details">
@@ -94,18 +94,18 @@ function ContentArea({ selectedOption }) {
                                     <p class="status_failure">Đã huỷ</p>
                                     <h3>55.000đ</h3>
                                 </div>
-                            </dev>
+                            </div>
                             <div className="separator"></div>
-                            <dev className='btn_review'>
+                            <div className='btn_review'>
                                 {/* <button className='btn-2'>Đánh giá</button> */}
                                 <button className='btn-1'>Mua Lại</button>
-                            </dev>
+                            </div>
                         </div>
                     </div>}
                 {selectedOption === 'history' &&
                     <div class="purchase-history">
                         <div class="order">
-                            <dev className='order_info'>
+                            <div className='order_info'>
                                 <div class="order-left" >
                                     <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
                                     <div class="order-details">
@@ -118,16 +118,16 @@ function ContentArea({ selectedOption }) {
                                     <p class="status_success">Đã giao</p>
                                     <h3>55.000đ</h3>
                                 </div>
-                            </dev>
+                            </div>
                             <div className="separator"></div>
-                            <dev className='btn_review'>
+                            <div className='btn_review'>
                                 <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
                                 <button className='btn-1'>Mua Lại</button>
-                            </dev>
+                            </div>
                         </div>
 
                         <div class="order">
-                            <dev className='order_info'>
+                            <div className='order_info'>
                                 <div class="order-left" >
                                     <img src="https://images.pexels.com/photos/2641886/pexels-photo-2641886.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Sản phẩm 3" />
                                     <div class="order-details">
@@ -140,12 +140,12 @@ function ContentArea({ selectedOption }) {
                                     <p class="status_success">Đã giao</p>
                                     <h3>90.000đ</h3>
                                 </div>
-                            </dev>
+                            </div>
                             <div className="separator"></div>
-                            <dev className='btn_review'>
+                            <div className='btn_review'>
                                 <button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>
                                 <button className='btn-1'>Mua Lại</button>
-                            </dev>
+                            </div>
                         </div>
                     </div>}
             </div>

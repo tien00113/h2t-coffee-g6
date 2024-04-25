@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IoMdStar, IoMdCheckmark } from 'react-icons/io';
 import { calculateDiscount, displayMoney } from '../helpers/utils';
 import useDocTitle from '../hooks/useDocTitle';
@@ -17,6 +17,7 @@ import ProductRating from '../components/product/ProductRating';
 
 const ProductDetails = ({ auth }) => {
     const { productId } = useParams();
+    const navigate = useNavigate();
     const prodId = parseInt(productId);
     const dispatch = useDispatch();
     const { product } = useSelector(state => state.product);
@@ -30,7 +31,7 @@ const ProductDetails = ({ auth }) => {
 
     const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
 
-    const [previewImg, setPreviewImg] = useState(product?.image[0].imageUrl);
+    const [previewImg, setPreviewImg] = useState(product?.image[0]?.imageUrl);
     const [showError, setShowError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedTopping, setSelectedTopping] = useState(null);
@@ -51,7 +52,6 @@ const ProductDetails = ({ auth }) => {
     // handling Add-to-cart
     let currentId = localStorage.getItem('currentId');
     currentId = currentId ? Number(currentId) : 1;
-    console.log("currentId modal: ", currentId)
     const handleAddItemToGuestCart = () => {
         const newItem = { id: currentId, product: product, sizeOption: selectedSize, toppingOption: selectedTopping, quantity: count };
         addItemCartGuest(newItem, count);
@@ -88,12 +88,24 @@ const ProductDetails = ({ auth }) => {
 
     // setting the very-first image on re-render
     useEffect(() => {
-        setPreviewImg(product?.image[0].imageUrl);
+        setPreviewImg(product?.image[0]?.imageUrl);
         handleActive(0);
     }, [product?.image]);
 
     const newPrice = displayMoney(product?.salePrice);
     const oldPrice = displayMoney(product?.price);
+
+    const orderItems = [
+        {
+            product: product,
+            sizeOption: selectedSize,
+            toppingOption: selectedTopping,
+            quantity: count,
+            price: (product?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            priceSale: (product?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            userId: auth?.user?.id
+        }
+    ]
 
     return (
         <>
@@ -182,7 +194,7 @@ const ProductDetails = ({ auth }) => {
                                 <button type="button" className="btn" onClick={handleAddToCart}>
                                     Thêm vào giỏ
                                 </button>
-                                <button type="button" className="btn-1" onClick={handleAddToCart}>
+                                <button type="button" className="btn-1" onClick={() => {navigate("/checkout", {state: {item: orderItems}})}}>
                                     Mua Ngay
                                 </button>
                             </div>
@@ -192,7 +204,7 @@ const ProductDetails = ({ auth }) => {
                 </div>
             </section>
 
-            <ProductSummary />
+            {product?.reViewProducts.length > 0 && <ProductSummary review={product?.reViewProducts}/>}
 
             <section id="related_products" className="section">
                 <div className="container">

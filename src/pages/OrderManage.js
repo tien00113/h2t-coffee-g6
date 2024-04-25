@@ -63,7 +63,10 @@ function ContentArea({ allOrder, onSelect }) {
     const deliveredOrders = allOrder.filter(item => item?.status === 'DELIVERED');
 
     const [modalVisible, setModalVisible] = useState(false);
-    const handleChangeClick = () => {
+    const [selectedOrder, setSelectedOrder] = useState(null);
+
+    const handleChangeClick = (order) => {
+        setSelectedOrder(order);
         setModalVisible(true);
     };
     const handleCloseModal = () => {
@@ -97,9 +100,9 @@ function ContentArea({ allOrder, onSelect }) {
                             <div className='add_product' >
                                 <div className='quantity_item'>
                                     <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
-                                   <p>
-                                    {order?.orderItems.length} Sản Phẩm
-                                   </p>
+                                    <p>
+                                        {order?.orderItems.length} Sản Phẩm
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -213,12 +216,12 @@ function ContentArea({ allOrder, onSelect }) {
                             <div className='add_product'>
                                 <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
                                 <div className='btn_review'>
-                                    {order?.deliveryDateTime && !(order?.deliveryDateTime < order?.updateStatusAt) && < button className='btn-2' onClick={handleChangeClick}>Đánh giá</button>}
+                                    {order?.deliveryDateTime && !(order?.deliveryDateTime < order?.updateStatusAt) && < button className='btn-2' onClick={() => handleChangeClick(order)}>Đánh giá</button>}
                                     <button className='btn-1'>Mua Lại</button>
                                 </div>
                             </div>
                         </div >
-                        {modalVisible && <ModalReview onClose={handleCloseModal} order={order} />}
+                        {modalVisible && <ModalReview onClose={handleCloseModal} order={selectedOrder} />}
                     </React.Fragment>
                 )) : "Chưa có đơn hàng")}
 

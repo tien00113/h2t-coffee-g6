@@ -11,8 +11,6 @@ const ModalReview = ({ onClose, order }) => {
     const [reviews, setReviews] = useState([]);
     const [hoverValue, setHoverValue] = useState(0);
 
-    console.log("Đơn hàng là: ", order);
-
     useEffect(() => {
         setReviews(order?.orderItems.map(item => ({ productId: item.product.id, rating: 0, hover: 0, review: '' })));
     }, [order]);
@@ -39,6 +37,7 @@ const ModalReview = ({ onClose, order }) => {
     };
     const handleSubmit = () => {
         reviewProduct(data);
+        onClose();
     };
 
     const renderStars = (rating, setRating) => {
@@ -55,10 +54,6 @@ const ModalReview = ({ onClose, order }) => {
             );
         });
     };
-
-    const handleReView = () => {
-
-    }
 
     return (
         <div className="modal_review">

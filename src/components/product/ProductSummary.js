@@ -1,58 +1,38 @@
 import React from 'react';
-import reviewsData from '../../data/reviewsData';
-import useActive from '../../hooks/useActive';
 import ProductReviews from './ProductReviews';
 
 
-const ProductSummary = (props) => {
+const ProductSummary = ({ review }) => {
 
-    const { brand, title, info, category, type, connectivity } = props;
+    let ratingCounts = [0, 0, 0, 0, 0];
 
-    const { active, handleActive, activeClass } = useActive('specs');
+    if (!review) {
+        review = [];
+    }
 
+    review.forEach(rv => {
+        ratingCounts[rv.rating - 1]++;
+    });
+
+    let percentages = ratingCounts.map(count => Math.round((count / review.length) * 100));
 
     return (
         <>
             <section id="product_summary" className="section">
                 <div className='reviews_product'>
                     <div className='star_user'>
-                        <div className='rating'>
-                            <h4 className='h4-v1'>5 sao</h4>
-                            <div className="rating-bar-container">
-                                <div className="rating-bar rating-bar-5star"></div>
+                        {percentages.slice().reverse().map((percentage, index) => (
+                            <div className='rating' key={index}>
+                                <h4 className='h4-v1'>{5 - index} sao</h4>
+                                <div className="rating-bar-container">
+                                    <div className="rating-bar" style={{ width: `${percentage}%` }}></div>
+                                </div>
+                                <h4 className='h4-v2'>{percentage}%</h4>
                             </div>
-                            <h4 className='h4-v2'>70%</h4>
-                        </div>
-                        <div className='rating'>
-                            <h4 className='h4-v1'>4 sao</h4>
-                            <div className="rating-bar-container">
-                                <div className="rating-bar rating-bar-4star"></div>
-                            </div>
-                            <h4 className='h4-v2'>17%</h4>
-                        </div>
-                        <div className='rating'>
-                            <h4 className='h4-v1'>3 sao</h4>
-                            <div className="rating-bar-container">
-                                <div className="rating-bar rating-bar-3star"></div>
-                            </div>
-                            <h4 className='h4-v2'>8%</h4>
-                        </div>
-                        <div className='rating'>
-                            <h4 className='h4-v1'>2 sao</h4>
-                            <div className="rating-bar-container">
-                                <div className="rating-bar rating-bar-2star"></div>
-                            </div>
-                            <h4 className='h4-v2'>4%</h4>
-                        </div>
-                        <div className='rating'>
-                            <h4 className='h4-v1'>1 sao</h4>
-                            <div className="rating-bar-container">
-                                <div className="rating-bar rating-bar-1star"></div>
-                            </div>
-                            <h4 className='h4-v2'>1%</h4>
-                        </div>
+                        ))}
                     </div>
-                    
+
+
                     <div className="container">
                         {/*===== Product-Summary-Details =====*/}
                         <div className="prod_summary_details">
@@ -60,10 +40,10 @@ const ProductSummary = (props) => {
                             <div className="prod_reviews">
                                 <ul>
                                     {
-                                        reviewsData.map(item => (
+                                        review.map((item) => (
                                             <ProductReviews
                                                 key={item.id}
-                                                {...item}
+                                                userReview={item}
                                             />
                                         ))
                                     }

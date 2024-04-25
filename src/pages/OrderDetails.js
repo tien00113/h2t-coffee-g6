@@ -102,10 +102,10 @@ const OrderDetails = () => {
                         ))}
                     </div>
 
-                    <dev className='note'>
+                    <div className='note'>
                         <h4>Ghi Chú đơn hàng:</h4>
                         <p>{orderDetail?.note} </p>
-                    </dev>
+                    </div>
 
                     <div className="separator"></div>
 

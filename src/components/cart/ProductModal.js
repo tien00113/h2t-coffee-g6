@@ -38,7 +38,6 @@ const ProductModal = ({ onClose, item, auth, status }) => {
 
     let currentId = localStorage.getItem('currentId');
     currentId = currentId ? Number(currentId) : 1;
-    console.log("currentId modal: ", currentId)
     const handleAddItemToGuestCart = () => {
         const newItem = { id: currentId,product: item, sizeOption: selectedSize, toppingOption: selectedTopping, quantity:count };
         addItemCartGuest(newItem,count);
