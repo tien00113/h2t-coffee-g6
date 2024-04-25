@@ -94,7 +94,7 @@ const Header = () => {
                                                 })
                                             }
                                         </ul>
-                                    </div>
+                                    </div>  
                                 </div>
                                 <div className='box' onClick={hideMenu}>
                                     <h4><Link to="/contact">Contact Us</Link></h4>
