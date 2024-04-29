@@ -45,6 +45,20 @@ const CheckOut = ({ auth }) => {
     setLogin(false);
   }
 
+
+  // const socket = new SockJS('http://localhost:5454/ws'); // Connect to the WebSocket endpoint
+  // const stompClient = Stomp.over(socket);
+
+  // stompClient.connect({}, function (frame) {
+  //   console.log('Connected to WebSocket');
+  // });
+
+  // const sendOrder = (orderData) => {
+  //   stompClient.send('/app/newOrder', {}, JSON.stringify(orderData)); // Send order data to the server
+  // };
+
+
+
   const handleOrder = async () => {
     const addOrder = {
       orderItems: checkoutItem,
@@ -52,8 +66,7 @@ const CheckOut = ({ auth }) => {
       shipAddress: shipAddress
     }
     const newOrder = await order(addOrder);
-
-    navigate("/order-manage", {state: newOrder});
+    navigate("/order-manage", { state: newOrder });
 
   }
 
