@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import ProductReviews from './ProductReviews';
-
+import ProductRating from '../product/ProductRating';
 
 const ProductSummary = ({ review }) => {
 
+    const { product } = useSelector(state => state.product);
     let ratingCounts = [0, 0, 0, 0, 0];
 
     if (!review) {
@@ -21,6 +23,11 @@ const ProductSummary = ({ review }) => {
             <section id="product_summary" className="section">
                 <div className='reviews_product'>
                     <div className='star_user'>
+                    <div className="prod_details_ratings">
+                        <ProductRating rating={product?.averageRating || 5} />
+                        {/* <span>{product?.averageRating}</span> */}
+                        {product?.reViewProducts.length > 0 && <span className='rating_text'>({product?.averageRating + "/5"})</span>}
+                    </div>
                         {percentages.slice().reverse().map((percentage, index) => (
                             <div className='rating' key={index}>
                                 <h4 className='h4-v1'>{5 - index} sao</h4>
@@ -36,7 +43,6 @@ const ProductSummary = ({ review }) => {
                     <div className="container">
                         {/*===== Product-Summary-Details =====*/}
                         <div className="prod_summary_details">
-
                             <div className="prod_reviews">
                                 <ul>
                                     {
@@ -50,7 +56,6 @@ const ProductSummary = ({ review }) => {
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>

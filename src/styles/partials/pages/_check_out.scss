@@ -20,6 +20,9 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 1rem;
+      .info_left{
+        margin-right: 1rem;
+      }
     }
        
     .select_address{
@@ -241,5 +244,15 @@
         text-transform: uppercase;
       }
     }
+  }
+
+  @include devices(lg) {
+    flex-direction: column;
+    .payment-address,
+    .payment-checkout{
+      width: 100%;
+      margin: 4rem 0 2rem 0;
+    }
+
   }
 }

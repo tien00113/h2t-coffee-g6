@@ -19,36 +19,38 @@ function Sidebar({ onSelect }) {
     return (
         <div className="sidebar">
             <h3>Quản lý đơn hàng</h3>
-            <button
-                onClick={() => handleSelect('PLACED')}
-                style={{ backgroundColor: selected === 'PLACED' ? 'gray' : 'transparent' }}
-            >
-                Chờ Xác Nhận
-            </button>
-            <button
-                onClick={() => handleSelect('CONFIRMED')}
-                style={{ backgroundColor: selected === 'CONFIRMED' ? 'gray' : 'transparent' }}
-            >
-                Chờ Lấy Hàng
-            </button>
-            <button
-                onClick={() => handleSelect('SHIPPED')}
-                style={{ backgroundColor: selected === 'SHIPPED' ? 'gray' : 'transparent' }}
-            >
-                Đang Giao Hàng
-            </button>
-            <button
-                onClick={() => handleSelect('CANCELLED')}
-                style={{ backgroundColor: selected === 'CANCELLED' ? 'gray' : 'transparent' }}
-            >
-                Đã Hủy
-            </button>
-            <button
-                onClick={() => handleSelect('DELIVERED')}
-                style={{ backgroundColor: selected === 'DELIVERED' ? 'gray' : 'transparent' }}
-            >
-                Lịch Sử Mua Hàng
-            </button>
+            <div className='slidebar_menu'>
+                <button
+                    onClick={() => handleSelect('PLACED')}
+                    style={{ backgroundColor: selected === 'PLACED' ? 'gray' : 'transparent' }}
+                >
+                    Chờ Xác Nhận
+                </button>
+                <button
+                    onClick={() => handleSelect('CONFIRMED')}
+                    style={{ backgroundColor: selected === 'CONFIRMED' ? 'gray' : 'transparent' }}
+                >
+                    Chờ Lấy Hàng
+                </button>
+                <button
+                    onClick={() => handleSelect('SHIPPED')}
+                    style={{ backgroundColor: selected === 'SHIPPED' ? 'gray' : 'transparent' }}
+                >
+                    Đang Giao Hàng
+                </button>
+                <button
+                    onClick={() => handleSelect('CANCELLED')}
+                    style={{ backgroundColor: selected === 'CANCELLED' ? 'gray' : 'transparent' }}
+                >
+                    Đã Hủy
+                </button>
+                <button
+                    onClick={() => handleSelect('DELIVERED')}
+                    style={{ backgroundColor: selected === 'DELIVERED' ? 'gray' : 'transparent' }}
+                >
+                    Lịch Sử Mua Hàng
+                </button>
+            </div>
         </div>
     );
 }
