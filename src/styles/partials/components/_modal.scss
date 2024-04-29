@@ -170,6 +170,12 @@
       }
     }
   }
+
+  @include devices(md) {
+    .modal-content{
+      width: 70%;
+    }
+  }
 }
 
 
@@ -370,7 +376,16 @@
       border: 1px solid var(--main-color);
       border-radius: 0.2rem;
       width: 20%;
-      margin-right: 0.4rem;
+      margin-right: 1rem;
+    }
+  }
+
+  @include devices(md) {
+    width: 75%;
+  }
+  @include devices(lg) {
+    .form-select {
+      flex-direction: column;
     }
   }
 }
@@ -479,6 +494,9 @@
       .btn-primary {
         margin-left: 1rem;
       }
+    }
+    @include devices(md) {
+      width: 80%;
     }
   }
 }

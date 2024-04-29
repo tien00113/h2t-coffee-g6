@@ -3,6 +3,7 @@
     justify-content: space-between;
     min-height: 100vh;
     margin-top: 5rem;
+    
 }
 
 .stepper {
@@ -47,6 +48,9 @@
         .active {
             background-color: rgb(73, 175, 243);
         }
+    }
+    @include devices(md) {
+        width: 70%;
     }
 }
 
@@ -132,5 +136,13 @@
                 }
             }
         }
+    }
+    @include devices(md) {
+        flex-direction: column;
+        .detail_order,
+        .detail_address {
+            width: 100%;
+            margin: 0;
+    }
     }
 }

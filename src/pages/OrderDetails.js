@@ -135,6 +135,7 @@ const OrderDetails = () => {
                         </table>
                     </div>
                 </div>
+                
                 <div className="detail_address">
                     <h3>Thông tin nhận hàng</h3>
                     <div className="address">

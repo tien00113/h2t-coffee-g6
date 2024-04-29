@@ -97,16 +97,18 @@
                 }
             }
         }
-        &:hover .dropdown_text{
-            @include toggleVisibility(visible, 1);
-        }
         p, h4{
             font-weight: 500;
             &:hover{
                 color: #eee;
             }
         }
+        
+        &:hover .dropdown_text{
+            @include toggleVisibility(visible, 1);
+        }
     }
+    
 }
 
 

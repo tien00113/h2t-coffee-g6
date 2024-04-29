@@ -12,6 +12,8 @@
 
     @include devices(sm) {
         @include grid-cols(1, 1fr, 1rem);
+        margin: auto;
+        width: 60%;
     }
 }
 
@@ -60,7 +62,7 @@
     object-fit: fill;
     img {
         width: 100%;
-        aspect-ratio: 3/4;
+        height: 100%;
     }
     .btn_card {
         position: absolute;
@@ -151,6 +153,7 @@
 
         @include devices(sm) {
             @include grid-cols(1, 1fr, 1rem);
+            width: auto;
         }
     }
 }

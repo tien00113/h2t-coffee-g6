@@ -77,7 +77,7 @@ const CheckOut = ({ auth }) => {
           <h3>Thanh toán và giao hàng</h3>
           <div className="separator"></div>
           {auth?.user?.address.length > 0 ? (<div class="address-info">
-            <div>
+            <div className='info_left'>
               {shipAddress ? (<p>{shipAddress?.recipientName} ({shipAddress?.phoneNumber})</p>) : (<p>{defaultAddress?.recipientName} ({defaultAddress?.phoneNumber})</p>)}
               {shipAddress ? (<p>{shipAddress?.street}, {shipAddress?.ward}, {shipAddress?.district}, {shipAddress?.city}</p>) : (<p>{defaultAddress?.street}, {defaultAddress?.ward}, {defaultAddress?.district}, {defaultAddress?.city}</p>)}
             </div>
