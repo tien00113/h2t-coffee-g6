@@ -86,6 +86,7 @@
             padding: 1.4rem;
             @include bordered(1px, var(--text-muted));
             @include toggleVisibility(hidden, 0);
+            transition: all 0.2s ease-in-out;
 
             li {
                 &:not(:last-child) {
@@ -124,7 +125,7 @@
         border-radius: 3px;
         @include bordered(1px, var(--text-muted));
         @include toggleVisibility(hidden, 0);
-        @include transition(all, 0.2s, ease-in-out);
+        @include transition(all, 0.3s, ease-in-out);
 
         h4 {
             font-weight: 600;

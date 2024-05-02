@@ -8,7 +8,7 @@ const Services = () => {
     <>
       <section id="services" className="section">
         <div className="container">
-          <SectionsHead heading="Our Advantages" />
+          <SectionsHead heading="Lợi ích của bạn" />
           <div className="wrapper services_wrapper">
             {
               servicesData.map((item) => {

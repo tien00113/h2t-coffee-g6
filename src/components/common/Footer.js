@@ -45,7 +45,7 @@ const Footer = () => {
                     }
 
                 <div className="foot_social">
-                    <h4>Follow Us</h4>
+                    <h4>Theo dõi chúng tôi</h4>
                     {
                         footSocial.map((item) => {
                             const { id, icon, path } = item;

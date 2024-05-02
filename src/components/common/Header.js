@@ -75,12 +75,12 @@ const Header = () => {
                         <nav>
                             <div className={`nav_text ${isActive ? 'active' : ''}`}>
                                 <div className='box' onClick={hideMenu}>
-                                    <h4><Link to="/">Home</Link></h4>
+                                    <h4><Link to="/">Trang chủ</Link></h4>
                                 </div>
                                 <div className='box'>
-                                    <h4>Menu</h4>
+                                    <h4>Thực đơn</h4>
                                     <div className="dropdown_text">
-                                        <p><Link to="/all-products" onClick={hideMenu}>All Products</Link></p>
+                                        <p><Link to="/all-products" onClick={hideMenu}>Tất cả sản phẩm</Link></p>
                                         <div className="separator"></div>
                                         <ul>
                                             {
@@ -94,13 +94,13 @@ const Header = () => {
                                                 })
                                             }
                                         </ul>
-                                    </div>  
+                                    </div>
                                 </div>
                                 <div className='box' onClick={hideMenu}>
-                                    <h4><Link to="/contact">Contact Us</Link></h4>
+                                    <h4><Link to="/contact">Liên hệ</Link></h4>
                                 </div>
                                 <div className='box' onClick={hideMenu}>
-                                    <h4><Link to="/about">About Us</Link></h4>
+                                    <h4><Link to="/about">Về chúng tôi</Link></h4>
                                 </div>
                             </div>
                         </nav>
@@ -110,7 +110,7 @@ const Header = () => {
                                 <span onClick={() => toggleSearch(true)}>
                                     <AiOutlineSearch />
                                 </span>
-                                <div className="tooltip">Search</div>
+                                <div className="tooltip">Tìm kiếm</div>
                             </div>
 
                             <div className="cart_action">
@@ -124,7 +124,7 @@ const Header = () => {
                                         )
                                     }
                                 </Link>
-                                <div className="tooltip">Cart</div>
+                                <div className="tooltip">Giỏ hàng</div>
                             </div>
 
                             <div className="user_action">

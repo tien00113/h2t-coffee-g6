@@ -3,93 +3,78 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 export const footMenu = [
     {
         id: 1,
-        title: "Help",
+        title: "Trợ Giúp",
         menu: [
             {
                 id: 1,
-                link: "FAQs",
+                link: "Câu hỏi thường gặp",
                 path: "/"
             },
             {
                 id: 2,
-                link: "Track Order",
+                link: "Hủy đơn hàng",
                 path: "/"
             },
             {
                 id: 3,
-                link: "Cancel Order",
+                link: "Trả đơn hàng",
                 path: "/"
             },
             {
                 id: 4,
-                link: "Return Order",
-                path: "/"
-            },
-            {
-                id: 5,
-                link: "Warranty Info",
+                link: "Thông tin bảo hành",
                 path: "/"
             },
         ]
     },
     {
         id: 2,
-        title: "Policies",
+        title: "Chính Sách",
         menu: [
             {
                 id: 1,
-                link: "Return Policy",
+                link: "Chính sách hoàn trả",
                 path: "/"
             },
             {
                 id: 2,
-                link: "Security",
+                link: "Chính sách bảo mật",
                 path: "/"
             },
             {
                 id: 3,
-                link: "Sitemap",
+                link: "Sơ đồ trang web",
                 path: "/"
             },
             {
                 id: 4,
-                link: "Privacy Policy",
-                path: "/"
-            },
-            {
-                id: 5,
-                link: "Terms & Conditions",
+                link: "Điều khoản",
                 path: "/"
             },
         ]
     },
     {
         id: 3,
-        title: "Company",
+        title: "Cửa Hàng",
         menu: [
             {
                 id: 1,
-                link: "About Us",
+                link: "Về chúng tôi",
                 path: "/about"
             },
             {
                 id: 2,
-                link: "Contact Us",
+                link: "Liên hệ",
                 path: "/contact"
             },
             {
                 id: 3,
-                link: "Service Centres",
+                link: "Chi nhánh",
                 path: "/"
             },
             {
                 id: 4,
-                link: "Careers",
-                path: "/"
-            },
-            {
-                id: 5,
-                link: "Affiliates",
+                link: "Trung tâm dịch vụ",
                 path: "/"
             },
         ]
