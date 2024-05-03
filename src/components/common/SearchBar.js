@@ -13,7 +13,7 @@ const SearchBar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {search} = useSelector(store=> store);
+    const resultProducts = useSelector(store=> store.search.resultProducts);
     const [query, setQuery] = useState('');
 
     const { isSearchOpen, toggleSearch, searchResults, setSearchResults } = useContext(commonContext);
@@ -67,10 +67,10 @@ const SearchBar = () => {
                             </div>
 
                             {
-                                search.resultProducts.length !== 0 && (
+                                resultProducts.length !== 0 && (
                                     <div className="search_results">
                                         {
-                                            search.resultProducts.map(item => {
+                                            resultProducts.map(item => {
                                                 return (
                                                     <Link
                                                         to={`/product-details/${item.id}`}

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, A11y, Autoplay } from 'swiper';
 import { useDispatch, useSelector } from 'react-redux';
 import { displayMoney } from '../../helpers/utils';
-import productsData from '../../data/productsData';
 
 import 'swiper/scss';
 import 'swiper/scss/autoplay';
@@ -12,19 +11,31 @@ import 'swiper/scss/pagination';
 import "swiper/scss/effect-coverflow";
 import { getAllProductAction } from '../../Redux/Product/product.action';
 
-
 const FeaturedSlider = () => {
+    const [isLoading, setIsLoading] = useState(true);
 
-    const featuredProducts = productsData.filter(item => item.tag === 'featured-product');
-
-    const {product} = useSelector(store=> store);
+    const products = useSelector(store => store.product.products);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (product) {
-            dispatch(getAllProductAction());
-        }
+        dispatch(getAllProductAction());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (products.length > 0) {
+            setIsLoading(false);
+        }
+    }, [products]);
+
+    const topSoldProducts = products
+    .slice() // Tạo một bản sao của mảng sản phẩm để tránh ảnh hưởng đến danh sách gốc
+    .sort((a, b) => b.sold - a.sold) // Sắp xếp giảm dần theo thuộc tính sold
+    .slice(0, 6); // Lấy ra 6 sản phẩm đầu tiên
+
+    if (isLoading) {
+        return <div>Loading...</div>; // Hiển thị một thông báo khi đang tải dữ liệu
+    }
+
     return (
         <Swiper
             modules={[EffectCoverflow, Pagination, A11y, Autoplay]}
@@ -58,28 +69,25 @@ const FeaturedSlider = () => {
             }}
             className="featured_swiper"
         >
-            {
-                product?.products.map((item) => {
-                    // const { id, images, title, finalPrice, originalPrice, path } = item;
-                    const newPrice = displayMoney(item?.salePrice);
-                    const oldPrice = displayMoney(item?.price);
+            {topSoldProducts.map((item) => {
+                const newPrice = displayMoney(item.salePrice);
+                const oldPrice = displayMoney(item.price);
 
-                    return (
-                        <SwiperSlide key={item?.id} className="featured_slides">
-                            <div className="featured_title">{item?.name}</div>
-                            <figure className="featured_img">
-                                <Link to={`/product-details/${item?.id}`}>
-                                    <img src={item?.image[0]?.imageUrl} alt="" />
-                                </Link>
-                            </figure>
-                            <h2 className="products_price">
-                                {newPrice} &nbsp;
-                                <small><del>{oldPrice}</del></small>
-                            </h2>
-                        </SwiperSlide>
-                    );
-                })
-            }
+                return (
+                    <SwiperSlide key={item.id} className="featured_slides">
+                        <div className="featured_title">{item.name}</div>
+                        <figure className="featured_img">
+                            <Link to={`/product-details/${item.id}`}>
+                                <img src={item.image[0].imageUrl} alt="" />
+                            </Link>
+                        </figure>
+                        <h2 className="products_price">
+                            {newPrice} &nbsp;
+                            <small><del>{oldPrice}</del></small>
+                        </h2>
+                    </SwiperSlide>
+                );
+            })}
         </Swiper>
     );
 };

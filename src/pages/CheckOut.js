@@ -4,6 +4,7 @@ import { displayMoney } from '../helpers/utils';
 import AddressForm from '../components/form/AddressForm';
 import AccountForm from '../components/form/AccountForm';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const CheckOut = ({ auth }) => {
 
@@ -20,7 +21,7 @@ const CheckOut = ({ auth }) => {
     return { ...item };
   })
 
-  const defaultAddress = auth?.user?.address.find(address => address.isDefault === true);
+  const defaultAddress = auth?.address.find(address => address.isDefault === true);
 
   const [shipAddress, setShipAddress] = useState(defaultAddress);
 
@@ -30,7 +31,7 @@ const CheckOut = ({ auth }) => {
   }, 0);
 
   const handleChangeClick = () => {
-    if (auth?.user) {
+    if (auth) {
       setModalVisible(true);
     }
     else {
@@ -60,23 +61,27 @@ const CheckOut = ({ auth }) => {
 
 
   const handleOrder = async () => {
-    const addOrder = {
-      orderItems: checkoutItem,
-      note: textAreaRef.current.value,
-      shipAddress: shipAddress
+    if (auth) {
+      const addOrder = {
+        orderItems: checkoutItem,
+        note: textAreaRef.current.value,
+        shipAddress: shipAddress
+      }
+      const newOrder = await order(addOrder);
+      navigate("/order-manage", { state: newOrder });
+    } else{
+      toast.warning('Bạn cần phải đăng nhập.')
     }
-    const newOrder = await order(addOrder);
-    navigate("/order-manage", { state: newOrder });
 
   }
 
   return (
     <>
-      <section class='payment'>
-        <div class="payment-address">
+      <section className='payment'>
+        <div className="payment-address">
           <h3>Thanh toán và giao hàng</h3>
           <div className="separator"></div>
-          {auth?.user?.address.length > 0 ? (<div class="address-info">
+          {auth?.address.length > 0 ? (<div className="address-info">
             <div className='info_left'>
               {shipAddress ? (<p>{shipAddress?.recipientName} ({shipAddress?.phoneNumber})</p>) : (<p>{defaultAddress?.recipientName} ({defaultAddress?.phoneNumber})</p>)}
               {shipAddress ? (<p>{shipAddress?.street}, {shipAddress?.ward}, {shipAddress?.district}, {shipAddress?.city}</p>) : (<p>{defaultAddress?.street}, {defaultAddress?.ward}, {defaultAddress?.district}, {defaultAddress?.city}</p>)}
@@ -92,8 +97,8 @@ const CheckOut = ({ auth }) => {
           )}
           <div className="separator"></div>
 
-          <div class="payment-address-drop">
-            <label for="store">Chọn chi nhánh gần bạn</label>
+          <div className="payment-address-drop">
+            <label htmlFor="store">Chọn chi nhánh gần bạn</label>
             <select name="store" id="store">
               <option value="store1">Cửa hàng 1 - Phố Huế, Hai Bà Trưng, Hà Nội</option>
               <option value="store1">Cửa hàng 2 - Hồ Tùng Mậu, Cầu Giấy, Hà Nội</option>
@@ -102,10 +107,10 @@ const CheckOut = ({ auth }) => {
           </div>
           <div className='payment-address-image'>
 
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59585.57208772585!2d105.74971368816317!3d21.028754205820025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab5756f91033%3A0x576917442d674bfd!2zQ-G6p3UgR2nhuqV5LCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1712213052135!5m2!1svi!2s" style={{ border: "0", width: "100%", aspectRatio: 5 / 2 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59585.57208772585!2d105.74971368816317!3d21.028754205820025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab5756f91033%3A0x576917442d674bfd!2zQ-G6p3UgR2nhuqV5LCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1712213052135!5m2!1svi!2s" style={{ border: "0", width: "100%", aspectRatio: 5 / 2 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
-          <div class="payment-address-form">
+          <div className="payment-address-form">
             <form>
               <label htmlFor='address'>Ghi chú</label>
               <textarea ref={textAreaRef} name='additional-info' placeholder='Ghi chú về đơn hàng '></textarea>
@@ -116,18 +121,18 @@ const CheckOut = ({ auth }) => {
           </div>
         </div>
 
-        <div class="payment-checkout">
+        <div className="payment-checkout">
           <h3>Mặt hàng thanh toán</h3>
 
           <div className="separator"></div>
           {/* product */}
           {
-            checkoutItem.map((item) => (
-              <div class="payment-checkout-product">
-                <div class="product">
-                  <div class="product-left" >
+            checkoutItem.map((item, index) => (
+              <div key={index} className="payment-checkout-product">
+                <div className="product">
+                  <div className="product-left" >
                     <img src={item?.product?.image[0]?.imageUrl} alt="product" />
-                    <div class="product-details">
+                    <div className="product-details">
                       <span>{item?.product?.name}</span>
                       <div className="size-topping">
                         <div className='size'>
@@ -142,7 +147,7 @@ const CheckOut = ({ auth }) => {
                       <h5>x{item?.quantity}</h5>
                     </div>
                   </div>
-                  <div class="product-right" >
+                  <div className="product-right" >
                     <span>{displayMoney(item?.product?.salePrice + item?.sizeOption?.price + item?.toppingOption?.price)}</span>
                   </div>
                 </div>
@@ -153,16 +158,16 @@ const CheckOut = ({ auth }) => {
           <div className="separator"></div>
           <div className="payment-checkout-sale">
             <form>
-              <div class="cost">
-                <div class="subtotal">
+              <div className="cost">
+                <div className="subtotal">
                   <span>Cộng (1 món)</span>
                   <span>{displayMoney(grandTotal)}</span>
                 </div>
-                <div class="subtotal-ship">
+                <div className="subtotal-ship">
                   <span>Giao hàng</span>
                   <span>Free</span>
                 </div>
-                <div class="total">
+                <div className="total">
                   <span>Thành Tiền</span>
                   <span className='totalPrice'>{displayMoney(grandTotal)}</span>
                 </div>

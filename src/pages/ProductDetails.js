@@ -20,7 +20,7 @@ const ProductDetails = ({ auth }) => {
     const navigate = useNavigate();
     const prodId = parseInt(productId);
     const dispatch = useDispatch();
-    const { product } = useSelector(state => state.product);
+    const product  = useSelector(state => state.product.product);
 
     useEffect(() => {
         dispatch(getProductDetail(prodId));
@@ -77,7 +77,7 @@ const ProductDetails = ({ auth }) => {
             setShowError(true);
         } else {
             setShowError(false);
-            if (auth.user === null) {
+            if (auth === null) {
                 handleAddItemToGuestCart();
             }
             else {
@@ -103,7 +103,7 @@ const ProductDetails = ({ auth }) => {
             quantity: count,
             price: (product?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
             priceSale: (product?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
-            userId: auth?.user?.id
+            userId: auth?.id
         }
     ]
 
@@ -183,7 +183,7 @@ const ProductDetails = ({ auth }) => {
                             <div className="separator"></div>
 
                             <div className="describe">
-                                <h4>Describe:</h4>
+                                <h4>Mô tả:</h4>
                                 <p>{product?.description}</p>
                             </div>
 
@@ -198,7 +198,6 @@ const ProductDetails = ({ auth }) => {
                                     Mua Ngay
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </div>

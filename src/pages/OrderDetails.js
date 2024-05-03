@@ -112,7 +112,7 @@ const OrderDetails = () => {
                     <div className='info'>
                         <button className='btn-2' onClick={updateStatusOrder}>
                             {
-                                step ===3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' ? "Đánh Giá" : "Mua Lại"
+                                step ===3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime >= orderDetail?.updateStatusAt) ? "Đánh Giá" : "Mua Lại"
                             }
                         </button>
                         <table>

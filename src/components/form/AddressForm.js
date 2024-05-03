@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import data from '../../data/addressData.json';
 import { IoAdd } from "react-icons/io5";
@@ -6,10 +6,9 @@ import { Form, Formik } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { createAddressAction } from '../../Redux/Auth/auth.action';
 
-const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
+const AddressForm = ({ onClose, defaultAddress, setShippingAddress }) => {
 
     const dispatch = useDispatch();
-    const user = useSelector(state => state?.auth?.user) ?? null;
     const address = useSelector(state => state.auth?.user?.address) ?? [];
     address && address?.length > 0 && address.sort((a, b) => b.isDefault - a.isDefault);
 
@@ -21,6 +20,7 @@ const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
     const [shipAddress, setShipAddress] = useState(defaultAddress);
+    const [shipAddressIndex, setShipAddressIndex] = useState(null);
 
     const handleCityChange = (event, setFieldValue) => {
         if (event.target.value === "") {
@@ -84,12 +84,9 @@ const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
         dispatch(createAddressAction(values));
         handleSetShowFormAdd();
     }
+    useEffect(() => {
 
-    console.log("address chọn==============", shipAddress);
-
-    useEffect(()=>{
-
-    },[address])
+    }, [address])
 
     return (
         <>
@@ -141,7 +138,7 @@ const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
                                 </div>
 
                                 <div className="map">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59585.57208772585!2d105.74971368816317!3d21.028754205820025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab5756f91033%3A0x576917442d674bfd!2zQ-G6p3UgR2nhuqV5LCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1712213052135!5m2!1svi!2s" style={{ border: "0", width: "100%", aspectRatio: 10 / 2 }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59585.57208772585!2d105.74971368816317!3d21.028754205820025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab5756f91033%3A0x576917442d674bfd!2zQ-G6p3UgR2nhuqV5LCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1712213052135!5m2!1svi!2s" style={{ border: "0", width: "100%", aspectRatio: 10 / 2 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                                 </div>
 
                                 <div className='form-address'>
@@ -164,7 +161,7 @@ const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
                             <div>Địa Chỉ Của Bạn</div>
                             <div className='separator'></div>
 
-                            {address.length > 0 && address.map((item, index) => (<div className="container">
+                            {address.length > 0 && address.map((item, index) => (<div key={index} className="container">
                                 <div className="left">
                                     <div className="input_checkbox"><input type="checkbox" checked={shipAddress===item} onChange={() => {setShipAddress(item);}} /></div>
                                 </div>
@@ -188,7 +185,7 @@ const AddressForm = ({ onClose, defaultAddress, setShippingAddress}) => {
                         <div className='separator'></div>
                         <div className="btn-group">
                             <button type="button" className="btn_cancel" onClick={onClose}>Hủy</button>
-                            <button type="button" className="btn-1 btn-primary" onClick={()=> {setShippingAddress(shipAddress); onClose()}}>Xác Nhận</button>
+                            <button type="button" className="btn-1 btn-primary" onClick={() => { setShippingAddress(shipAddress); onClose() }}>Xác Nhận</button>
                         </div>
                     </div>
                 </div>)

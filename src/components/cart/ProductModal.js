@@ -30,7 +30,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
             quantity: count,
             price: (item?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
             priceSale: (item?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
-            userId: auth?.user?.id
+            userId: auth?.id
         }
     ]
 
@@ -59,7 +59,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     }
 
     const handleAddToCart = () => {
-        if (auth.user === null) {
+        if (auth === null) {
             handleAddItemToGuestCart();
             onClose();
         }

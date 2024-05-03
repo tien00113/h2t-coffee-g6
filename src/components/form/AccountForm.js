@@ -21,7 +21,8 @@ const AccountForm = ({onClose}) => {
             .oneOf([ref('password'), null], 'Mật khẩu không khớp'),
     });
 
-    const { auth } = useSelector(store => store);
+    const user  =  useSelector(state => state.auth?.user);
+    const err = useSelector(state => state.auth?.error);
 
     const handleController = () => {
         setIsSignupVisible(!isSignupVisible);
@@ -32,12 +33,12 @@ const AccountForm = ({onClose}) => {
         dispatch(loginUserAction({ data: values }));
     }
     useEffect(() => {
-        if (auth.user) {
+        if (user) {
             window.location.reload();
         } else {
             localStorage.removeItem("jwt")
         }
-    }, [auth.user])
+    }, [user])
 
     const handleSubmitSignup = (values) => {
         dispatch(registerUserAction({ data: values }));
@@ -70,7 +71,7 @@ const AccountForm = ({onClose}) => {
                                     {/*===== Form-Body =====*/}
                                     <div className="form_body">
                                         {
-                                            auth.error && (
+                                            err && (
                                                 <div className="error_message">
                                                     {isSignupVisible ? 'Username hoặc Email đã tồn tại!' : 'Tài khoản hoặc mật khẩu không chính xác!'}
                                                 </div>

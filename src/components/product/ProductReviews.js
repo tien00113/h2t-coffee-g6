@@ -17,7 +17,7 @@ const ProductReviews = ({ userReview }) => {
                                 [...Array(userReview?.rating)].map((_, i) => <IoMdStar key={i} />)
                             }
                         </div>
-                        <div className="date">14-08-2024 14:47</div>
+                        <div className="date">{userReview?.createAt}</div>
                     </div>
                     <p className="user_review">
                         {userReview?.comment}

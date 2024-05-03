@@ -58,11 +58,11 @@ function Sidebar({ onSelect }) {
 // ContentArea Component
 function ContentArea({ allOrder, onSelect }) {
     const navigate = useNavigate();
-    const placedOrders = allOrder.filter(item => item?.status === 'PLACED');
-    const confirmedOrders = allOrder.filter(item => item?.status === 'CONFIRMED');
-    const shippedOrders = allOrder.filter(item => item?.status === 'SHIPPED');
-    const cancelledOrdes = allOrder.filter(item => item?.status === 'CANCELLED');
-    const deliveredOrders = allOrder.filter(item => item?.status === 'DELIVERED');
+    const placedOrders = allOrder.filter(item => item?.status === 'PLACED').sort((a, b) => new Date(b.updateStatusAt) - new Date(a.updateStatusAt));
+    const confirmedOrders = allOrder.filter(item => item?.status === 'CONFIRMED').sort((a, b) => new Date(b.updateStatusAt) - new Date(a.updateStatusAt));
+    const shippedOrders = allOrder.filter(item => item?.status === 'SHIPPED').sort((a, b) => new Date(b.updateStatusAt) - new Date(a.updateStatusAt));
+    const cancelledOrdes = allOrder.filter(item => item?.status === 'CANCELLED').sort((a, b) => new Date(b.updateStatusAt) - new Date(a.updateStatusAt));
+    const deliveredOrders = allOrder.filter(item => item?.status === 'DELIVERED').sort((a, b) => new Date(b.updateStatusAt) - new Date(a.updateStatusAt));
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
@@ -132,8 +132,13 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                         </div>
                         <div className="separator"></div>
-                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
-                            <h5>Xem Chi Tiết</h5>
+                        <div className='add_product'>
+                            <div className='quantity_item'>
+                                <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                <p>
+                                    {order?.orderItems.length} Sản Phẩm
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -159,8 +164,13 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                         </div>
                         <div className="separator"></div>
-                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
-                            <h5>Xem Chi Tiết</h5>
+                        <div className='add_product'>
+                            <div className='quantity_item'>
+                                <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                <p>
+                                    {order?.orderItems.length} Sản Phẩm
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -186,9 +196,13 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                         </div>
                         <div className="separator"></div>
-                        <div className='add_product' onClick={() => { navigate("/order-details", { state: order }) }}>
-                            <h5>Xem Chi Tiết</h5>
-                            <div className='quantity_item'>2 Sản phẩm</div>
+                        <div className='add_product'>
+                            <div className='quantity_item'>
+                                <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                <p>
+                                    {order?.orderItems.length} Sản Phẩm
+                                </p>
+                            </div>
                         </div>
                     </div>
                 )) : "Chưa có đơn hàng")}
@@ -216,7 +230,15 @@ function ContentArea({ allOrder, onSelect }) {
                             </div>
                             <div className="separator"></div>
                             <div className='add_product'>
-                                <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                {/* <div className='quantity_item'>
+                                    <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                    <p>
+                                        {order?.orderItems.length} Sản Phẩm
+                                    </p>
+                                </div> */}
+                                <div className='quantity_item'>
+                                    <h5 onClick={() => { navigate("/order-details", { state: order }) }}>Xem Chi Tiết</h5>
+                                </div>
                                 <div className='btn_review'>
                                     {order?.deliveryDateTime && !(order?.deliveryDateTime < order?.updateStatusAt) && < button className='btn-2' onClick={() => handleChangeClick(order)}>Đánh giá</button>}
                                     <button className='btn-1'>Mua Lại</button>

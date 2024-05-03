@@ -9,6 +9,8 @@ import AccountForm from '../form/AccountForm';
 import SearchBar from './SearchBar';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { getUserAction, logoutAction } from '../../Redux/Auth/auth.action';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -20,12 +22,12 @@ const Header = () => {
     const [isOpenLoginSignup, setIsLoginSignup] = useState(false);
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt");
-    const { auth } = useSelector(store => store);
+    const user  =  useSelector(state => state.auth?.user);
 
     useEffect(() => {
         if (jwt) {
             dispatch(getUserAction(jwt));
-            if (auth?.user) {
+            if (user) {
                 getUserCart();
             }
         }
@@ -38,7 +40,7 @@ const Header = () => {
         dispatch(logoutAction());
         localStorage.removeItem("jwt");
         localStorage.removeItem("cart");
-        alert("đã đăng xuất thành công")
+        toast.success('Đã đăng xuất');
     }
 
     useEffect(() => {
@@ -117,8 +119,8 @@ const Header = () => {
                                 <Link to="/cart">
                                     <AiOutlineShoppingCart />
                                     {
-                                        auth?.user ? (
-                                             <span className="badge">{cartUser?.cartItems.length}</span>
+                                        user ? (
+                                            cartUser?.cartItems.length > 0 && <span className="badge">{cartUser?.cartItems.length}</span>
                                         ) : (
                                             cartGuests.length > 0 && (<span className="badge">{cartGuests.length}</span>)
                                         )
@@ -132,10 +134,10 @@ const Header = () => {
                                     <AiOutlineUser />
                                 </span>
                                 <div className="dropdown_menu">
-                                    {auth.user && <h4>Xin chào! {<Link to="*">&nbsp;{auth.user.username}</Link>}</h4>}
+                                    {user && <h4>Xin chào! {<Link to="*">&nbsp;{user?.username}</Link>}</h4>}
                                     <p>Tài Khoản</p>
                                     {
-                                        !auth.user && (
+                                        !user && (
                                             <button
                                                 type="button"
                                                 onClick={handleOpenLoginSignup}
@@ -145,13 +147,15 @@ const Header = () => {
                                         )
                                     }
                                     {
-                                        auth.user && (
+                                        user && (
+                                            
                                             <button
                                                 type="button"
                                                 onClick={handleLogout}
                                             >
                                                 Đăng xuất
                                             </button>
+                                            
                                         )
                                     }
                                     <div className="separator"></div>
@@ -161,7 +165,7 @@ const Header = () => {
                                                 const { id, link, path } = item;
                                                 return (
                                                     <li key={id}>
-                                                        {link !== "Orders" ? <Link to={path}>{link}</Link> : (auth?.user ? <Link to={path}>{link}</Link> : <Link to="/">{link}</Link>)}
+                                                        {link !== "Orders" ? <Link to={path}>{link}</Link> : (user ? <Link to={path}>{link}</Link> : <Link to="/">{link}</Link>)}
                                                     </li>
                                                 );
                                             })
@@ -180,6 +184,7 @@ const Header = () => {
             </header>
             {isOpenLoginSignup && <AccountForm onClose={handleClose}/>}
             <SearchBar />
+            <ToastContainer />
         </>
     );
 };

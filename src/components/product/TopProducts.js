@@ -12,16 +12,16 @@ import { getAllCategoryAction } from '../../Redux/Category/category.action';
 const TopProducts = () => {
 
     const dispatch = useDispatch();
-    const { product } = useSelector(store=> store);
-    const { category } = useSelector(state => state.category);
+    const product = useSelector(store=> store.product.products);
+    const category = useSelector(state => state.category.category);
     const { activeClass, handleActive } = useActive(0);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        if (product.products) {
-            setProducts(product.products);
+        if (product) {
+            setProducts(product);
         }
-    }, [product.products]);
+    }, [product]);
     useEffect(() => {
         if (product) {
             dispatch(getAllProductAction());
@@ -38,12 +38,12 @@ const TopProducts = () => {
     // handling product's filtering
     const handleProducts = (category, i) => {
         if (category === 'Tất Cả') {
-            setProducts(product.products);
+            setProducts(product);
             handleActive(i);
             return;
         }
 
-        const filteredProducts = product.products.filter(item => item.category.name === category);
+        const filteredProducts = product.filter(item => item.category.name === category);
         setProducts(filteredProducts);
         handleActive(i);
     };
@@ -67,7 +67,7 @@ const TopProducts = () => {
             </div>
             <div className="wrapper products_wrapper">
                 {
-                    products.slice(0, 14).map(item => (
+                    products.slice(0, 11).map(item => (
                         <ProductCard
                             key={item.id}
                             item={item}

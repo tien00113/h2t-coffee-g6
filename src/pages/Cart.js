@@ -20,11 +20,11 @@ const Cart = ({ auth }) => {
     const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
 
     useEffect(() => {
-        if(auth?.user) {
+        if(auth) {
             getUserCart();
             localStorage.removeItem('cart');
         }
-    }, [cartGuests, auth.user]);
+    }, [cartGuests, auth]);
 
     useEffect(() => {
         let p = 0;
@@ -40,7 +40,7 @@ const Cart = ({ auth }) => {
     return (
         <>
             <section id="cart" className="section">
-                {auth.user === null ? (<div className="container">
+                {auth === null ? (<div className="container">
                     {
                         cartGuests.length === 0 ? (
                             <EmptyView

@@ -17,13 +17,11 @@ const RouterRoutes = () => {
 
     useScrollRestore();
 
-    const { auth } = useSelector(store => store);
+    const user = useSelector(store => store.auth?.user);
 
     useEffect(() => {
 
-    }, auth?.user?.address);
-
-    console.log("tất cả các address: ", auth?.user?.address);
+    }, [user?.address.length]);
 
     return (
         <>
@@ -31,10 +29,10 @@ const RouterRoutes = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/contact" element={<ContactUs />} />
-                <Route path="/cart" element={<Cart auth={auth} />} />
+                <Route path="/cart" element={<Cart auth={user} />} />
                 <Route path="/all-products" element={<AllProducts />} />
-                <Route path="/product-details/:productId" element={<ProductDetails auth={auth} />} />
-                <Route path="/checkout" element={<CheckOut auth={auth} />} />
+                <Route path="/product-details/:productId" element={<ProductDetails auth={user} />} />
+                <Route path="/checkout" element={<CheckOut auth={user} />} />
                 <Route path="*" element={<ErrorPage />} />
                 <Route path="/order-manage" element={<OrderManage />} />
                 <Route path="/order-details" element={<OrderDetails />} />
