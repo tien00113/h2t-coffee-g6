@@ -23,6 +23,7 @@ const AccountForm = ({onClose}) => {
 
     const user  =  useSelector(state => state.auth?.user);
     const err = useSelector(state => state.auth?.error);
+    const status = useSelector(state => state.auth?.status);
 
     const handleController = () => {
         setIsSignupVisible(!isSignupVisible);
@@ -33,12 +34,12 @@ const AccountForm = ({onClose}) => {
         dispatch(loginUserAction({ data: values }));
     }
     useEffect(() => {
-        if (user) {
+        if (status) {
             window.location.reload();
         } else {
             localStorage.removeItem("jwt")
         }
-    }, [user])
+    }, [status])
 
     const handleSubmitSignup = (values) => {
         dispatch(registerUserAction({ data: values }));

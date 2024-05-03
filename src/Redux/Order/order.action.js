@@ -6,7 +6,6 @@ export const getAllOrderAction = () =>  async (dispatch) => {
 
     try {
         const {data} = await api.get(`${API_BASE_URL}/api/order/user`);
-        console.log("Tất cả đơn hàng: ", data);
         dispatch({type: GET_ALL_ORDER_SUCCESS, payload: data})
     } catch (error) {
         console.log("Lỗi get all order-----------", error)

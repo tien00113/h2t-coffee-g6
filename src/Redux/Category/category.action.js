@@ -6,7 +6,6 @@ export const getAllCategoryAction = () => async (dispatch) => {
     dispatch({ type: GET_ALL_CATEGORY_REQUEST})
     try {
         const { data } = await axios.get(`${API_BASE_URL}/allproduct/categorys`);
-        console.log("tat ca category: ", data);
         dispatch({ type: GET_ALL_CATEGORY_SUCCESS, payload: data })
 
     } catch (error) {

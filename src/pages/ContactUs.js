@@ -8,8 +8,8 @@ class ContactUs extends React.Component {
     return (
       <section className="contact">
         <div className="content">
-          <h2>Contact Us</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet autem debitis suscipit, repellat odit amet possimus quos dolor?</p>
+          <h2>Liên Hệ</h2>
+          <p>Để mua sản phẩm dễ dàng hơn, thưởng thức các hương vị cà phê truyền thống.</p>
         </div>
         <div className="container">
 
@@ -18,15 +18,15 @@ class ContactUs extends React.Component {
             <div className="box">
               <div className="icon"><FiMapPin /></div>
               <div className="text">
-                <h3>Address</h3>
-                <p>319 Ho Tung Mau</p>
+                <h3>Địa Chỉ</h3>
+                <p>319 Hồ Tùng Mậu</p>
               </div>
 
             </div>
             <div className="box">
               <div className="icon"><MdOutlineLocalPhone /></div>
               <div className="text">
-                <h3>Phone</h3>
+                <h3>Số Điện Thoại</h3>
                 <p>+123 456 789</p>
               </div>
 
@@ -43,10 +43,10 @@ class ContactUs extends React.Component {
 
           <div className="contactForm">
               <form >
-                  <h2>Send Message</h2>
+                  <h2>Gửi Tin Nhắn</h2>
                   <div className="inputBox">
                       <input type="text" name="" required='required' />
-                      <span>Full Name</span>
+                      <span>Tên đầy đủ</span>
                   </div>
                   <div className="inputBox">
                       <input type="text" name="" required='required' />
@@ -54,11 +54,11 @@ class ContactUs extends React.Component {
                   </div>
                   <div className="inputBox">
                       <textarea name="" id="" cols="30" rows="3" required='required'></textarea>
-                      <span>Type your message...</span>
+                      <span>Nhập lời nhắn của bạn...</span>
                   </div>
                   <div className="inputBox">
-                      <input type="submit" name="" value="Send" />
-                  </div>
+                      <input type="submit" name="" value="Gửi" />
+                  </div>      
               </form> 
           </div>
 

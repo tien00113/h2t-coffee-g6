@@ -4,7 +4,8 @@ const initialState = {
     jwt: null,
     error: null,
     loading: false,
-    user: null
+    user: null,
+    status: false,
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -25,7 +26,8 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 jwt: action.payload,
                 loading: false,
-                error: null
+                error: null,
+                status: true,
             }
 
         case LOGOUT_SUCCESS:
@@ -58,7 +60,8 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                error: action.payload
+                error: action.payload,
+                status: false,
             }
 
         default:

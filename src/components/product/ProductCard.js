@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import ProductRating from './ProductRating';
 
 const ProductCard = ({ item }) => {
-    const { user } = useSelector(store => store.auth?.user);
+    const user = useSelector(store => store.auth?.user);
     const { active, activeClass } = useActive(false);
     const [status, setStatus] = useState(false);
     const newPrice = displayMoney(item?.salePrice);

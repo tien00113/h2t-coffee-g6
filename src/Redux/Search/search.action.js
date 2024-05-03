@@ -6,7 +6,6 @@ export const getProductByName = (query) => async (dispatch) => {
     dispatch({ type: SEARCH_PRODUCT_REQUEST})
     try {
         const { data } = await axios.get(`${API_BASE_URL}/allproduct/search?query=${query}`);
-        console.log("ket qua tim kiem theo ten: ", data);
         dispatch({ type: SEARCH_PRODUCT_SUCCESS, payload: data });
         dispatch({type: SEARCH_PRODUCT_QUERY, payload: query});
 

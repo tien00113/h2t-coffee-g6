@@ -6,7 +6,6 @@ export const getAllProductAction = () => async (dispatch) => {
     dispatch({ type: GET_ALL_PRODUCT_REQUEST })
     try {
         const { data } = await axios.get(`${API_BASE_URL}/allproduct`);
-        console.log("Tat ca san pham", data);
         dispatch({ type: GET_ALL_PRODUCT_SUCCESS, payload: data })
 
     } catch (error) {
@@ -19,7 +18,6 @@ export const getProductDetail = (productId) => async (dispatch) => {
     dispatch({ type: GET_PRODUCT_DETAIL_REQUEST })
     try {
         const { data } = await axios.get(`${API_BASE_URL}/allproduct/${productId}`, productId);
-        console.log("Chi tiết sản phẩm", data);
         dispatch({ type: GET_PRODUCT_DETAIL_SUCCESS, payload: data })
 
     } catch (error) {

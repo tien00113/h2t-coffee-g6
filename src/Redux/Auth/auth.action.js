@@ -11,11 +11,10 @@ export const loginUserAction = (loginData) => async (dispatch) => {
         if (data.token) {
             localStorage.setItem("jwt", data.token)
         }
-        console.log("đã đăng nhập", data)
         dispatch({ type: LOGIN_SUCCESS, payload: data.jwt })
 
     } catch (error) {
-        console.log("--------", error)
+        console.log("Lỗi đăng nhập--------", error)
         dispatch({ type: LOGIN_FAILURE, payload: error })
     }
 }
@@ -30,11 +29,10 @@ export const registerUserAction = (registerData) => async (dispatch) => {
             localStorage.setItem("jwt", data.token)
 
         }
-        console.log("hoàn tất đăng ký-------", data)
         dispatch({ type: REGISTER_SUCCESS, payload: data.jwt })
 
     } catch (error) {
-        console.log("--------", error)
+        console.log("lỗi đăng ký--------", error)
         dispatch({ type: REGISTER_FAILURE, payload: error })
     }
 }
@@ -55,7 +53,7 @@ export const getUserAction = (jwt) => async (dispatch) => {
         dispatch({ type: GET_USER_SUCCESS, payload: data })
 
     } catch (error) {
-        console.log("lỗi rồi mày--------", error)
+        console.log("lỗi--------", error)
         dispatch({ type: GET_USER_FAILURE, payload: error })
     }
 }
@@ -68,7 +66,7 @@ export const logoutAction = () => async (dispatch) => {
         dispatch({ type: LOGOUT_SUCCESS, payload: data })
 
     } catch (error) {
-        console.log("lỗi rồi mày--------", error)
+        console.log("lỗi--------", error)
         dispatch({ type: LOGOUT_FAILURE, payload: error })
     }
 }
@@ -77,12 +75,10 @@ export const createAddressAction = (adr) => async (dispatch) => {
     dispatch({ type: CREATE_ADDRESS });
     try {
         const { data } = await api.post(`${API_BASE_URL}/api/address/create`, adr);
-        console.log("đã thêm address vào user", data);
         dispatch({
             type: CREATE_ADDRESS_SUCCESS,
             payload: data,
         });
-        console.log("đã dispatch");
     } catch (error) {
         console.log("Lỗi add address: ", error);
         dispatch({type: CREATE_ADDRESS_FAILURE, payload: error});

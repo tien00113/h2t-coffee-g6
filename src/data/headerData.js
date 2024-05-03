@@ -1,50 +1,36 @@
 export const menu = [
     {
         id: 1,
-        link: "Cream Coffee",
+        link: "Cà phê",
         path: "*",
     },
     {
         id: 2,
-        link: "Black Coffee",
+        link: "Đồ ăn",
         path: "*",
     },
-    {
-        id: 3,
-        link: "Peach Tea",
-        path: "*",
-    },
-    {
-        id: 4,
-        link: "Milk Coffee",
-        path: "*",
-    },
+
 ];
 
 export const dropdownMenu = [
     {
         id: 1,
-        link: "Orders",
+        link: "Đơn hàng",
         path: "order-manage",
     },
     {
         id: 2,
-        link: "Wishlist",
+        link: "Danh sách yêu thích",
         path: "*",
     },
     {
         id: 3,
-        link: "Gift Cards",
+        link: "Thẻ quà tặng",
         path: "*",
     },
     {
         id: 4,
-        link: "Saved Cards",
-        path: "*",
-    },
-    {
-        id: 5,
-        link: "Saved Addresses",
+        link: "Địa chỉ đã lưu",
         path: "*",
     },
 ];

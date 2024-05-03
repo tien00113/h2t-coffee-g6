@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column; 
-    background: url(https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg);
+    // background: url(https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg);
     background-size: cover;
 
     h2 {
@@ -52,6 +52,48 @@
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
         }
+    }
+
+    h3{
+        text-transform: uppercase;
+        margin: 2rem 0;
+        font-size: 1.5rem;
+    }
+    .team-container {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        .member {
+          text-align: center;
+          width: 30%;
+            img {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                margin-bottom: 10px;
+            }
+          .member-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+          }
+          .member-role {
+            font-size: 1rem;
+            color: gray;
+            margin-top: 0.3rem;
+          }
+          @include devices(sm) {
+            img{
+                width: 100px;
+                height: 100px;
+            }
+            .member-name{
+                font-size: 1.2rem;
+            }
+            .member-role{
+                font-size: 0.8rem;
+            }
+        }
+      }
     }
 }
 

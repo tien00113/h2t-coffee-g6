@@ -30,7 +30,7 @@ const Home = () => {
             </section>
 
             <section className="section">
-                <SectionsHead heading="Coffee Chill" />
+                <SectionsHead heading="Góc thư giãn" />
                 <QuiltedImageList />
             </section>
 
