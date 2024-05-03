@@ -10,17 +10,27 @@
 
     .swiper {
         @include dimension(100%, 100%);
-        @include padding-x(0.75rem, 0.75rem);
-        @include padding-y(4rem, 5rem);
         max-width: 1300px;
         /* Đặt giới hạn chiều rộng tối đa */
         width: 100%;
         margin: 0 auto;
+        .swiper-wrapper{
+            height: 60%;
+            @include devices(sm) {
+                height: 80%;
+            }
+        }
+        .swiper-pagination{
+            bottom: 8rem;
+            @include devices(md) {
+                bottom: 4rem;
+            }
+            @include devices(sm) {
+                bottom: 0rem;
+            }
+        }
     }
 
-    .swiper-pagination {
-        bottom: 60px;
-    }
     .swiper-slide {
         display: flex;
         justify-content: center;

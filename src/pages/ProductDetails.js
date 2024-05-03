@@ -206,13 +206,6 @@ const ProductDetails = ({ auth }) => {
 
             {product?.reViewProducts.length > 0 && <ProductSummary review={product?.reViewProducts}/>}
 
-            <section id="related_products" className="section">
-                <div className="container">
-                    <SectionsHead heading="Related Products" />
-                    <RelatedSlider category={product?.category} />
-                </div>
-            </section>
-
             <Services />
         </>
     );
