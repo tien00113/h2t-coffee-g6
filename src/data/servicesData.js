@@ -5,7 +5,7 @@ const servicesData = [
         id: 1,
         icon: <FaShippingFast />,
         title: "Chuyển phát nhanh",
-        info: "Giao hàng trong 24 giờ",
+        info: "Giao hàng trong 1 giờ",
     },
     {
         id: 2,

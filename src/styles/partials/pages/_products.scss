@@ -11,9 +11,9 @@
     }
 
     @include devices(sm) {
-        @include grid-cols(1, 1fr, 1rem);
+        @include grid-cols(2, 1fr, 1rem);
         margin: auto;
-        width: 60%;
+        width: auto;
     }
 }
 
