@@ -72,7 +72,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     return (
         <div className="modal-box">
             <div className='modal-content'>
-                <div class="modal-first">
+                <div className="modal-first">
                     <div className="first-left">
                         <img src={item.image[0].imageUrl} alt="Bac Xiu" />
                         <div>

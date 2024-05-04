@@ -7,7 +7,7 @@
     grid-template-columns: 0.7fr 1fr;
     gap: 4rem;
 
-    @include devices(md) {
+    @include devices(lg) {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
@@ -15,16 +15,39 @@
 
 .prod_details_left_col {
   
+    .prod_details_tabs {
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        margin-top: 2rem;
+    
+        .tabs_item {
+            @include dimension(6rem, 6rem);
+            @include bordered(2px, rgba($color: #ffffff, $alpha: 0.2));
+            border-radius: 3px;
+            padding: 0.5rem;
+            cursor: pointer;
+            @include transition(border-color, 0.2s);
+    
+            &.active {
+                border-color: #eee;
+            }
+    
+            img {
+                @include img-fit;
+            }
+        }
+
+        .tabs_item.selected{
+            border: 1px solid var(--main-color); 
+        }
+    }
+
     .prod_details_img {
         height: 26rem;
         img {
             @include img-fit;
         }
-    }
-
-    @include devices(sm) {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
     }
     
 }

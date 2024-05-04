@@ -21,7 +21,7 @@ const RouterRoutes = () => {
 
     useEffect(() => {
 
-    }, [user?.address.length]);
+    }, [user?.address?.length]);
 
     return (
         <>

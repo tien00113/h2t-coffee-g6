@@ -65,7 +65,7 @@ const cartReducer = (state, action) => {
                 message: action.payload,
                 cartUser: {
                     ...state.cartUser,
-                    cartItems: [...state?.cartUser?.cartItems, action.payload]
+                    cartItems: [...state?.cartUser?.cartItems, action.payload.request]
                 }
             }
         // }
