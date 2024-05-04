@@ -1,34 +1,16 @@
 #hero {
-    // min-height: 100vh;
-    // height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     @include centered;
-    // background: url(https://cdn.pixabay.com/photo/2017/09/23/10/53/coffee-2778423_1280.png);
     background-size: cover;
 
     .swiper {
         @include dimension(100%, 100%);
         max-width: 1300px;
-        /* Đặt giới hạn chiều rộng tối đa */
         width: 100%;
-        margin: 0 auto;
-        .swiper-wrapper{
-            height: 60%;
-            @include devices(sm) {
-                height: 80%;
-            }
-        }
-        .swiper-pagination{
-            bottom: 8rem;
-            @include devices(md) {
-                bottom: 4rem;
-            }
-            @include devices(sm) {
-                bottom: 0rem;
-            }
-        }
+        margin-top: 3.3rem;
+        margin-bottom: 3rem;
     }
 
     .swiper-slide {

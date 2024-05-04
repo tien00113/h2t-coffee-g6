@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { footMenu, footSocial } from '../../data/footerData';
+import { footMenu } from '../../data/footerData';
 
 
 const Footer = () => {
@@ -43,18 +43,6 @@ const Footer = () => {
                             );
                         })
                     }
-
-                <div className="foot_social">
-                    <h4>Theo dõi</h4>
-                    {
-                        footSocial.map((item) => {
-                            const { id, icon, path } = item;
-                            return (
-                                <Link to={path} key={id}>{icon}</Link>
-                            );
-                        })
-                    }
-                </div>
                 </div>
             </div>
 
