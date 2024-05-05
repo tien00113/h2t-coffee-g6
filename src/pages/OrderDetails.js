@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { MdDone } from "react-icons/md";
 import { displayMoney } from '../helpers/utils';
 import orderContext from '../contexts/order/orderContext';
+import { toast } from 'react-toastify';
 
 const steps = [
     'Chờ Xác Nhận',
@@ -38,19 +39,68 @@ const OrderDetails = () => {
     const date = new Date(orderDetail?.createAt);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 
-    const updateStatusOrder = () => {
-        if (orderDetail?.status === 'SHIPPED') {
-            completedOrder(orderDetail?.id);
-            setStep(4);
-            setStatus('DELIVERED');
-        } else if (step < 3) {
-            cancelledOrder(orderDetail?.id)
-        } else if (orderDetail?.status === 'DELIVERED') {
-            
-        }
+    const showCustomAlert = () => {
+        const toastId = toast.info(
+            <div>
+                <p>Bạn đã nhận được hàng?</p>
+                <button className='btn-3' onClick={() => handleContinue(toastId)}>Xác nhận</button>
+                <button className='btn-4' onClick={() => handleClose(toastId)}>Hủy</button>
+            </div>,
+            {
+                autoClose: false,
+                closeOnClick: false
+            }
+        );
+    };
+
+    // Hàm xử lý khi nhấn nút "Oke"
+    const handleContinue = (toastId) => {
+        completedOrder(orderDetail?.id);
+        setStep(4);
+        setStatus('DELIVERED');
+        toast.dismiss(toastId);
+    };
+
+    // Hàm xử lý khi nhấn nút "Đóng"
+    const handleClose = (toastId) => {
+        toast.dismiss(toastId);
+    };
+
+    const alertCancelOrder = () => {
+        const toastId = toast.info(
+            <div>
+                <p>Bạn muốn hủy đơn hàng?</p>
+                <button className='btn-3' onClick={() => handleContinueCancel(toastId)}>Hủy đơn</button>
+                <button className='btn-4' onClick={() => handleClose(toastId)}>Đóng</button>
+            </div>,
+            {
+                autoClose: false,
+                closeOnClick: false
+            }
+        );
     }
 
-    console.log("step là: ", orderDetail)
+    const handleContinueCancel = (toastId) => {
+        cancelledOrder(orderDetail?.id);
+        toast.dismiss(toastId);
+    }
+
+    const updateStatusOrder = () => {
+        if (orderDetail?.status === 'SHIPPED' && step < 4) {
+            // completedOrder(orderDetail?.id);
+            // setStep(4);
+            // setStatus('DELIVERED');
+            showCustomAlert()
+        } else if (step < 3) {
+            // cancelledOrder(orderDetail?.id)
+            alertCancelOrder();
+        } else if (orderDetail?.status === 'DELIVERED') {
+            toast.warning('Chức năng đang nâng cấp, hãy đánh giá ở trang quản lý đơn hàng');
+            showCustomAlert();
+        } else if (step === 4 && status === "DELIVERED" && orderDetail?.status === "SHIPPED") {
+            toast.warning('Chức năng đang nâng cấp, hãy đánh giá ở trang quản lý đơn hàng');
+        }
+    }
 
     return (
         <div className="order_details">
@@ -112,7 +162,7 @@ const OrderDetails = () => {
                     <div className='info'>
                         <button className='btn-2' onClick={updateStatusOrder}>
                             {
-                                step === 3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime >= orderDetail?.updateStatusAt) ? "Đánh Giá" : step===4 && status === 'DELIVERED' && orderDetail?.status === 'SHIPPED' ? "Đánh Giá" : "Mua Lại"
+                                step === 3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime >= orderDetail?.updateStatusAt) ? "Đánh Giá" : step === 4 && status === 'DELIVERED' && orderDetail?.status === 'SHIPPED' ? "Đánh Giá" : "Mua Lại"
                             }
                         </button>
                         <table>

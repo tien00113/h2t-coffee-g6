@@ -275,7 +275,7 @@ function OrderManage() {
         <>
             <div className="main-layout">
                 <Sidebar onSelect={handleSelect} />
-                <ContentArea allOrder={order} onSelect={selectedOption} />
+                <ContentArea allOrder={order} onSelect={selectedOption} /> {/* Pass rerender callback */}
             </div>
         </>
     );

@@ -1,6 +1,7 @@
 import { createContext, useReducer } from "react";
 import reviewReducer from "./reviewReducer";
 import { API_BASE_URL, api } from "../../config/api";
+import { toast } from "react-toastify";
 
 const reviewContext = createContext();
 
@@ -14,13 +15,14 @@ const ReviewProvider = ({children}) => {
     const reviewProduct = async (review) => {
         try {
             const {data} = await api.put(`${API_BASE_URL}/api/product/review`, review);
-            console.log("đã đánh giá sản phẩm: ", data);
+            toast.success('Đã đánh giá sản phẩm thành công!')
             dispatch({
                 type: "REVIEW_PRODUCT",
                 payload: data
             });
         } catch (error) {
             console.log("Lỗi đánh giá -------------------", error);
+            toast.error('Lỗi đánh giá, hãy thử lại sau!')
         }
     }
 

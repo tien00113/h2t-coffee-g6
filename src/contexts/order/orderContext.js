@@ -1,6 +1,7 @@
 import { createContext, useReducer } from "react";
 import orderReducer from "./orderReducer";
 import { API_BASE_URL, api } from "../../config/api";
+import { toast } from "react-toastify";
 
 const orderContext = createContext();
 
@@ -14,7 +15,8 @@ const OrderProvider = ({children}) => {
     const order = async (order) => {
         try {
             const {data} = await api.post(`${API_BASE_URL}/api/order/create`, order);
-            console.log("Đã đặt hàng thành công! ", data);
+            // console.log("Đã đặt hàng thành công! ", data);
+            toast.success('Bạn đã đặt hàng thành công!');
             dispatch({
                 type:'ORDER',
                 payload: data,
