@@ -102,7 +102,7 @@ const Header = () => {
                                     <h4><Link to="/contact">Liên hệ</Link></h4>
                                 </div>
                                 <div className='box' onClick={hideMenu}>
-                                    <h4><Link to="/about">Giới thiệu</Link></h4>
+                                    <h4><Link to="/about">Giới Thiệu</Link></h4>
                                 </div>
                             </div>
                         </nav>

@@ -15,13 +15,12 @@ const OrderDetails = () => {
     const location = useLocation();
     const orderDetail = location?.state;
     const { completedOrder, cancelledOrder } = useContext(orderContext);
+    const [status, setStatus] = useState(orderDetail?.status);
     const [step, setStep] = useState();
 
-    console.log("order là: ", orderDetail);
-    let activeStep;
 
     useEffect(() => {
-        switch (orderDetail?.status) {
+        switch (status) {
             case 'PLACED':
                 setStep(1);
                 break;
@@ -34,7 +33,7 @@ const OrderDetails = () => {
             default:
                 setStep(4);
         }
-    }, [orderDetail?.status]);
+    }, [orderDetail?.status, step]);
 
     const date = new Date(orderDetail?.createAt);
     const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
@@ -42,7 +41,8 @@ const OrderDetails = () => {
     const updateStatusOrder = () => {
         if (orderDetail?.status === 'SHIPPED') {
             completedOrder(orderDetail?.id);
-            setStep(4)
+            setStep(4);
+            setStatus('DELIVERED');
         } else if (step < 3) {
             cancelledOrder(orderDetail?.id)
         } else if (orderDetail?.status === 'DELIVERED') {
@@ -50,7 +50,7 @@ const OrderDetails = () => {
         }
     }
 
-    console.log("step là: ", step)
+    console.log("step là: ", orderDetail)
 
     return (
         <div className="order_details">
@@ -60,15 +60,15 @@ const OrderDetails = () => {
                         {index < steps.length - 1 && (
                             <div className={`connector ${index < step - 1 ? 'active' : ''}`} />
                         )}
-                        <div className={`circle ${index <= step -1 ? "active" : ''}`}>
+                        <div className={`circle ${index <= step - 1 ? "active" : ''}`}>
                             {(step <= 4 && index < step - 1) ? <MdDone style={{ fontSize: "20" }} /> : (step === 4 && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime < orderDetail?.updateStatusAt)) ? <MdDone style={{ fontSize: "20" }} /> : index + 1}
                         </div>
                         <div className="stepLabel">
                             {
-                                step === 4 && orderDetail?.status === 'CANCELLED' ? "Đã Hủy" :
-                                    orderDetail?.status === 'CONFIRMED' && label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" :
-                                        orderDetail?.status === 'SHIPPED' && (label === 'Chờ Lấy Hàng' || label === 'Chờ Xác Nhận') ? label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : "Đã Xác Nhận" :
-                                            step ===4  && (label === 'Chờ Xác Nhận' || label === 'Chờ Lấy Hàng' || label === 'Đang Giao' || label === 'Đánh Giá') ? label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" : label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : label === 'Đang Giao' ? "Đã Giao" : (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime < orderDetail?.updateStatusAt) ? "Hoàn Thành" : "Đánh Giá" :
+                                step === 4 && status === 'CANCELLED' ? "Đã Hủy" :
+                                    status === 'CONFIRMED' && label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" :
+                                        status === 'SHIPPED' && (label === 'Chờ Lấy Hàng' || label === 'Chờ Xác Nhận') ? label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : "Đã Xác Nhận" :
+                                            step === 4 && (label === 'Chờ Xác Nhận' || label === 'Chờ Lấy Hàng' || label === 'Đang Giao' || label === 'Đánh Giá') ? label === 'Chờ Xác Nhận' ? "Đã Xác Nhận" : label === 'Chờ Lấy Hàng' ? "Đã Lấy Hàng" : label === 'Đang Giao' ? "Đã Giao" : (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime < orderDetail?.updateStatusAt) ? "Hoàn Thành" : "Đánh Giá" :
                                                 label
                             }
                         </div>
@@ -83,19 +83,19 @@ const OrderDetails = () => {
                         <h5>{formattedDate}</h5>
                     </div>
                     <div className="separator"></div>
-                    <div class="purchase-history">
+                    <div className="purchase-history">
                         {orderDetail?.orderItems.map((item) => (
-                            <div class="order">
-                                <div class="order-left" >
+                            <div className="order">
+                                <div className="order-left" >
                                     <img src={item?.product?.image[0]?.imageUrl} alt="Sản phẩm 1" />
-                                    <div class="order-details">
+                                    <div className="order-details">
                                         <h3>{item?.product?.name}</h3>
                                         <p>Size: {item?.sizeOption?.name}</p>
                                         <p>Topping: {item?.toppingOption?.name}</p>
                                         <h5>x{item?.quantity}</h5>
                                     </div>
                                 </div>
-                                <div class="order-right" >
+                                <div className="order-right" >
                                     <h3>{displayMoney(item?.priceSale)}</h3>
                                 </div>
                             </div>
@@ -112,30 +112,32 @@ const OrderDetails = () => {
                     <div className='info'>
                         <button className='btn-2' onClick={updateStatusOrder}>
                             {
-                                step ===3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime >= orderDetail?.updateStatusAt) ? "Đánh Giá" : "Mua Lại"
+                                step === 3 ? "Đã Nhận Hàng" : step < 3 ? "Hủy Đơn" : step === 4 && orderDetail?.status === 'DELIVERED' && (orderDetail?.deliveryDateTime && orderDetail?.deliveryDateTime >= orderDetail?.updateStatusAt) ? "Đánh Giá" : step===4 && status === 'DELIVERED' && orderDetail?.status === 'SHIPPED' ? "Đánh Giá" : "Mua Lại"
                             }
                         </button>
                         <table>
-                            <tr>
-                                <td>Tổng tiền hàng</td>
-                                <td>{displayMoney(orderDetail?.totalSalePrice)}</td>
-                            </tr>
-                            <tr>
-                                <td>Phí vận chuyển</td>
-                                <td>Free</td>
-                            </tr>
-                            <tr>
-                                <td id='info-pay'>Thành Tiền</td>
-                                <td id='info-pay'>{displayMoney(orderDetail?.totalSalePrice)}</td>
-                            </tr>
-                            <tr>
-                                <td id='info-pay'>Phương Thức Thanh Toán</td>
-                                <td id='info-pay'>COD</td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>Tổng tiền hàng</td>
+                                    <td>{displayMoney(orderDetail?.totalSalePrice)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phí vận chuyển</td>
+                                    <td>Free</td>
+                                </tr>
+                                <tr>
+                                    <td id='info-pay'>Thành Tiền</td>
+                                    <td id='info-pay'>{displayMoney(orderDetail?.totalSalePrice)}</td>
+                                </tr>
+                                <tr>
+                                    <td id='info-pay'>Phương Thức Thanh Toán</td>
+                                    <td id='info-pay'>COD</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
-                
+
                 <div className="detail_address">
                     <h3>Thông tin nhận hàng</h3>
                     <div className="address">

@@ -59,7 +59,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     }
 
     const handleAddToCart = () => {
-        if (auth === null) {
+        if (!auth) {
             handleAddItemToGuestCart();
             onClose();
         }

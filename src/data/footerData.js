@@ -78,28 +78,33 @@ export const footMenu = [
                 path: "/"
             },
         ]
-    }
-];
-
-export const footSocial = [
-    {
-        id: 1,
-        icon: <FaFacebookF />,
-        path: "/",
-    },
-    {
-        id: 2,
-        icon: <FaTwitter />,
-        path: "/",
-    },
-    {
-        id: 3,
-        icon: <FaInstagram />,
-        path: "/",
     },
     {
         id: 4,
-        icon: <FaLinkedinIn />,
-        path: "/",
-    },
+        title: "Theo dõi",
+        menu: [
+            {
+                id: 1,
+                link: <FaFacebookF />,
+                path: "/",
+            },
+            {
+                id: 2,
+                link: <FaTwitter />,
+                path: "/",
+            },
+            {
+                id: 3,
+                link: <FaInstagram />,
+                path: "/",
+            },
+            {
+                id: 4,
+                link: <FaLinkedinIn />,
+                path: "/",
+            },
+        ]
+    }
 ];
+
+

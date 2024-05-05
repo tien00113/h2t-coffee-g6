@@ -83,18 +83,18 @@ function ContentArea({ allOrder, onSelect }) {
                     onSelect === 'PLACED' && (placedOrders.length > 0 ? placedOrders.map((order) => (
                         // <Link key={order?.id} to={`/order-details/${order?.id}`}>
                         <div className='purchase-history'>
-                            <div class="order">
-                                <div class="order-left" >
+                            <div className="order">
+                                <div className="order-left" >
                                     <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                    <div class="order-details">
+                                    <div className="order-details">
                                         <h3>{order?.orderItems[0]?.product?.name}</h3>
                                         <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
                                         <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
                                         <h5>x{order?.orderItems[0]?.quantity}</h5>
                                     </div>
                                 </div>
-                                <div class="order-right" >
-                                    <p class="status_wait in-progress">Chờ Xác Nhận</p>
+                                <div className="order-right" >
+                                    <p className="status_wait in-progress">Chờ Xác Nhận</p>
                                     <h3>Thành Tiền: {displayMoney(order?.totalSalePrice)}</h3>
                                 </div>
                             </div>
@@ -116,18 +116,18 @@ function ContentArea({ allOrder, onSelect }) {
 
                 {onSelect === 'CONFIRMED' && (confirmedOrders.length > 0 ? confirmedOrders.map((order) => (
                     <div className='purchase-history'>
-                        <div class="order">
-                            <div class="order-left" >
+                        <div className="order">
+                            <div className="order-left" >
                                 <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                <div class="order-details">
+                                <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
                                     <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
-                            <div class="order-right" >
-                                <p class="status_confirm in-progress">Chờ Lấy Hàng</p>
+                            <div className="order-right" >
+                                <p className="status_confirm in-progress">Chờ Lấy Hàng</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                             </div>
                         </div>
@@ -148,18 +148,18 @@ function ContentArea({ allOrder, onSelect }) {
 
                 {onSelect === 'SHIPPED' && (shippedOrders.length > 0 ? shippedOrders.map((order) => (
                     <div className='purchase-history'>
-                        <div class="order">
-                            <div class="order-left" >
+                        <div className="order">
+                            <div className="order-left" >
                                 <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                <div class="order-details">
+                                <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
                                     <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
-                            <div class="order-right" >
-                                <p class="status_shipping in-progress">Đang Giao Hàng</p>
+                            <div className="order-right" >
+                                <p className="status_shipping in-progress">Đang Giao Hàng</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                             </div>
                         </div>
@@ -180,18 +180,18 @@ function ContentArea({ allOrder, onSelect }) {
 
                 {onSelect === 'CANCELLED' && (cancelledOrdes.length > 0 ? cancelledOrdes.map((order) => (
                     <div className='purchase-history'>
-                        <div class="order">
-                            <div class="order-left" >
+                        <div className="order">
+                            <div className="order-left" >
                                 <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                <div class="order-details">
+                                <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
                                     <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
-                            <div class="order-right" >
-                                <p class="status_failure in-progress">Đã Hủy</p>
+                            <div className="order-right" >
+                                <p className="status_failure in-progress">Đã Hủy</p>
                                 <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                             </div>
                         </div>
@@ -213,18 +213,18 @@ function ContentArea({ allOrder, onSelect }) {
                 {onSelect === 'DELIVERED' && (deliveredOrders.length > 0 ? deliveredOrders.map((order, index) => (
                     <React.Fragment key={index}>
                         <div className='purchase-history'>
-                            <div class="order">
-                                <div class="order-left" >
+                            <div className="order">
+                                <div className="order-left" >
                                     <img src={order?.orderItems[0]?.product?.image[0]?.imageUrl} alt="orderImage" />
-                                    <div class="order-details">
+                                    <div className="order-details">
                                         <h3>{order?.orderItems[0]?.product?.name}</h3>
                                         <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
                                         <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
                                         <h5>x{order?.orderItems[0]?.quantity}</h5>
                                     </div>
                                 </div>
-                                <div class="order-right" >
-                                    <p class="status_success in-progress">Hoàn Thành</p>
+                                <div className="order-right" >
+                                    <p className="status_success in-progress">Hoàn Thành</p>
                                     <h3>Thành tiền: {displayMoney(order?.totalSalePrice)}</h3>
                                 </div>
                             </div>
