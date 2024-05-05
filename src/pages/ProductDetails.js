@@ -20,7 +20,7 @@ const ProductDetails = ({ auth }) => {
     const navigate = useNavigate();
     const prodId = parseInt(productId);
     const dispatch = useDispatch();
-    const product  = useSelector(state => state.product.product);
+    const product = useSelector(state => state.product.product);
 
     useEffect(() => {
         dispatch(getProductDetail(prodId));
@@ -32,6 +32,7 @@ const ProductDetails = ({ auth }) => {
     const { addItemCartUser, addItemCartGuest } = useContext(cartContext);
 
     const [previewImg, setPreviewImg] = useState(product?.image[0]?.imageUrl);
+    const [selectedImgIndex, setSelectedImgIndex] = useState(0);
     const [showError, setShowError] = useState(false);
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedTopping, setSelectedTopping] = useState(null);
@@ -87,6 +88,11 @@ const ProductDetails = ({ auth }) => {
     }
 
     // setting the very-first image on re-render
+    const handleImageClick = (imageUrl, index) => {
+        setPreviewImg(imageUrl);
+        setSelectedImgIndex(index);
+    };
+
     useEffect(() => {
         setPreviewImg(product?.image[0]?.imageUrl);
         handleActive(0);
@@ -101,8 +107,8 @@ const ProductDetails = ({ auth }) => {
             sizeOption: selectedSize,
             toppingOption: selectedTopping,
             quantity: count,
-            price: (product?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
-            priceSale: (product?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            price: (product?.price + (selectedTopping ? selectedTopping?.price : 0) + selectedSize?.price) * count,
+            priceSale: (product?.salePrice + (selectedTopping ? selectedTopping?.price : 0) + selectedSize?.price) * count,
             userId: auth?.id
         }
     ]
@@ -112,10 +118,19 @@ const ProductDetails = ({ auth }) => {
             <section id="product_details" className="section">
                 <div className="container">
                     <div className="wrapper prod_details_wrapper">
-
                         <div className="prod_details_left_col">
                             <div className="prod_details_img">
                                 <img src={previewImg} alt="product-img" />
+                            </div>
+
+                            <div className="prod_details_tabs">
+                                {product?.image.map((img, index) => (
+                                    <div className={`tabs_item ${index === selectedImgIndex ? 'selected' : ''}`}
+                                        key={index}
+                                        onClick={() => handleImageClick(img.imageUrl, index)}>
+                                        <img src={img.imageUrl} alt="product-img" />
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -194,7 +209,7 @@ const ProductDetails = ({ auth }) => {
                                 <button type="button" className="btn" onClick={handleAddToCart}>
                                     Thêm vào giỏ
                                 </button>
-                                <button type="button" className="btn-1" onClick={() => {navigate("/checkout", {state: {item: orderItems}})}}>
+                                <button type="button" className="btn-1" onClick={() => { navigate("/checkout", { state: { item: orderItems } }) }}>
                                     Mua Ngay
                                 </button>
                             </div>
@@ -203,7 +218,7 @@ const ProductDetails = ({ auth }) => {
                 </div>
             </section>
 
-            {product?.reViewProducts.length > 0 && <ProductSummary review={product?.reViewProducts}/>}
+            {product?.reViewProducts.length > 0 && <ProductSummary review={product?.reViewProducts} />}
 
             <Services />
         </>
