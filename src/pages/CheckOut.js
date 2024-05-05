@@ -27,7 +27,7 @@ const CheckOut = ({ auth }) => {
 
   const grandTotal = checkoutItem.reduce((total, item) => {
     const { product, quantity, sizeOption, toppingOption } = item;
-    return total + (product?.salePrice + sizeOption?.price + toppingOption?.price) * quantity;
+    return total + (product?.salePrice + sizeOption?.price + (toppingOption ?  toppingOption?.price : 0)) * quantity;
   }, 0);
 
   const handleChangeClick = () => {
@@ -139,16 +139,16 @@ const CheckOut = ({ auth }) => {
                           <p>Size: </p>
                           <h4>{item?.sizeOption?.name}</h4>
                         </div>
-                        <div className='topping'>
+                        {item?.toppingOption && <div className='topping'>
                           <p>Topping: </p>
                           <h4>{item?.toppingOption?.name}</h4>
-                        </div>
+                        </div>}
                       </div>
                       <h5>x{item?.quantity}</h5>
                     </div>
                   </div>
                   <div className="product-right" >
-                    <span>{displayMoney(item?.product?.salePrice + item?.sizeOption?.price + item?.toppingOption?.price)}</span>
+                    <span>{displayMoney(item?.product?.salePrice + item?.sizeOption?.price + (item?.toppingOption ? item?.toppingOption.price : 0))}</span>
                   </div>
                 </div>
               </div>

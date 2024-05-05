@@ -65,10 +65,9 @@ const cartReducer = (state, action) => {
                 message: action.payload,
                 cartUser: {
                     ...state.cartUser,
-                    cartItems: [...state?.cartUser?.cartItems, action.payload.request]
+                    cartItems: [action.payload, ...state?.cartUser?.cartItems]
                 }
             }
-        // }
 
         case 'REMOVE_ITEM_FROM_CART_USER':
             return {

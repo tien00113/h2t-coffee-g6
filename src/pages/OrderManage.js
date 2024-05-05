@@ -89,7 +89,7 @@ function ContentArea({ allOrder, onSelect }) {
                                     <div className="order-details">
                                         <h3>{order?.orderItems[0]?.product?.name}</h3>
                                         <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                        <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                        {order?.orderItems[0]?.toppingOption && <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>}
                                         <h5>x{order?.orderItems[0]?.quantity}</h5>
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@ function ContentArea({ allOrder, onSelect }) {
                                 <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                    {order?.orderItems[0]?.toppingOption && <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>}
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ function ContentArea({ allOrder, onSelect }) {
                                 <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                    {order?.orderItems[0]?.toppingOption && <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>}
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@ function ContentArea({ allOrder, onSelect }) {
                                 <div className="order-details">
                                     <h3>{order?.orderItems[0]?.product?.name}</h3>
                                     <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                    <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                    {order?.orderItems[0]?.toppingOption && <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>}
                                     <h5>x{order?.orderItems[0]?.quantity}</h5>
                                 </div>
                             </div>
@@ -219,7 +219,7 @@ function ContentArea({ allOrder, onSelect }) {
                                     <div className="order-details">
                                         <h3>{order?.orderItems[0]?.product?.name}</h3>
                                         <p>Size: {order?.orderItems[0]?.sizeOption?.name}</p>
-                                        <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>
+                                        {order?.orderItems[0]?.toppingOption && <p>Topping: {order?.orderItems[0]?.toppingOption?.name}</p>}
                                         <h5>x{order?.orderItems[0]?.quantity}</h5>
                                     </div>
                                 </div>

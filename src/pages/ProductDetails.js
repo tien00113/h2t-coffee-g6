@@ -170,7 +170,7 @@ const ProductDetails = ({ auth }) => {
                                 </div>
                             </div>
 
-                            <div class='topping'>
+                            {product?.toppingOptions.length > 0 && <div class='topping'>
                                 <h4>Topping</h4>
                                 <div className="topping-select">
                                     {product?.toppingOptions.map((topping) => (
@@ -183,7 +183,7 @@ const ProductDetails = ({ auth }) => {
                                         </span>
                                     ))}
                                 </div>
-                            </div>
+                            </div>}
 
                             <div className='quantity'>
                                 <h4>Số lượng</h4>

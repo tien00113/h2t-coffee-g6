@@ -46,7 +46,7 @@ const OrderDetails = () => {
         } else if (step < 3) {
             cancelledOrder(orderDetail?.id)
         } else if (orderDetail?.status === 'DELIVERED') {
-            console.log("dánh giá đi");
+            
         }
     }
 
@@ -91,7 +91,7 @@ const OrderDetails = () => {
                                     <div className="order-details">
                                         <h3>{item?.product?.name}</h3>
                                         <p>Size: {item?.sizeOption?.name}</p>
-                                        <p>Topping: {item?.toppingOption?.name}</p>
+                                        {item?.toppingOption && <p>Topping: {item?.toppingOption?.name}</p>}
                                         <h5>x{item?.quantity}</h5>
                                     </div>
                                 </div>
