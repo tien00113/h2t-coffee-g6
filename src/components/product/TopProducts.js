@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import useActive from '../../hooks/useActive';
-import productsData from '../../data/productsData';
 import ProductCard from './ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction } from '../../Redux/Product/product.action';
@@ -67,7 +66,7 @@ const TopProducts = () => {
             </div>
             <div className="wrapper products_wrapper">
                 {
-                    products.slice(0, 11).map(item => (
+                    products.slice(0, 15).map(item => (
                         <ProductCard
                             key={item.id}
                             item={item}

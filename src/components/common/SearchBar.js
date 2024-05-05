@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import commonContext from '../../contexts/common/commonContext';
-import productsData from '../../data/productsData';
 import useOutsideClose from '../../hooks/useOutsideClose';
 import useScrollDisable from '../../hooks/useScrollDisable';
 import { AiOutlineSearch } from 'react-icons/ai';

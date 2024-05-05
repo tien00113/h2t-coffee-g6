@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { IoMdStar, IoMdCheckmark } from 'react-icons/io';
-import { calculateDiscount, displayMoney } from '../helpers/utils';
+import { useNavigate, useParams } from 'react-router-dom';
+import { displayMoney } from '../helpers/utils';
 import useDocTitle from '../hooks/useDocTitle';
 import useActive from '../hooks/useActive';
 import cartContext from '../contexts/cart/cartContext';
-import productsData from '../data/productsData';
-import SectionsHead from '../components/common/SectionsHead';
-import RelatedSlider from '../components/sliders/RelatedSlider';
 import ProductSummary from '../components/product/ProductSummary';
 import Services from '../components/common/Services';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProductAction, getProductDetail } from '../Redux/Product/product.action';
+import { getProductDetail } from '../Redux/Product/product.action';
 import ProductRating from '../components/product/ProductRating';
 
 
@@ -141,7 +137,7 @@ const ProductDetails = ({ auth }) => {
                             <div className="prod_details_ratings">
                                 <ProductRating rating={product?.averageRating || 5} />
                                 {/* <span>{product?.averageRating}</span> */}
-                                {product?.reViewProducts.length > 0 && <span className='rating_text'>({product?.averageRating + "/5"})</span>}
+                                {product?.sold > 0 && <span className='rating_text'>(đã bán {product?.sold})</span>}
                             </div>
 
                             <div className="prod_details_price">
