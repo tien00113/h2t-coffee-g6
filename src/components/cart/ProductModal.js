@@ -9,6 +9,7 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     const navigate = useNavigate();
     const [count, setCount] = useState(1);
     const [selectedSize, setSelectedSize] = useState(null);
+    const [showError, setShowError] = useState(false);
 
     const handleSizeClick = (size) => {
         setSelectedSize(size);
@@ -28,8 +29,8 @@ const ProductModal = ({ onClose, item, auth, status }) => {
             sizeOption: selectedSize,
             toppingOption: selectedTopping,
             quantity: count,
-            price: (item?.price+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
-            priceSale: (item?.salePrice+ (selectedTopping ? selectedTopping?.price : 0 ) + selectedSize?.price) * count,
+            price: (item?.price + (selectedTopping ? selectedTopping?.price : 0) + selectedSize?.price) * count,
+            priceSale: (item?.salePrice + (selectedTopping ? selectedTopping?.price : 0) + selectedSize?.price) * count,
             userId: auth?.id
         }
     ]
@@ -39,10 +40,10 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     let currentId = localStorage.getItem('currentId');
     currentId = currentId ? Number(currentId) : 1;
     const handleAddItemToGuestCart = () => {
-        const newItem = { id: currentId,product: item, sizeOption: selectedSize, toppingOption: selectedTopping, quantity:count };
-        addItemCartGuest(newItem,count);
+        const newItem = { id: currentId, product: item, sizeOption: selectedSize, toppingOption: selectedTopping, quantity: count };
+        addItemCartGuest(newItem, count);
         currentId++;
-        localStorage.setItem("currentId",currentId);
+        localStorage.setItem("currentId", currentId);
     };
 
     let obj = {
@@ -59,13 +60,25 @@ const ProductModal = ({ onClose, item, auth, status }) => {
     }
 
     const handleAddToCart = () => {
-        if (!auth) {
-            handleAddItemToGuestCart();
-            onClose();
+        if (!selectedSize) {
+            setShowError(true);
+        } else {
+            setShowError(false);
+            if (!auth) {
+                handleAddItemToGuestCart();
+            }
+            else {
+                addToUserCart();
+            }
         }
-        else {
-            addToUserCart();
-            onClose();
+    }
+
+    const handleBuyNow = () => {
+        if (selectedSize) {
+            navigate("/checkout", { state: { item: orderItems } })
+            setShowError(false);
+        } else {
+            setShowError(true)
         }
     }
 
@@ -130,7 +143,8 @@ const ProductModal = ({ onClose, item, auth, status }) => {
                             <span className="counter__count">{count}</span>
                             <button className="counter__button" onClick={() => setCount(count + 1)}>+</button>
                         </div>
-                        {status ? (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={() => {navigate("/checkout", {state: {item: orderItems}})}}>Mua Ngay</button>) : (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleAddToCart}>Thêm Vào Giỏ</button>)}
+                        {showError && <div style={{ color: "red" }}>Chọn size để tiếp tục</div>}
+                        {status ? (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleBuyNow}>Mua Ngay</button>) : (<button className={`${selectedSize ? 'btn-1 add-to-cart' : 'disabled'}`} onClick={handleAddToCart}>Thêm Vào Giỏ</button>)}
                     </div>
                 </div>
 

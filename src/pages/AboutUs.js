@@ -4,7 +4,7 @@ import React from 'react';
 const AboutUs = () => {
   return (
     <section class='about'>
-      <h2>Về Chúng Tôi</h2>
+      <h2>Giới Thiệu Chung</h2>
       <div class='about_content'>
         <img src="https://cdn.pixabay.com/photo/2018/01/31/09/57/coffee-3120750_1280.jpg" alt="Coffee" />
         <div class="about_text">

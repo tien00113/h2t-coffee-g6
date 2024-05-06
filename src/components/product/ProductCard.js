@@ -56,12 +56,12 @@ const ProductCard = ({ item }) => {
                             Mua Ngay
                         </button>
                     </div>
+
                 </figure>
                 <div className="products_details">
                     <h3 className="products_title">
                         <Link to={`/product-details/${item?.id}`}>{item?.name}</Link>
                     </h3>
-                    {/* <h5 className="products_info">{info}</h5> */}
 
                     <div className="separator"></div>
 
@@ -70,13 +70,13 @@ const ProductCard = ({ item }) => {
                     </span>
                     <div className="prod_details_price">
                         <div className="price_box">
-                            <h2 className="price" style={{ color: "white" }}>
-                                {newPrice} &nbsp;
+                            <div className="price" style={{ color: "white" }}>
+                                <div className='priceno'>{newPrice} &nbsp;</div>
                                 <small className="del_price"><del>{oldPrice}</del></small>
-                            </h2>
+                            </div>
                         </div>
                         <div className='icon_card' onClick={handleClick}>
-                            <span><FaHeart style={{ color: color }} /></span>
+                            <span><FaHeart className='wish_list_icon' style={{ color: color }} /></span>
                         </div>
                     </div>
                 </div>

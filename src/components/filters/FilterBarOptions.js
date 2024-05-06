@@ -40,7 +40,7 @@ const FilterBarOptions = () => {
                             className="btn"
                             onClick={handleClearFilters}
                         >
-                            Clear Filters
+                            Đặt Lại
                         </button>
                     </div>
                 )
@@ -49,7 +49,7 @@ const FilterBarOptions = () => {
             {/*===== Sort-menu =====*/}
             <div className={`sort_options ${isMobSortVisible ? 'show' : ''}`}>
                 <div className="sort_head">
-                    <h3 className="title">Sort By</h3>
+                    <h3 className="title">Sắp Xếp</h3>
                     <button
                         type="button"
                         className="close_btn"
@@ -69,7 +69,7 @@ const FilterBarOptions = () => {
                                 <li
                                     key={id}
                                     className={sortedValue === title ? 'active' : ''}
-                                    onClick={() => setSortedValue(title)}
+                                    // onClick={() => setSortedValue(title)}
                                 >
                                     {title}
                                 </li>
@@ -82,7 +82,7 @@ const FilterBarOptions = () => {
             {/*===== Filter-menu =====*/}
             <div className={`filter_options ${isMobFilterVisible ? 'show' : ''}`}>
                 <div className="filter_head">
-                    <h3 className="title">Filter By</h3>
+                    <h3 className="title">Bộ Lọc</h3>
                     <button
                         type="button"
                         className="close_btn"
@@ -96,7 +96,7 @@ const FilterBarOptions = () => {
 
                 {/* Filter by Category */}
                 <div className="filter_block">
-                    <h4>Category</h4>
+                    <h4>Phân loại</h4>
                     <ul className="filter_menu">
                         {
                             category.map(item => {

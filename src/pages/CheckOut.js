@@ -27,7 +27,7 @@ const CheckOut = ({ auth }) => {
 
   const grandTotal = checkoutItem.reduce((total, item) => {
     const { product, quantity, sizeOption, toppingOption } = item;
-    return total + (product?.salePrice + sizeOption?.price + (toppingOption ?  toppingOption?.price : 0)) * quantity;
+    return total + (product?.salePrice + sizeOption?.price + (toppingOption ? toppingOption?.price : 0)) * quantity;
   }, 0);
 
   const handleChangeClick = () => {
@@ -69,7 +69,7 @@ const CheckOut = ({ auth }) => {
       }
       const newOrder = await order(addOrder);
       navigate("/order-manage", { state: newOrder });
-    } else{
+    } else {
       toast.warning('Bạn cần phải đăng nhập.')
     }
 
@@ -87,7 +87,11 @@ const CheckOut = ({ auth }) => {
               {shipAddress ? (<p>{shipAddress?.street}, {shipAddress?.ward}, {shipAddress?.district}, {shipAddress?.city}</p>) : (<p>{defaultAddress?.street}, {defaultAddress?.ward}, {defaultAddress?.district}, {defaultAddress?.city}</p>)}
             </div>
             <div>
-              <button className='btn-1' onClick={handleChangeClick}>Thay đổi</button>
+              <div className='btn_address'>
+                <button className='btn-1 btn_address' onClick={handleChangeClick}>
+                  <span>Thay đổi</span>
+                </button>
+              </div>
             </div>
           </div>) : (
             <div className="select_address">

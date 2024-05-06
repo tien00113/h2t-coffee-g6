@@ -75,6 +75,7 @@
         background-color: #fff;
         color: #30271C;
     }
+
 }
 
 .btn-2 {
@@ -276,4 +277,8 @@
     &:hover {
         transform: scale(0.9);
     }
+}
+
+.disabled {
+    cursor: not-allowed;
 }
