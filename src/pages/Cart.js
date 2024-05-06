@@ -11,16 +11,17 @@ import { getProductInCartGuest } from '../Redux/Product/product.action';
 
 
 const Cart = ({ auth }) => {
+
+    const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
+
     const [price, setPrice] = useState(0);
     const [discount, setDiscount] = useState(0);
     const navigate = useNavigate();
 
     useDocTitle('Cart');
 
-    const { cartGuests, cartUser, getUserCart } = useContext(cartContext);
-
     useEffect(() => {
-        if(auth) {
+        if (auth) {
             getUserCart();
             localStorage.removeItem('cart');
         }
@@ -88,7 +89,7 @@ const Cart = ({ auth }) => {
                                                 <b>{displayMoney(price - discount)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", {state: {item: cartGuests}})}>Thanh Toán</button>
+                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", { state: { item: cartGuests } })}>Thanh Toán</button>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +144,7 @@ const Cart = ({ auth }) => {
                                                 <b>{displayMoney(cartUser?.totalSalePrice)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", {state: {item: cartUser?.cartItems}})}>Thanh Toán</button>
+                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", { state: { item: cartUser?.cartItems } })}>Thanh Toán</button>
                                     </div>
                                 </div>
                             </div>

@@ -2,7 +2,7 @@
 const cartReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_TO_CART_GUEST':
-            const existingItem = state.cartGuests.find(cartItem => ((cartItem.product.id === action.payload.item.product.id) && cartItem.sizeOption.id === action.payload.item.sizeOption.id && ((cartItem.toppingOption === null && action.payload.item.toppingOption === null) || cartItem.toppingOption.id === action.payload.item.toppingOption.id)));
+            const existingItem = state.cartGuests.find(cartItem => ((cartItem.product.id === action.payload.item.product.id) && cartItem?.sizeOption?.id === action.payload.item?.sizeOption?.id && ((cartItem?.toppingOption === null && action.payload.item?.toppingOption === null) || cartItem?.toppingOption?.id === action.payload.item?.toppingOption?.id)));
             let newCartGuest;
             if (existingItem) {
                 newCartGuest = state.cartGuests.map(cartItem =>
@@ -11,7 +11,7 @@ const cartReducer = (state, action) => {
                         : cartItem
                 );
             } else {
-                const newItem = { id: action.payload.item.id, product: action.payload.item.product, quantity: action.payload.quantity, sizeOption: action.payload.item.sizeOption, toppingOption: action.payload.item.toppingOption };
+                const newItem = { id: action.payload.item.id, product: action.payload.item.product, quantity: action.payload.quantity, sizeOption: action.payload.item?.sizeOption, toppingOption: action.payload.item?.toppingOption };
                 newCartGuest = [...state.cartGuests, newItem];
             }
             localStorage.setItem('cart', JSON.stringify(newCartGuest));
@@ -59,13 +59,27 @@ const cartReducer = (state, action) => {
                 cartGuests: decrementedCartGuests,
             };
 
+        // case 'ADD_TO_CART_USER':
+        //     return {
+        //         ...state,
+        //         message: action.payload,
+        //         cartUser: {
+        //             ...state.cartUser,
+        //             cartItems: [action.payload, ...state?.cartUser?.cartItems]
+        //         }
+        //     }
         case 'ADD_TO_CART_USER':
+            const item = JSON.parse(action.payload);
             return {
                 ...state,
-                message: action.payload,
+                message: item,
+                // cartUser: {
+                //     ...state.cartUser,
+                //     cartItems: [item, ...state?.cartUser?.cartItems]
+                // }
                 cartUser: {
                     ...state.cartUser,
-                    cartItems: [action.payload, ...state?.cartUser?.cartItems]
+                    cartItems: state.cartUser && state.cartUser.cartItems ? [item, ...state.cartUser.cartItems] : [item]
                 }
             }
 

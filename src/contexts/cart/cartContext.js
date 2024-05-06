@@ -7,7 +7,9 @@ const cartContext = createContext();
 
 // Initial State
 const initialState = {
-    cartUser: null,
+    cartUser: {
+        cartItems: [], 
+    },
     cartGuests: JSON.parse(localStorage.getItem('cart')) || [],
     message: null,
 };
