@@ -109,6 +109,15 @@ const ProductDetails = ({ auth }) => {
         }
     ]
 
+    const handleOrderNow = () => {
+        if(!selectedSize){
+            setShowError(true)
+        } else{
+            navigate("/checkout", { state: { item: orderItems } });
+            showError(false);
+        }
+    }
+
     return (
         <>
             <section id="product_details" className="section">
@@ -205,7 +214,7 @@ const ProductDetails = ({ auth }) => {
                                 <button type="button" className="btn" onClick={handleAddToCart}>
                                     Thêm vào giỏ
                                 </button>
-                                <button type="button" className="btn-1" onClick={() => { navigate("/checkout", { state: { item: orderItems } }) }}>
+                                <button type="button" className="btn-1" onClick={handleOrderNow}>
                                     Mua Ngay
                                 </button>
                             </div>

@@ -144,7 +144,7 @@ const Cart = ({ auth }) => {
                                                 <b>{displayMoney(cartUser?.totalSalePrice)}</b>
                                             </div>
                                         </div>
-                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", { state: { item: cartUser?.cartItems } })}>Thanh Toán</button>
+                                        <button type="button" className="btn-2 checkout_btn" onClick={() => navigate("/checkout", { state: { item: cartUser?.cartItems } })}>Mua Hàng</button>
                                     </div>
                                 </div>
                             </div>

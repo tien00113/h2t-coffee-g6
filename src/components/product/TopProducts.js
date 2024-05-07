@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProductAction } from '../../Redux/Product/product.action';
 import { getAllCategoryAction } from '../../Redux/Category/category.action';
+import { toTitleCase } from '../../helpers/utils';
 
 
 const TopProducts = () => {
@@ -58,7 +59,7 @@ const TopProducts = () => {
                                 className={`tabs_item ${activeClass(i)}`}
                                 onClick={() => handleProducts(item, i)}
                             >
-                                {item}
+                                {toTitleCase(item)}
                             </li>
                         ))
                     }
