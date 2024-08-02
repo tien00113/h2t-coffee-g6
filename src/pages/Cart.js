@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { BsCartX } from 'react-icons/bs';
-import { displayMoney } from '../helpers/utils';
-import useDocTitle from '../hooks/useDocTitle';
-import cartContext from '../contexts/cart/cartContext';
+import { useNavigate } from 'react-router-dom';
 import CartItem from '../components/cart/CartItem';
 import EmptyView from '../components/common/EmptyView';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProductInCartGuest } from '../Redux/Product/product.action';
+import cartContext from '../contexts/cart/cartContext';
+import { displayMoney } from '../helpers/utils';
+import useDocTitle from '../hooks/useDocTitle';
 
 
 const Cart = ({ auth }) => {
