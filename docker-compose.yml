@@ -1,8 +1,6 @@
 services:
   react-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: tien00113/h2t-coffee:latest
     ports:
       - "3000:80"
     restart: unless-stopped
